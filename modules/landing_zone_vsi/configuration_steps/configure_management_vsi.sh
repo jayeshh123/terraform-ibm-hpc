@@ -149,7 +149,7 @@ if [ "$on_primary" == "true" ]; then
 
   # 1. setting up lsf configuration
   cat <<EOT >> $LSF_CONF_FILE
-LSB_RC_EXTERNAL_HOST_IDLE_TIME=10
+LSB_RC_EXTERNAL_HOST_IDLE_TIME=40320
 LSF_DYNAMIC_HOST_TIMEOUT="EXPIRY[10m] THRESHOLD[250] INTERVAL[60m]"
 LSB_RC_EXTERNAL_HOST_FLAG="icgen2host cloudhpchost"
 LSB_RC_UPDATE_INTERVAL=15
