@@ -30,6 +30,7 @@ module "landing_zone" {
   zones                  = var.zones
 }
 
+/*
 module "bootstrap" {
   source                     = "./../../modules/bootstrap"
   ibmcloud_api_key           = var.ibmcloud_api_key
@@ -156,3 +157,4 @@ module "storage_playbook" {
   playbook_path    = local.storage_playbook_path
   depends_on       = [module.storage_inventory]
 }
+*/

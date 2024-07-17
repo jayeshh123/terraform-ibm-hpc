@@ -4,6 +4,7 @@ locals {
   region = join("-", slice(split("-", var.zones[0]), 0, 2))
 }
 
+/*
 # locals needed for bootstrap
 locals {
   # dependency: landing_zone -> bootstrap
@@ -137,3 +138,4 @@ locals {
   compute_playbook_path    = "compute_ssh.yaml"
   storage_playbook_path    = "storage_ssh.yaml"
 }
+*/

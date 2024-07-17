@@ -1,24 +1,16 @@
 ##############################################################################
 # Offering Variations
 ##############################################################################
-# Future use
-/*
 variable "scheduler" {
   type        = string
   default     = "LSF"
   description = "Select one of the scheduler (LSF/Symphony/Slurm/None)"
 }
 
-variable "storage_type" {
-  type        = string
-  default     = "scratch"
-  description = "Select the required storage type(scratch/persistent/eval)."
-}
-
 variable "ibm_customer_number" {
   type        = string
   sensitive   = true
-  default     = ""
+  default     = null
   description = "Comma-separated list of the IBM Customer Number(s) (ICN) that is used for the Bring Your Own License (BYOL) entitlement check. For more information on how to find your ICN, see [What is my IBM Customer Number (ICN)?](https://www.ibm.com/support/pages/what-my-ibm-customer-number-icn)."
   validation {
     # regex(...) fails if the IBM customer number has special characters.
@@ -26,11 +18,10 @@ variable "ibm_customer_number" {
     error_message = "The IBM customer number input value cannot have special characters."
   }
 }
-*/
+
 ##############################################################################
 # Account Variables
 ##############################################################################
-
 variable "ibmcloud_api_key" {
   description = "IBM Cloud API Key that will be used for authentication in scripts run in this module. Only required if certain options are required."
   type        = string
@@ -41,7 +32,6 @@ variable "ibmcloud_api_key" {
 ##############################################################################
 # Resource Groups Variables
 ##############################################################################
-
 variable "resource_group" {
   description = "String describing resource groups to create or reference"
   type        = string
@@ -51,7 +41,6 @@ variable "resource_group" {
 ##############################################################################
 # Module Level Variables
 ##############################################################################
-
 variable "prefix" {
   description = "A unique identifier for resources. Must begin with a letter and end with a letter or number. This prefix will be prepended to any resources provisioned by this template. Prefixes must be 16 or fewer characters."
   type        = string
@@ -70,7 +59,6 @@ variable "zones" {
 ##############################################################################
 # VPC Variables
 ##############################################################################
-
 variable "vpc" {
   type        = string
   description = "Name of an existing VPC in which the cluster resources will be deployed. If no value is given, then a new VPC will be provisioned for the cluster. [Learn more](https://cloud.ibm.com/docs/vpc)"
@@ -88,6 +76,7 @@ variable "placement_strategy" {
   default     = null
   description = "VPC placement groups to create (null / host_spread / power_spread)"
 }
+
 ##############################################################################
 # Access Variables
 ##############################################################################
@@ -153,14 +142,11 @@ variable "allowed_cidr" {
 ##############################################################################
 # Compute Variables
 ##############################################################################
-# Future use
-/*
 variable "login_subnets_cidr" {
   type        = list(string)
   default     = ["10.10.10.0/24", "10.20.10.0/24", "10.30.10.0/24"]
   description = "Subnet CIDR block to launch the login host."
 }
-*/
 
 variable "login_ssh_keys" {
   type        = list(string)
@@ -251,8 +237,7 @@ variable "compute_image_name" {
   default     = "ibm-redhat-8-6-minimal-amd64-5"
   description = "Image name to use for provisioning the compute cluster instances."
 }
-# Future use
-/*
+
 variable "compute_gui_username" {
   type        = string
   default     = "admin"
@@ -265,11 +250,10 @@ variable "compute_gui_password" {
   sensitive   = true
   description = "Password for compute cluster GUI"
 }
-*/
+
 ##############################################################################
 # Scale Storage Variables
 ##############################################################################
-
 variable "storage_subnets_cidr" {
   type        = list(string)
   default     = ["10.10.30.0/24", "10.20.30.0/24", "10.30.30.0/24"]
@@ -320,8 +304,7 @@ variable "protocol_instances" {
   }]
   description = "Number of instances to be launched for protocol hosts."
 }
-# Future use
-/*
+
 variable "storage_gui_username" {
   type        = string
   default     = "admin"
@@ -334,7 +317,6 @@ variable "storage_gui_password" {
   sensitive   = true
   description = "Password for storage cluster GUI"
 }
-*/
 
 variable "file_shares" {
   type = list(
@@ -405,7 +387,6 @@ variable "dns_domain_names" {
 ##############################################################################
 # Observability Variables
 ##############################################################################
-
 variable "enable_cos_integration" {
   type        = bool
   default     = true
@@ -433,7 +414,6 @@ variable "enable_vpc_flow_logs" {
 ##############################################################################
 # Encryption Variables
 ##############################################################################
-
 variable "key_management" {
   type        = string
   default     = "key_protect"

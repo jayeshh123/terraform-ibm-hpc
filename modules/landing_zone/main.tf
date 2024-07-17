@@ -1,7 +1,7 @@
 module "landing_zone" {
   count                          = var.enable_landing_zone ? 1 : 0
   source                         = "terraform-ibm-modules/landing-zone/ibm"
-  version                        = "4.15.0"
+  version                        = "5.25.1"
   prefix                         = local.prefix
   region                         = local.region
   tags                           = local.tags
@@ -19,17 +19,17 @@ module "landing_zone" {
   cos                            = local.env.cos
   service_endpoints              = local.env.service_endpoints
   key_management                 = local.env.key_management
-  add_kms_block_storage_s2s      = local.env.add_kms_block_storage_s2s
-  atracker                       = local.env.atracker
-  clusters                       = local.env.clusters
-  wait_till                      = local.env.wait_till
-  iam_account_settings           = local.env.iam_account_settings
-  access_groups                  = local.env.access_groups
-  f5_vsi                         = local.env.f5_vsi
-  f5_template_data               = local.env.f5_template_data
-  appid                          = local.env.appid
-  teleport_config_data           = local.env.teleport_config_data
-  teleport_vsi                   = local.env.teleport_vsi
-  secrets_manager                = local.env.secrets_manager
-  vpc_placement_groups           = local.env.vpc_placement_groups
+  #add_kms_block_storage_s2s      = local.env.add_kms_block_storage_s2s
+  atracker  = local.env.atracker
+  clusters  = local.env.clusters
+  wait_till = local.env.wait_till
+  #iam_account_settings           = local.env.iam_account_settings
+  #access_groups                  = local.env.access_groups
+  f5_vsi               = local.env.f5_vsi
+  f5_template_data     = local.env.f5_template_data
+  appid                = local.env.appid
+  teleport_config_data = local.env.teleport_config_data
+  teleport_vsi         = local.env.teleport_vsi
+  #secrets_manager                = local.env.secrets_manager
+  vpc_placement_groups = local.env.vpc_placement_groups
 }
