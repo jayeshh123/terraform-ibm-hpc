@@ -271,6 +271,7 @@ locals {
 
   # Define transit gateway (to connect multiple VPC)
   enable_transit_gateway         = false
+  transit_gateway_global         = false
   transit_gateway_resource_group = local.resource_group
   transit_gateway_connections    = [var.vpc]
 
@@ -383,27 +384,21 @@ locals {
     collector_bucket_name = "atracker-bucket"
     add_route             = var.enable_atracker
   }
-  secrets_manager = {
-    use_secrets_manager = false
-  }
-  access_groups             = []
-  f5_vsi                    = []
-  add_kms_block_storage_s2s = false
-  clusters                  = []
-  wait_till                 = "IngressReady"
-  teleport_vsi              = []
-  iam_account_settings = {
-    enable = false
-  }
-  teleport_config_data = {
-    domain = var.prefix
-  }
-  f5_template_data = {
-    license_type = "none"
-  }
+  clusters  = []
+  wait_till = "IngressReady"
   appid = {
     use_appid = false
   }
+  teleport_vsi = []
+  teleport_config_data = {
+    domain = var.prefix
+  }
+  f5_vsi = []
+  f5_template_data = {
+    license_type = "none"
+  }
+  skip_kms_block_storage_s2s_auth_policy = false
+  skip_all_s2s_auth_policies             = false
 }
 
 
@@ -411,32 +406,31 @@ locals {
 locals {
   env = {
     #ibmcloud_api_key              = var.ibmcloud_api_key
-    resource_groups                = local.resource_groups
-    network_cidr                   = var.network_cidr
-    vpcs                           = local.vpcs
-    vpn_gateways                   = local.vpn_gateways
-    enable_transit_gateway         = local.enable_transit_gateway
-    transit_gateway_resource_group = local.transit_gateway_resource_group
-    transit_gateway_connections    = local.transit_gateway_connections
-    vsi                            = local.vsi
-    ssh_keys                       = local.ssh_keys
-    cos                            = local.cos
-    key_management                 = local.key_management
-    atracker                       = local.atracker
-    vpc_placement_groups           = local.vpc_placement_groups
-    security_groups                = local.security_groups
-    virtual_private_endpoints      = local.virtual_private_endpoints
-    service_endpoints              = local.service_endpoints
-    add_kms_block_storage_s2s      = local.add_kms_block_storage_s2s
-    clusters                       = local.clusters
-    wait_till                      = local.wait_till
-    iam_account_settings           = local.iam_account_settings
-    access_groups                  = local.access_groups
-    f5_vsi                         = local.f5_vsi
-    f5_template_data               = local.f5_template_data
-    appid                          = local.appid
-    teleport_config_data           = local.teleport_config_data
-    teleport_vsi                   = local.teleport_vsi
-    secrets_manager                = local.secrets_manager
+    resource_groups                        = local.resource_groups
+    network_cidr                           = var.network_cidr
+    vpcs                                   = local.vpcs
+    vpn_gateways                           = local.vpn_gateways
+    enable_transit_gateway                 = local.enable_transit_gateway
+    transit_gateway_global                 = local.transit_gateway_global
+    transit_gateway_resource_group         = local.transit_gateway_resource_group
+    transit_gateway_connections            = local.transit_gateway_connections
+    vsi                                    = local.vsi
+    ssh_keys                               = local.ssh_keys
+    cos                                    = local.cos
+    key_management                         = local.key_management
+    atracker                               = local.atracker
+    vpc_placement_groups                   = local.vpc_placement_groups
+    security_groups                        = local.security_groups
+    virtual_private_endpoints              = local.virtual_private_endpoints
+    service_endpoints                      = local.service_endpoints
+    clusters                               = local.clusters
+    wait_till                              = local.wait_till
+    appid                                  = local.appid
+    teleport_config_data                   = local.teleport_config_data
+    teleport_vsi                           = local.teleport_vsi
+    f5_vsi                                 = local.f5_vsi
+    f5_template_data                       = local.f5_template_data
+    skip_kms_block_storage_s2s_auth_policy = local.skip_kms_block_storage_s2s_auth_policy
+    skip_all_s2s_auth_policies             = local.skip_all_s2s_auth_policies
   }
 }
