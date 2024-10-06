@@ -31,7 +31,7 @@ locals {
 
   bastion_machine_type = "cx2-4x8"
   bastion_image_name   = "ibm-ubuntu-22-04-3-minimal-amd64-1"
-  bootstrap_image_name = "ibm-redhat-8-6-minimal-amd64-6"
+  bootstrap_image_name = "ibm-redhat-8-10-minimal-amd64-2"
 
   bastion_image_id   = data.ibm_is_image.bastion.id
   bootstrap_image_id = data.ibm_is_image.bootstrap.id

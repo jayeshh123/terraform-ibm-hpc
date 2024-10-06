@@ -397,7 +397,7 @@ locals {
   f5_template_data = {
     license_type = "none"
   }
-  skip_kms_block_storage_s2s_auth_policy = false
+  skip_kms_block_storage_s2s_auth_policy = true
   skip_all_s2s_auth_policies             = false
 }
 

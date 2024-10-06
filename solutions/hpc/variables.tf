@@ -26,7 +26,6 @@ variable "ibmcloud_api_key" {
   description = "IBM Cloud API Key that will be used for authentication in scripts run in this module. Only required if certain options are required."
   type        = string
   sensitive   = true
-  default     = null
 }
 
 ##############################################################################
@@ -144,7 +143,7 @@ variable "allowed_cidr" {
 ##############################################################################
 variable "login_subnets_cidr" {
   type        = list(string)
-  default     = ["10.10.10.0/24", "10.20.10.0/24", "10.30.10.0/24"]
+  default     = ["10.10.10.0/24"]
   description = "Subnet CIDR block to launch the login host."
 }
 
@@ -274,7 +273,7 @@ variable "storage_instances" {
   )
   default = [{
     profile = "bx2-2x8"
-    count   = 3
+    count   = 2
   }]
   description = "Number of instances to be launched for storage cluster."
 }

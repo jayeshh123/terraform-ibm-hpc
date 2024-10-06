@@ -13,6 +13,7 @@ locals {
   kms_encryption_enabled     = var.key_management != null ? true : false
   boot_volume_encryption_key = var.key_management != null ? one(module.landing_zone.boot_volume_encryption_key)["crn"] : null
   existing_kms_instance_guid = var.key_management != null ? module.landing_zone.key_management_guid : null
+  
   # Future use
   # skip_iam_authorization_policy = true
 }
