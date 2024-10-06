@@ -100,7 +100,7 @@ variable "login_ssh_keys" {
 
 variable "login_image_name" {
   type        = string
-  default     = "ibm-redhat-8-6-minimal-amd64-5"
+  default     = "ibm-redhat-8-10-minimal-amd64-2"
   description = "Image name to use for provisioning the login instances."
 }
 
@@ -136,7 +136,7 @@ variable "compute_ssh_keys" {
 
 variable "management_image_name" {
   type        = string
-  default     = "ibm-redhat-8-6-minimal-amd64-5"
+  default     = "ibm-redhat-8-10-minimal-amd64-2"
   description = "Image name to use for provisioning the management cluster instances."
 }
 
@@ -184,7 +184,7 @@ variable "dynamic_compute_instances" {
 
 variable "compute_image_name" {
   type        = string
-  default     = "ibm-redhat-8-6-minimal-amd64-5"
+  default     = "ibm-redhat-8-10-minimal-amd64-2"
   description = "Image name to use for provisioning the compute cluster instances."
 }
 
@@ -224,7 +224,7 @@ variable "storage_instances" {
 
 variable "storage_image_name" {
   type        = string
-  default     = "ibm-redhat-8-6-minimal-amd64-5"
+  default     = "ibm-redhat-8-10-minimal-amd64-2"
   description = "Image name to use for provisioning the storage cluster instances."
 }
 

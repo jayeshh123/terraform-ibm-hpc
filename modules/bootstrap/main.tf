@@ -43,7 +43,7 @@ module "bastion_vsi" {
 module "bootstrap_vsi" {
   count                         = local.enable_bootstrap ? 1 : 0
   source                        = "terraform-ibm-modules/landing-zone-vsi/ibm"
-  version                       = "4.0.1"
+  version                       = "4.2.0"
   vsi_per_subnet                = 1
   create_security_group         = false
   security_group                = null

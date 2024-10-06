@@ -50,7 +50,7 @@
 | <a name="input_compute_dns_zone_id"></a> [compute\_dns\_zone\_id](#input\_compute\_dns\_zone\_id) | IBM Cloud compute cluster DNS zone id. | `string` | `null` | no |
 | <a name="input_compute_gui_password"></a> [compute\_gui\_password](#input\_compute\_gui\_password) | Password for compute cluster GUI | `string` | n/a | yes |
 | <a name="input_compute_gui_username"></a> [compute\_gui\_username](#input\_compute\_gui\_username) | GUI user to perform system management and monitoring tasks on compute cluster. | `string` | `"admin"` | no |
-| <a name="input_compute_image_name"></a> [compute\_image\_name](#input\_compute\_image\_name) | Image name to use for provisioning the compute cluster instances. | `string` | `"ibm-redhat-8-6-minimal-amd64-5"` | no |
+| <a name="input_compute_image_name"></a> [compute\_image\_name](#input\_compute\_image\_name) | Image name to use for provisioning the compute cluster instances. | `string` | `"ibm-redhat-8-10-minimal-amd64-2"` | no |
 | <a name="input_compute_profile"></a> [compute\_profile](#input\_compute\_profile) | Profile to be used for compute cluster virtual server instance. | `string` | `"cx2-2x4"` | no |
 | <a name="input_compute_ssh_keys"></a> [compute\_ssh\_keys](#input\_compute\_ssh\_keys) | The key pair to use to launch the compute host. | `list(string)` | n/a | yes |
 | <a name="input_compute_subnets_cidr"></a> [compute\_subnets\_cidr](#input\_compute\_subnets\_cidr) | Subnet CIDR block to launch the compute cluster host. | `list(string)` | <pre>[<br>  "10.10.10.0/24",<br>  "10.20.10.0/24",<br>  "10.30.10.0/24"<br>]</pre> | no |
@@ -67,7 +67,7 @@
 | <a name="input_key_management"></a> [key\_management](#input\_key\_management) | null/key\_protect/hs\_crypto | `string` | `null` | no |
 | <a name="input_login_ssh_keys"></a> [login\_ssh\_keys](#input\_login\_ssh\_keys) | The key pair to use to access the login host. | `list(string)` | n/a | yes |
 | <a name="input_login_subnets_cidr"></a> [login\_subnets\_cidr](#input\_login\_subnets\_cidr) | Subnet CIDR block to launch the login host. | `list(string)` | <pre>[<br>  "10.0.0.0/24"<br>]</pre> | no |
-| <a name="input_management_image_name"></a> [management\_image\_name](#input\_management\_image\_name) | Image name to use for provisioning the management cluster instances. | `string` | `"ibm-redhat-8-6-minimal-amd64-5"` | no |
+| <a name="input_management_image_name"></a> [management\_image\_name](#input\_management\_image\_name) | Image name to use for provisioning the management cluster instances. | `string` | `"ibm-redhat-8-10-minimal-amd64-2"` | no |
 | <a name="input_management_instances"></a> [management\_instances](#input\_management\_instances) | Number of instances to be launched for management. | `number` | `3` | no |
 | <a name="input_management_profile"></a> [management\_profile](#input\_management\_profile) | Profile to be used for management virtual server instance. | `string` | `"cx2-2x4"` | no |
 | <a name="input_max_compute_instances"></a> [max\_compute\_instances](#input\_max\_compute\_instances) | MaxNumber of instances to be launched for compute cluster. | `number` | `250` | no |
@@ -88,7 +88,7 @@
 | <a name="input_storage_dns_zone_id"></a> [storage\_dns\_zone\_id](#input\_storage\_dns\_zone\_id) | IBM Cloud storage cluster DNS zone id. | `string` | `null` | no |
 | <a name="input_storage_gui_password"></a> [storage\_gui\_password](#input\_storage\_gui\_password) | Password for storage cluster GUI | `string` | n/a | yes |
 | <a name="input_storage_gui_username"></a> [storage\_gui\_username](#input\_storage\_gui\_username) | GUI user to perform system management and monitoring tasks on storage cluster. | `string` | `"admin"` | no |
-| <a name="input_storage_image_name"></a> [storage\_image\_name](#input\_storage\_image\_name) | Image name to use for provisioning the storage cluster instances. | `string` | `"ibm-redhat-8-6-minimal-amd64-5"` | no |
+| <a name="input_storage_image_name"></a> [storage\_image\_name](#input\_storage\_image\_name) | Image name to use for provisioning the storage cluster instances. | `string` | `"ibm-redhat-8-10-minimal-amd64-2"` | no |
 | <a name="input_storage_instances"></a> [storage\_instances](#input\_storage\_instances) | Number of instances to be launched for storage cluster. | `number` | `3` | no |
 | <a name="input_storage_profile"></a> [storage\_profile](#input\_storage\_profile) | Profile to be used for storage cluster instance. | `string` | `"bx2d-2x8"` | no |
 | <a name="input_storage_ssh_keys"></a> [storage\_ssh\_keys](#input\_storage\_ssh\_keys) | The key pair to use to launch the storage cluster host. | `list(string)` | n/a | yes |

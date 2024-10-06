@@ -1,4 +1,3 @@
-/*
 output "bastion_vsi_data" {
   value = module.bastion_vsi[*]
 }
@@ -6,7 +5,6 @@ output "bastion_vsi_data" {
 output "bootstrap_vsi_data" {
   value = module.bootstrap_vsi[*]
 }
-*/
 
 output "bastion_fip" {
   description = "Bastion FIP"

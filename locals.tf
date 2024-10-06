@@ -18,7 +18,7 @@ locals {
   # skip_iam_authorization_policy = true
 }
 
-/*
+
 # locals needed for landing_zone_vsi
 locals {
   # dependency: landing_zone -> bootstrap -> landing_zone_vsi
@@ -37,7 +37,7 @@ locals {
   #vpc_id            = var.vpc == null ? module.landing_zone.vpc_id[0] : data.ibm_is_vpc.itself[0].id
   #vpc_crn           = var.vpc == null ? module.landing_zone.vpc_crn[0] : data.ibm_is_vpc.itself[0].crn
 }
-
+/*
 # locals needed for file-storage
 locals {
   # dependency: landing_zone -> file-storage

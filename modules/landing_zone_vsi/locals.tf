@@ -112,25 +112,29 @@ locals {
   # Security group rules
   login_security_group_rules = [
     {
-      name      = "allow-all-bastion"
+      name      = "allow-all-bastion-in"
       direction = "inbound"
       remote    = var.bastion_security_group_id
     },
+    /*
     {
       name      = "allow-all-compute"
       direction = "inbound"
       remote    = module.compute_sg[0].security_group_id
     },
+    */
     {
-      name      = "allow-all-bastion"
+      name      = "allow-all-bastion-out"
       direction = "outbound"
       remote    = var.bastion_security_group_id
     },
+    /*
     {
       name      = "allow-all-compute"
       direction = "outbound"
       remote    = module.compute_sg[0].security_group_id
     }
+    */
   ]
   # TODO: Compute & storage can't be added due to SG rule limitation
   /* [ERROR] Error while creating Security Group Rule Exceeded limit of remote rules per security group
@@ -138,44 +142,44 @@ locals {
 
   compute_security_group_rules = [
     {
-      name      = "allow-all-bastion"
+      name      = "allow-all-bastion-in"
       direction = "inbound"
       remote    = var.bastion_security_group_id
     },
     {
-      name      = "allow-all-login"
+      name      = "allow-all-login-in"
       direction = "inbound"
       remote    = module.login_sg[0].security_group_id
     },
     {
-      name      = "allow-all-bastion"
+      name      = "allow-all-bastion-out"
       direction = "outbound"
       remote    = var.bastion_security_group_id
     },
     {
-      name      = "allow-all-login"
+      name      = "allow-all-login-out"
       direction = "outbound"
       remote    = module.login_sg[0].security_group_id
     }
   ]
   storage_security_group_rules = [
     {
-      name      = "allow-all-bastion"
+      name      = "allow-all-bastion-in"
       direction = "inbound"
       remote    = var.bastion_security_group_id
     },
     {
-      name      = "allow-all-compute"
+      name      = "allow-all-compute-in"
       direction = "inbound"
       remote    = module.compute_sg[0].security_group_id
     },
     {
-      name      = "allow-all-bastion"
+      name      = "allow-all-bastion-out"
       direction = "outbound"
       remote    = var.bastion_security_group_id
     },
     {
-      name      = "allow-all-compute"
+      name      = "allow-all-compute-out"
       direction = "outbound"
       remote    = module.compute_sg[0].security_group_id
   }]

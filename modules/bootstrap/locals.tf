@@ -38,16 +38,14 @@ locals {
 
   bastion_ssh_keys = [for name in var.ssh_keys : data.ibm_is_ssh_key.bastion[name].id]
 
-  /*
   # Scale static configs
   scale_cloud_deployer_path     = "/opt/IBM/ibm-spectrumscale-cloud-deploy"
   scale_cloud_install_repo_url  = "https://github.com/IBM/ibm-spectrum-scale-cloud-install"
   scale_cloud_install_repo_name = "ibm-spectrum-scale-cloud-install"
-  scale_cloud_install_branch    = "5.1.8.1"
+  scale_cloud_install_tag       = "v2.6.0"
   scale_cloud_infra_repo_url    = "https://github.com/IBM/ibm-spectrum-scale-install-infra"
   scale_cloud_infra_repo_name   = "ibm-spectrum-scale-install-infra"
-  scale_cloud_infra_repo_tag    = "v2.7.0"
-  */
+  scale_cloud_infra_repo_tag    = "ibmcloud_v2.6.0"
 
   # Region and Zone calculations
   region = join("-", slice(split("-", var.zones[0]), 0, 2))

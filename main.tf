@@ -48,7 +48,7 @@ module "bootstrap" {
   boot_volume_encryption_key = local.boot_volume_encryption_key
   existing_kms_instance_guid = local.existing_kms_instance_guid
 }
-/*
+
 module "landing_zone_vsi" {
   source                     = "./modules/landing_zone_vsi"
   ibmcloud_api_key           = var.ibmcloud_api_key
@@ -80,7 +80,7 @@ module "landing_zone_vsi" {
   kms_encryption_enabled     = local.kms_encryption_enabled
   boot_volume_encryption_key = local.boot_volume_encryption_key
 }
-
+/*
 module "file_storage" {
   source             = "./modules/file_storage"
   ibmcloud_api_key   = var.ibmcloud_api_key
