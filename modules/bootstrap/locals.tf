@@ -52,6 +52,8 @@ locals {
 
   # Security group rules
   # TODO: Fix SG rules
+  bastion_security_group_rules = []
+  /*
   bastion_security_group_rules = flatten([
     [for cidr in local.bastion_sg_variable_cidr : {
       name      = format("allow-variable-inbound-%s", index(local.bastion_sg_variable_cidr, cidr) + 1)
@@ -69,7 +71,7 @@ locals {
       remote    = cidr
     }]
   ])
-
+  */
   # Derived configs
   # VPC
   resource_group_id = data.ibm_resource_group.itself.id

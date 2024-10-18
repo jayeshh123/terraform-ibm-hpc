@@ -1,6 +1,5 @@
 module "landing_zone" {
   source = "./modules/landing_zone"
-  # TODO: Add logic
   allowed_cidr           = var.allowed_cidr
   compute_subnets_cidr   = var.compute_subnets_cidr
   cos_instance_name      = var.cos_instance_name
