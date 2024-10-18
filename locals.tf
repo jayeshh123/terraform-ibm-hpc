@@ -37,7 +37,7 @@ locals {
   #vpc_id            = var.vpc == null ? module.landing_zone.vpc_id[0] : data.ibm_is_vpc.itself[0].id
   #vpc_crn           = var.vpc == null ? module.landing_zone.vpc_crn[0] : data.ibm_is_vpc.itself[0].crn
 }
-/*
+
 # locals needed for file-storage
 locals {
   # dependency: landing_zone -> file-storage
@@ -140,4 +140,4 @@ locals {
   compute_playbook_path    = "compute_ssh.yaml"
   storage_playbook_path    = "storage_ssh.yaml"
 }
-*/
+

@@ -79,7 +79,7 @@ module "landing_zone_vsi" {
   kms_encryption_enabled     = local.kms_encryption_enabled
   boot_volume_encryption_key = local.boot_volume_encryption_key
 }
-/*
+
 module "file_storage" {
   source             = "./modules/file_storage"
   ibmcloud_api_key   = var.ibmcloud_api_key
@@ -155,4 +155,3 @@ module "storage_playbook" {
   playbook_path    = local.storage_playbook_path
   depends_on       = [module.storage_inventory]
 }
-*/
