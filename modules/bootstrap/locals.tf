@@ -17,11 +17,11 @@ locals {
     "150.238.230.128/27",
     "169.55.82.128/27"
   ]
-  bastion_sg_variable_cidr = var.enable_bootstrap == false ? flatten([
+  bastion_sg_variable_cidr = var.enable_bootstrap == false ? distinct(flatten([
     local.schematics_reserved_cidrs,
     var.allowed_cidr,
     var.network_cidr
-  ]) : flatten([var.allowed_cidr, var.network_cidr])
+  ])) : distinct(flatten([var.allowed_cidr, var.network_cidr]))
 
   enable_bastion   = var.enable_bastion || var.enable_bootstrap
   enable_bootstrap = var.enable_bootstrap
@@ -52,8 +52,6 @@ locals {
 
   # Security group rules
   # TODO: Fix SG rules
-  bastion_security_group_rules = []
-  /*
   bastion_security_group_rules = flatten([
     [for cidr in local.bastion_sg_variable_cidr : {
       name      = format("allow-variable-inbound-%s", index(local.bastion_sg_variable_cidr, cidr) + 1)
@@ -71,7 +69,7 @@ locals {
       remote    = cidr
     }]
   ])
-  */
+  
   # Derived configs
   # VPC
   resource_group_id = data.ibm_resource_group.itself.id
