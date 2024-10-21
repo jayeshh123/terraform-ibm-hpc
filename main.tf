@@ -137,7 +137,7 @@ module "storage_inventory" {
   hosts          = local.storage_hosts
   inventory_path = local.storage_inventory_path
 }
-/*
+
 module "compute_playbook" {
   source           = "./modules/playbook"
   bastion_fip      = local.bastion_fip
@@ -155,4 +155,3 @@ module "storage_playbook" {
   playbook_path    = local.storage_playbook_path
   depends_on       = [module.storage_inventory]
 }
-*/

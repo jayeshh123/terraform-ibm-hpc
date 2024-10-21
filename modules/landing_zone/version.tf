@@ -1,12 +1,31 @@
+##############################################################################
+# Terraform Providers
+##############################################################################
+
 terraform {
-  required_version = ">= 1.3, < 1.6"
+  required_version = ">= 1.3"
+  # Use "greater than or equal to" range for root level modules
   required_providers {
     ibm = {
       source  = "IBM-Cloud/ibm"
-      version = ">= 1.56.2"
+      version = ">= 1.68.1, < 2.0.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.4.3, < 4.0.0"
+    }
+    time = {
+      source  = "hashicorp/time"
+      version = ">= 0.9.1, < 1.0.0"
+    }
+    ansible = {
+      source = "ansible/ansible"
+      version = "~> 1.3.0"
     }
   }
 }
+
+##############################################################################
 
 provider "ibm" {
   ibmcloud_api_key = var.ibmcloud_api_key

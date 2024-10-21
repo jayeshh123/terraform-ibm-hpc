@@ -1,23 +1,22 @@
+##############################################################################
+# Terraform Providers
+##############################################################################
+
 terraform {
-  required_version = ">= 1.3, < 1.6"
+  required_version = ">= 1.3"
+  # Use "greater than or equal to" range for root level modules
   required_providers {
+    ibm = {
+      source  = "IBM-Cloud/ibm"
+      version = ">= 1.68.1, < 2.0.0"
+    }
     local = {
       source  = "hashicorp/local"
       version = "~> 2"
     }
-    /*
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 3"
-    }
-    http = {
-      source  = "hashicorp/http"
-      version = "~> 3.4.0"
-    }
-    */
     ansible = {
-      version = "~> 1.1.0"
-      source  = "ansible/ansible"
+      source = "ansible/ansible"
+      version = "~> 1.3.0"
     }
   }
 }
