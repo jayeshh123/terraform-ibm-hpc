@@ -23,6 +23,7 @@ locals {
     resource_group            = var.resource_group
     allowed_cidr              = var.allowed_cidr
     deployer_instance_profile = var.deployer_instance_profile
+    ssh_keys                  = var.ssh_keys
     bastion_ssh_keys          = var.bastion_ssh_keys
     bastion_subnets_cidr      = var.bastion_subnets_cidr
     compute_gui_password      = var.compute_gui_password
@@ -72,6 +73,7 @@ locals {
     resource_group            = lookup(local.override[local.override_type], "resource_group", local.config.resource_group)
     allowed_cidr              = lookup(local.override[local.override_type], "allowed_cidr", local.config.allowed_cidr)
     deployer_instance_profile = lookup(local.override[local.override_type], "deployer_instance_profile", local.config.deployer_instance_profile)
+    ssh_keys                  = lookup(local.override[local.override_type], "ssh_keys", local.config.ssh_keys)
     bastion_ssh_keys          = lookup(local.override[local.override_type], "bastion_ssh_keys", local.config.bastion_ssh_keys)
     bastion_subnets_cidr      = lookup(local.override[local.override_type], "bastion_subnets_cidr", local.config.bastion_subnets_cidr)
     compute_gui_password      = lookup(local.override[local.override_type], "compute_gui_password", local.config.compute_gui_password)

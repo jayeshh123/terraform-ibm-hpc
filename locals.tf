@@ -5,10 +5,10 @@ locals {
 
   # SSH key calculations
   # Combining the common ssh keys with host specific ssh keys
-  bastion_ssh_keys = setunion(coalesce(var.bastion_ssh_keys, []), coalesce(var.ssh_keys, []))
-  storage_ssh_keys = setunion(coalesce(var.storage_ssh_keys, []), coalesce(var.ssh_keys, []))
-  compute_ssh_keys = setunion(coalesce(var.compute_ssh_keys, []), coalesce(var.ssh_keys, []))
-  client_ssh_keys  = setunion(coalesce(var.client_ssh_keys, []), coalesce(var.ssh_keys, []))
+  bastion_ssh_keys = distinct(concat(coalesce(var.bastion_ssh_keys, []), coalesce(var.ssh_keys, [])))
+  storage_ssh_keys = distinct(concat(coalesce(var.storage_ssh_keys, []), coalesce(var.ssh_keys, [])))
+  compute_ssh_keys = distinct(concat(coalesce(var.compute_ssh_keys, []), coalesce(var.ssh_keys, [])))
+  client_ssh_keys  = distinct(concat(coalesce(var.client_ssh_keys, []), coalesce(var.ssh_keys, [])))
 }
 
 
@@ -24,7 +24,7 @@ locals {
   # Future use
   # skip_iam_authorization_policy = true
 }
-
+/*
 
 # locals needed for landing_zone_vsi
 locals {
@@ -147,4 +147,4 @@ locals {
   compute_playbook_path    = "compute_ssh.yaml"
   storage_playbook_path    = "storage_ssh.yaml"
 }
-
+*/
