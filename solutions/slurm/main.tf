@@ -1,6 +1,6 @@
-module "custom" {
+module "slurm" {
   source                    = "./../.."
-  scheduler                 = var.scheduler
+  scheduler                 = "slurm"
   ibm_customer_number       = var.ibm_customer_number
   ibmcloud_api_key          = var.ibmcloud_api_key
   zones                     = var.zones
