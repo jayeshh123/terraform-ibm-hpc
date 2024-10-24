@@ -3,8 +3,5 @@
   "prefix": $PREFIX,
   "zones": "[\"ca-tor-1\"]",
   "resource_group": "geretain-hpc-rg",
-  "bastion_ssh_keys": "[\"geretain-hpc-ssh-key\"]",
-  "client_ssh_keys": "[\"geretain-hpc-ssh-key\"]",
-  "compute_ssh_keys": "[\"geretain-hpc-ssh-key\"]",
-  "storage_ssh_keys": "[\"geretain-hpc-ssh-key\"]"
+  "ssh_keys": "[\"geretain-hpc-ssh-key\"]"
 }
