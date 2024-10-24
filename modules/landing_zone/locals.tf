@@ -46,7 +46,7 @@ locals {
   # For the variables looking for resource group names only (transit_gateway, key_management, atracker)
   resource_group = var.resource_group == null ? "service-rg" : var.resource_group
 
-  client_instance_count          = sum(var.client_instances[*]["count"])
+  client_instance_count         = sum(var.client_instances[*]["count"])
   management_instance_count     = sum(var.management_instances[*]["count"])
   static_compute_instance_count = sum(var.compute_instances[*]["count"])
   storage_instance_count        = sum(var.storage_instances[*]["count"])

@@ -32,7 +32,7 @@ variable "ssh_keys" {
   type        = list(string)
   default     = null
   description = "The key pair to use to access the HPC cluster."
-  
+
 }
 
 variable "allowed_cidr" {
@@ -330,7 +330,7 @@ variable "nsd_details" {
       iops     = optional(number)
     })
   )
-  default = null
+  default     = null
   description = "Storage scale NSD details"
 }
 

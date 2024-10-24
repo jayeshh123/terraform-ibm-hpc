@@ -6,7 +6,7 @@ terraform {
       version = ">= 1.68.1, < 2.0.0"
     }
     ansible = {
-      source = "ansible/ansible"
+      source  = "ansible/ansible"
       version = "~> 1.3.0"
     }
   }

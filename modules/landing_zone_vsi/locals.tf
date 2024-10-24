@@ -43,7 +43,7 @@ locals {
   protocol_instance_count       = sum(var.protocol_instances[*]["count"])
   static_compute_instance_count = sum(var.static_compute_instances[*]["count"])
 
-  enable_client      = local.management_instance_count > 0
+  enable_client     = local.management_instance_count > 0
   enable_management = local.management_instance_count > 0
   enable_compute    = local.management_instance_count > 0 || local.static_compute_instance_count > 0 || local.protocol_instance_count > 0
   enable_storage    = local.storage_instance_count > 0
@@ -54,7 +54,7 @@ locals {
   # TODO: Fix the logic
   # enable_load_balancer = false
 
-  client_node_name      = format("%s-%s", local.prefix, "client")
+  client_node_name     = format("%s-%s", local.prefix, "client")
   management_node_name = format("%s-%s", local.prefix, "mgmt")
   compute_node_name    = format("%s-%s", local.prefix, "comp")
   storage_node_name    = format("%s-%s", local.prefix, "strg")
@@ -81,14 +81,14 @@ locals {
   */
 
   management_image_id = data.ibm_is_image.management.id
-  client_image_id      = data.ibm_is_image.client.id
+  client_image_id     = data.ibm_is_image.client.id
   compute_image_id    = data.ibm_is_image.compute.id
   storage_image_id    = data.ibm_is_image.storage.id
   protocol_image_id   = data.ibm_is_image.storage.id
 
   storage_ssh_keys    = [for name in var.storage_ssh_keys : data.ibm_is_ssh_key.storage[name].id]
   compute_ssh_keys    = [for name in var.compute_ssh_keys : data.ibm_is_ssh_key.compute[name].id]
-  client_ssh_keys      = [for name in var.client_ssh_keys : data.ibm_is_ssh_key.client[name].id]
+  client_ssh_keys     = [for name in var.client_ssh_keys : data.ibm_is_ssh_key.client[name].id]
   management_ssh_keys = local.compute_ssh_keys
   protocol_ssh_keys   = local.storage_ssh_keys
 
@@ -192,7 +192,7 @@ locals {
   # Subnets
   # TODO: Multi-zone multi-vNIC VSIs deployment support (bug #https://github.ibm.com/GoldenEye/issues/issues/5830)
   # Findings: Singe zone multi-vNICs VSIs deployment & multi-zone single vNIC VSIs deployment are supported.
-  client_subnets    = var.client_subnets
+  client_subnets   = var.client_subnets
   compute_subnets  = var.compute_subnets
   storage_subnets  = var.storage_subnets
   protocol_subnets = var.protocol_subnets

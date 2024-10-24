@@ -2,13 +2,13 @@
 locals {
   # Region and Zone calculations
   region = join("-", slice(split("-", var.zones[0]), 0, 2))
-  
+
   # SSH key calculations
   # Combining the common ssh keys with host specific ssh keys
-  bastion_ssh_keys    = setunion(coalesce(var.bastion_ssh_keys, []), coalesce(var.ssh_keys, []))
-  storage_ssh_keys    = setunion(coalesce(var.storage_ssh_keys, []), coalesce(var.ssh_keys, []))
-  compute_ssh_keys    = setunion(coalesce(var.compute_ssh_keys, []), coalesce(var.ssh_keys, []))
-  client_ssh_keys      = setunion(coalesce(var.client_ssh_keys, []), coalesce(var.ssh_keys, []))
+  bastion_ssh_keys = setunion(coalesce(var.bastion_ssh_keys, []), coalesce(var.ssh_keys, []))
+  storage_ssh_keys = setunion(coalesce(var.storage_ssh_keys, []), coalesce(var.ssh_keys, []))
+  compute_ssh_keys = setunion(coalesce(var.compute_ssh_keys, []), coalesce(var.ssh_keys, []))
+  client_ssh_keys  = setunion(coalesce(var.client_ssh_keys, []), coalesce(var.ssh_keys, []))
 }
 
 
@@ -20,7 +20,7 @@ locals {
   kms_encryption_enabled     = var.key_management != null ? true : false
   boot_volume_encryption_key = var.key_management != null ? one(module.landing_zone.boot_volume_encryption_key)["crn"] : null
   existing_kms_instance_guid = var.key_management != null ? module.landing_zone.key_management_guid : null
-  
+
   # Future use
   # skip_iam_authorization_policy = true
 }
@@ -33,7 +33,7 @@ locals {
   bastion_public_key_content = module.deployer.bastion_public_key_content
 
   # dependency: landing_zone -> landing_zone_vsi
-  client_subnets    = module.landing_zone.client_subnets
+  client_subnets   = module.landing_zone.client_subnets
   compute_subnets  = module.landing_zone.compute_subnets
   storage_subnets  = module.landing_zone.storage_subnets
   protocol_subnets = module.landing_zone.protocol_subnets

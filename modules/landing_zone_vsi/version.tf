@@ -19,7 +19,7 @@ terraform {
       version = ">= 0.9.1, < 1.0.0"
     }
     ansible = {
-      source = "ansible/ansible"
+      source  = "ansible/ansible"
       version = "~> 1.3.0"
     }
   }

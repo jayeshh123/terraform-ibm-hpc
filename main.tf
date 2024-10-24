@@ -1,5 +1,5 @@
 module "landing_zone" {
-  source = "./modules/landing_zone"
+  source                 = "./modules/landing_zone"
   allowed_cidr           = var.allowed_cidr
   compute_subnets_cidr   = var.compute_subnets_cidr
   cos_instance_name      = var.cos_instance_name
@@ -39,8 +39,8 @@ module "deployer" {
   network_cidr               = var.network_cidr
   enable_bastion             = var.enable_bastion
   bastion_subnets            = local.bastion_subnets
-  enable_deployer           = var.enable_deployer
-  deployer_instance_profile = var.deployer_instance_profile
+  enable_deployer            = var.enable_deployer
+  deployer_instance_profile  = var.deployer_instance_profile
   ssh_keys                   = local.bastion_ssh_keys
   allowed_cidr               = var.allowed_cidr
   kms_encryption_enabled     = local.kms_encryption_enabled
@@ -57,10 +57,10 @@ module "landing_zone_vsi" {
   vpc_id                     = local.vpc_id
   bastion_security_group_id  = local.bastion_security_group_id
   bastion_public_key_content = local.bastion_public_key_content
-  client_subnets              = local.client_subnets
-  client_ssh_keys             = local.client_ssh_keys
-  client_image_name           = var.client_image_name
-  client_instances            = var.client_instances
+  client_subnets             = local.client_subnets
+  client_ssh_keys            = local.client_ssh_keys
+  client_image_name          = var.client_image_name
+  client_instances           = var.client_instances
   compute_subnets            = local.compute_subnets
   compute_ssh_keys           = local.compute_ssh_keys
   management_image_name      = var.management_image_name

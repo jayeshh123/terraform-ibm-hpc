@@ -23,17 +23,17 @@ locals {
     var.network_cidr
   ])) : distinct(flatten([var.allowed_cidr, var.network_cidr]))
 
-  enable_bastion   = var.enable_bastion || var.enable_deployer
+  enable_bastion  = var.enable_bastion || var.enable_deployer
   enable_deployer = var.enable_deployer
 
-  bastion_node_name   = format("%s-%s", local.prefix, "bastion")
+  bastion_node_name  = format("%s-%s", local.prefix, "bastion")
   deployer_node_name = format("%s-%s", local.prefix, "deployer")
 
   bastion_machine_type = "cx2-4x8"
   bastion_image_name   = "ibm-ubuntu-22-04-3-minimal-amd64-1"
-  deployer_image_name = "ibm-redhat-8-10-minimal-amd64-2"
+  deployer_image_name  = "ibm-redhat-8-10-minimal-amd64-2"
 
-  bastion_image_id   = data.ibm_is_image.bastion.id
+  bastion_image_id  = data.ibm_is_image.bastion.id
   deployer_image_id = data.ibm_is_image.deployer.id
 
   bastion_ssh_keys = [for name in var.ssh_keys : data.ibm_is_ssh_key.bastion[name].id]
@@ -69,7 +69,7 @@ locals {
       remote    = cidr
     }]
   ])
-  
+
   # Derived configs
   # VPC
   resource_group_id = data.ibm_resource_group.itself.id

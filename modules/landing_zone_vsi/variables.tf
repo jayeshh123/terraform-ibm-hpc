@@ -261,7 +261,7 @@ variable "nsd_details" {
       iops     = optional(number)
     })
   )
-  default = null
+  default     = null
   description = "NSD details"
 }
 
