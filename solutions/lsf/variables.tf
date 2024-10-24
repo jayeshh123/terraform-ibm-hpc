@@ -32,7 +32,6 @@ variable "ssh_keys" {
   type        = list(string)
   default     = null
   description = "The key pair to use to access the HPC cluster."
-
 }
 
 variable "allowed_cidr" {
@@ -84,22 +83,22 @@ variable "placement_strategy" {
 ##############################################################################
 # Access Variables
 ##############################################################################
-variable "enable_bastion" {
-  type        = bool
-  default     = true
-  description = "The solution supports multiple ways to connect to your HPC cluster for example, using bastion node, via VPN or direct connection. If connecting to the HPC cluster via VPN or direct connection, set this value to false."
-}
-
 variable "enable_deployer" {
   type        = bool
   default     = false
-  description = "deployer should be only used for better deployment performance"
+  description = "Deployer should be only used for better deployment performance"
 }
 
 variable "deployer_instance_profile" {
   type        = string
   default     = "mx2-4x32"
-  description = "deployer should be only used for better deployment performance"
+  description = "Deployer should be only used for better deployment performance"
+}
+
+variable "enable_bastion" {
+  type        = bool
+  default     = true
+  description = "The solution supports multiple ways to connect to your HPC cluster for example, using bastion node, via VPN or direct connection. If connecting to the HPC cluster via VPN or direct connection, set this value to false."
 }
 
 variable "bastion_ssh_keys" {
@@ -143,7 +142,7 @@ variable "vpn_preshared_key" {
 ##############################################################################
 variable "client_subnets_cidr" {
   type        = list(string)
-  default     = ["10.10.10.0/24"]
+  default     = ["10.10.10.0/24", "10.20.10.0/24", "10.30.10.0/24"]
   description = "Subnet CIDR block to launch the client host."
 }
 
@@ -153,22 +152,18 @@ variable "client_ssh_keys" {
   description = "The key pair to use to launch the client host."
 }
 
-variable "client_image_name" {
-  type        = string
-  default     = "ibm-redhat-8-10-minimal-amd64-2"
-  description = "Image name to use for provisioning the client instances."
-}
-
 variable "client_instances" {
   type = list(
     object({
       profile = string
       count   = number
+      image   = string
     })
   )
   default = [{
     profile = "cx2-2x4"
-    count   = 1
+    count   = 2
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Number of instances to be launched for client."
 }
@@ -185,22 +180,18 @@ variable "compute_ssh_keys" {
   description = "The key pair to use to launch the compute host."
 }
 
-variable "management_image_name" {
-  type        = string
-  default     = "ibm-redhat-8-10-minimal-amd64-2"
-  description = "Image name to use for provisioning the management cluster instances."
-}
-
 variable "management_instances" {
   type = list(
     object({
       profile = string
       count   = number
+      image   = string
     })
   )
   default = [{
     profile = "cx2-2x4"
-    count   = 3
+    count   = 2
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Number of instances to be launched for management."
 }
@@ -210,11 +201,13 @@ variable "static_compute_instances" {
     object({
       profile = string
       count   = number
+      image   = string
     })
   )
   default = [{
     profile = "cx2-2x4"
-    count   = 0
+    count   = 1
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Min Number of instances to be launched for compute cluster."
 }
@@ -224,19 +217,15 @@ variable "dynamic_compute_instances" {
     object({
       profile = string
       count   = number
+      image   = string
     })
   )
   default = [{
     profile = "cx2-2x4"
-    count   = 250
+    count   = 1024
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "MaxNumber of instances to be launched for compute cluster."
-}
-
-variable "compute_image_name" {
-  type        = string
-  default     = "ibm-redhat-8-10-minimal-amd64-2"
-  description = "Image name to use for provisioning the compute cluster instances."
 }
 
 variable "compute_gui_username" {
@@ -254,7 +243,7 @@ variable "compute_gui_password" {
 }
 
 ##############################################################################
-# Scale Storage Variables
+# Storage Scale Variables
 ##############################################################################
 variable "storage_subnets_cidr" {
   type        = list(string)
@@ -271,21 +260,19 @@ variable "storage_ssh_keys" {
 variable "storage_instances" {
   type = list(
     object({
-      profile = string
-      count   = number
+      profile         = string
+      count           = number
+      image           = string
+      filesystem_name = optional(string)
     })
   )
   default = [{
-    profile = "bx2-2x8"
-    count   = 2
+    profile         = "bx2-2x8"
+    count           = 2
+    image           = "ibm-redhat-8-10-minimal-amd64-2"
+    filesystem_name = "fs1"
   }]
   description = "Number of instances to be launched for storage cluster."
-}
-
-variable "storage_image_name" {
-  type        = string
-  default     = "ibm-redhat-8-10-minimal-amd64-2"
-  description = "Image name to use for provisioning the storage cluster instances."
 }
 
 variable "protocol_subnets_cidr" {
@@ -299,11 +286,13 @@ variable "protocol_instances" {
     object({
       profile = string
       count   = number
+      image   = string
     })
   )
   default = [{
     profile = "bx2-2x8"
     count   = 2
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Number of instances to be launched for protocol hosts."
 }
@@ -330,7 +319,11 @@ variable "nsd_details" {
       iops     = optional(number)
     })
   )
-  default     = null
+  default = [{
+    capacity = 100
+    iops     = 1000
+    profile  = "custom"
+  }]
   description = "Storage scale NSD details"
 }
 
@@ -355,7 +348,7 @@ variable "file_shares" {
 }
 
 ##############################################################################
-# DNS Template Variables
+# DNS Variables
 ##############################################################################
 
 variable "dns_instance_id" {
@@ -385,6 +378,21 @@ variable "dns_domain_names" {
 }
 
 ##############################################################################
+# Encryption Variables
+##############################################################################
+variable "key_management" {
+  type        = string
+  default     = "key_protect"
+  description = "null/key_protect/hs_crypto"
+}
+
+variable "hpcs_instance_name" {
+  type        = string
+  default     = null
+  description = "Hyper Protect Crypto Service instance"
+}
+
+##############################################################################
 # Observability Variables
 ##############################################################################
 variable "enable_cos_integration" {
@@ -410,26 +418,6 @@ variable "enable_vpc_flow_logs" {
   default     = true
   description = "Enable Activity tracker"
 }
-
-##############################################################################
-# Encryption Variables
-##############################################################################
-variable "key_management" {
-  type        = string
-  default     = "key_protect"
-  description = "null/key_protect/hs_crypto"
-}
-
-variable "hpcs_instance_name" {
-  type        = string
-  default     = null
-  description = "Hyper Protect Crypto Service instance"
-}
-
-##############################################################################
-# TODO: Auth Server (LDAP/AD) Variables
-##############################################################################
-
 
 ##############################################################################
 # Override JSON

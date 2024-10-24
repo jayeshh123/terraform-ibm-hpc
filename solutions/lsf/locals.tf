@@ -27,7 +27,6 @@ locals {
     bastion_subnets_cidr      = var.bastion_subnets_cidr
     compute_gui_password      = var.compute_gui_password
     compute_gui_username      = var.compute_gui_username
-    compute_image_name        = var.compute_image_name
     compute_ssh_keys          = var.compute_ssh_keys
     compute_subnets_cidr      = var.compute_subnets_cidr
     cos_instance_name         = var.cos_instance_name
@@ -44,11 +43,9 @@ locals {
     file_shares               = var.file_shares
     hpcs_instance_name        = var.hpcs_instance_name
     key_management            = var.key_management
-    client_image_name         = var.client_image_name
     client_instances          = var.client_instances
     client_ssh_keys           = var.client_ssh_keys
     client_subnets_cidr       = var.client_subnets_cidr
-    management_image_name     = var.management_image_name
     management_instances      = var.management_instances
     network_cidr              = var.network_cidr
     nsd_details               = var.nsd_details
@@ -59,7 +56,6 @@ locals {
     static_compute_instances  = var.static_compute_instances
     storage_gui_password      = var.storage_gui_password
     storage_gui_username      = var.storage_gui_username
-    storage_image_name        = var.storage_image_name
     storage_instances         = var.storage_instances
     storage_ssh_keys          = var.storage_ssh_keys
     storage_subnets_cidr      = var.storage_subnets_cidr
@@ -81,7 +77,6 @@ locals {
     bastion_subnets_cidr      = lookup(local.override[local.override_type], "bastion_subnets_cidr", local.config.bastion_subnets_cidr)
     compute_gui_password      = lookup(local.override[local.override_type], "compute_gui_password", local.config.compute_gui_password)
     compute_gui_username      = lookup(local.override[local.override_type], "compute_gui_username", local.config.compute_gui_username)
-    compute_image_name        = lookup(local.override[local.override_type], "compute_image_name", local.config.compute_image_name)
     compute_ssh_keys          = lookup(local.override[local.override_type], "compute_ssh_keys", local.config.compute_ssh_keys)
     compute_subnets_cidr      = lookup(local.override[local.override_type], "compute_subnets_cidr", local.config.compute_subnets_cidr)
     cos_instance_name         = lookup(local.override[local.override_type], "cos_instance_name", local.config.cos_instance_name)
@@ -98,11 +93,9 @@ locals {
     file_shares               = lookup(local.override[local.override_type], "file_shares", local.config.file_shares)
     hpcs_instance_name        = lookup(local.override[local.override_type], "hpcs_instance_name", local.config.hpcs_instance_name)
     key_management            = lookup(local.override[local.override_type], "key_management", local.config.key_management)
-    client_image_name         = lookup(local.override[local.override_type], "client_image_name", local.config.client_image_name)
     client_instances          = lookup(local.override[local.override_type], "client_instances", local.config.client_instances)
     client_ssh_keys           = lookup(local.override[local.override_type], "client_ssh_keys", local.config.client_ssh_keys)
     client_subnets_cidr       = lookup(local.override[local.override_type], "client_subnets_cidr", local.config.client_subnets_cidr)
-    management_image_name     = lookup(local.override[local.override_type], "management_image_name", local.config.management_image_name)
     management_instances      = lookup(local.override[local.override_type], "management_instances", local.config.management_instances)
     network_cidr              = lookup(local.override[local.override_type], "network_cidr", local.config.network_cidr)
     nsd_details               = lookup(local.override[local.override_type], "nsd_details", local.config.nsd_details)
@@ -113,7 +106,6 @@ locals {
     static_compute_instances  = lookup(local.override[local.override_type], "static_compute_instances", local.config.static_compute_instances)
     storage_gui_password      = lookup(local.override[local.override_type], "storage_gui_password", local.config.storage_gui_password)
     storage_gui_username      = lookup(local.override[local.override_type], "storage_gui_username", local.config.storage_gui_username)
-    storage_image_name        = lookup(local.override[local.override_type], "storage_image_name", local.config.storage_image_name)
     storage_instances         = lookup(local.override[local.override_type], "storage_instances", local.config.storage_instances)
     storage_ssh_keys          = lookup(local.override[local.override_type], "storage_ssh_keys", local.config.storage_ssh_keys)
     storage_subnets_cidr      = lookup(local.override[local.override_type], "storage_subnets_cidr", local.config.storage_subnets_cidr)

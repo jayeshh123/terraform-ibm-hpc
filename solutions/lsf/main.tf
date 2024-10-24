@@ -1,20 +1,17 @@
 module "lsf" {
-  source              = "./../.."
-  scheduler           = "LSF"
-  ibm_customer_number = var.ibm_customer_number
-  ibmcloud_api_key    = var.ibmcloud_api_key
-  zones               = var.zones
-  allowed_cidr        = var.allowed_cidr
-  prefix              = local.env.prefix
-  resource_group      = local.env.resource_group
-
-
+  source                    = "./../.."
+  scheduler                 = "LSF"
+  ibm_customer_number       = var.ibm_customer_number
+  ibmcloud_api_key          = var.ibmcloud_api_key
+  zones                     = var.zones
+  allowed_cidr              = var.allowed_cidr
+  prefix                    = local.env.prefix
+  resource_group            = local.env.resource_group
   deployer_instance_profile = local.env.deployer_instance_profile
   bastion_ssh_keys          = local.env.bastion_ssh_keys
   bastion_subnets_cidr      = local.env.bastion_subnets_cidr
   compute_gui_password      = local.env.compute_gui_password
   compute_gui_username      = local.env.compute_gui_username
-  compute_image_name        = local.env.compute_image_name
   compute_ssh_keys          = local.env.compute_ssh_keys
   compute_subnets_cidr      = local.env.compute_subnets_cidr
   cos_instance_name         = local.env.cos_instance_name
@@ -31,11 +28,9 @@ module "lsf" {
   file_shares               = local.env.file_shares
   hpcs_instance_name        = local.env.hpcs_instance_name
   key_management            = local.env.key_management
-  client_image_name         = local.env.client_image_name
   client_instances          = local.env.client_instances
   client_ssh_keys           = local.env.client_ssh_keys
   client_subnets_cidr       = local.env.client_subnets_cidr
-  management_image_name     = local.env.management_image_name
   management_instances      = local.env.management_instances
   network_cidr              = local.env.network_cidr
   nsd_details               = local.env.nsd_details
@@ -45,7 +40,6 @@ module "lsf" {
   static_compute_instances  = local.env.static_compute_instances
   storage_gui_password      = local.env.storage_gui_password
   storage_gui_username      = local.env.storage_gui_username
-  storage_image_name        = local.env.storage_image_name
   storage_instances         = local.env.storage_instances
   storage_ssh_keys          = local.env.storage_ssh_keys
   storage_subnets_cidr      = local.env.storage_subnets_cidr
