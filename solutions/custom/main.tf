@@ -6,6 +6,7 @@ module "custom" {
   zones                     = var.zones
   allowed_cidr              = var.allowed_cidr
   prefix                    = local.env.prefix
+  ssh_keys                  = local.env.ssh_keys
   resource_group            = local.env.resource_group
   deployer_instance_profile = local.env.deployer_instance_profile
   bastion_ssh_keys          = local.env.bastion_ssh_keys

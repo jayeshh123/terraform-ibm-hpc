@@ -23,9 +23,9 @@ variable "ibmcloud_api_key" {
 ##############################################################################
 # Cluster Level Variables
 ##############################################################################
-variable "zones" {
-  type        = list(string)
-  description = "Region where VPC will be created. To find your VPC region, use `ibmcloud is regions` command to find available regions."
+variable "zone" {
+  type        = string
+  description = "Zone where VPC will be created."
 }
 
 variable "ssh_keys" {
@@ -108,8 +108,8 @@ variable "bastion_ssh_keys" {
 }
 
 variable "bastion_subnets_cidr" {
-  type        = list(string)
-  default     = ["10.0.0.0/24"]
+  type        = string
+  default     = "10.0.0.0/24"
   description = "Subnet CIDR block to launch the bastion host."
 }
 
@@ -141,8 +141,8 @@ variable "vpn_preshared_key" {
 # Compute Variables
 ##############################################################################
 variable "client_subnets_cidr" {
-  type        = list(string)
-  default     = ["10.10.10.0/24", "10.20.10.0/24", "10.30.10.0/24"]
+  type        = string
+  default     = "10.10.10.0/24"
   description = "Subnet CIDR block to launch the client host."
 }
 
@@ -169,8 +169,8 @@ variable "client_instances" {
 }
 
 variable "compute_subnets_cidr" {
-  type        = list(string)
-  default     = ["10.10.20.0/24", "10.20.20.0/24", "10.30.20.0/24"]
+  type        = string
+  default     = "10.10.20.0/24"
   description = "Subnet CIDR block to launch the compute cluster host."
 }
 
@@ -246,8 +246,8 @@ variable "compute_gui_password" {
 # Storage Scale Variables
 ##############################################################################
 variable "storage_subnets_cidr" {
-  type        = list(string)
-  default     = ["10.10.30.0/24", "10.20.30.0/24", "10.30.30.0/24"]
+  type        = string
+  default     = "10.10.30.0/24"
   description = "Subnet CIDR block to launch the storage cluster host."
 }
 
@@ -276,8 +276,8 @@ variable "storage_instances" {
 }
 
 variable "protocol_subnets_cidr" {
-  type        = list(string)
-  default     = ["10.10.40.0/24", "10.20.40.0/24", "10.30.40.0/24"]
+  type        = string
+  default     = "10.10.40.0/24"
   description = "Subnet CIDR block to launch the storage cluster host."
 }
 
@@ -309,22 +309,6 @@ variable "storage_gui_password" {
   default     = "hpc@IBMCloud"
   sensitive   = true
   description = "Password for storage cluster GUI"
-}
-
-variable "nsd_details" {
-  type = list(
-    object({
-      profile  = string
-      capacity = optional(number)
-      iops     = optional(number)
-    })
-  )
-  default = [{
-    capacity = 100
-    iops     = 1000
-    profile  = "custom"
-  }]
-  description = "Storage scale NSD details"
 }
 
 variable "file_shares" {
