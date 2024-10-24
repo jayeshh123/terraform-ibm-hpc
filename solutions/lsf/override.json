@@ -4,6 +4,7 @@
     "vpc": null,
     "network_cidr":"10.0.0.0/8",
     "placement_strategy":null,
+    "ssh_keys":null,
     "enable_bastion":true,
     "enable_deployer":false,
     "deployer_instance_profile":"mx2-4x32",
