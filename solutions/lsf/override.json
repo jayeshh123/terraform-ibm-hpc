@@ -18,7 +18,8 @@
     "client_instances":[
        {
           "profile":"cx2-2x4",
-          "count":2
+          "count":2,
+          "image":"ibm-redhat-8-10-minimal-amd64-2"
        }
     ],
     "compute_subnets_cidr":"10.10.20.0/24",
