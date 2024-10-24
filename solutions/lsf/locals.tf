@@ -1,7 +1,7 @@
 # locals needed for ibm provider
 locals {
   # Region and Zone calculations
-  region = join("-", slice(split("-", var.zones[0]), 0, 2))
+  region = join("-", slice(split("-", var.zone), 0, 2))
 }
 
 
@@ -48,7 +48,6 @@ locals {
     client_subnets_cidr       = var.client_subnets_cidr
     management_instances      = var.management_instances
     network_cidr              = var.network_cidr
-    nsd_details               = var.nsd_details
     placement_strategy        = var.placement_strategy
     prefix                    = var.prefix
     protocol_instances        = var.protocol_instances
@@ -98,7 +97,6 @@ locals {
     client_subnets_cidr       = lookup(local.override[local.override_type], "client_subnets_cidr", local.config.client_subnets_cidr)
     management_instances      = lookup(local.override[local.override_type], "management_instances", local.config.management_instances)
     network_cidr              = lookup(local.override[local.override_type], "network_cidr", local.config.network_cidr)
-    nsd_details               = lookup(local.override[local.override_type], "nsd_details", local.config.nsd_details)
     placement_strategy        = lookup(local.override[local.override_type], "placement_strategy", local.config.placement_strategy)
     prefix                    = lookup(local.override[local.override_type], "prefix", local.config.prefix)
     protocol_instances        = lookup(local.override[local.override_type], "protocol_instances", local.config.protocol_instances)
