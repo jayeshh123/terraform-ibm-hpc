@@ -2,6 +2,13 @@
 locals {
   # Region and Zone calculations
   region = join("-", slice(split("-", var.zones[0]), 0, 2))
+  
+  # SSH key calculations
+  # Combining the common ssh keys with host specific ssh keys
+  bastion_ssh_keys    = setunion(coalesce(var.bastion_ssh_keys, []), coalesce(var.ssh_keys, []))
+  storage_ssh_keys    = setunion(coalesce(var.storage_ssh_keys, []), coalesce(var.ssh_keys, []))
+  compute_ssh_keys    = setunion(coalesce(var.compute_ssh_keys, []), coalesce(var.ssh_keys, []))
+  login_ssh_keys      = setunion(coalesce(var.login_ssh_keys, []), coalesce(var.ssh_keys, []))
 }
 
 
