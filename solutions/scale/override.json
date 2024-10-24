@@ -6,7 +6,7 @@
    "placement_strategy":null,
    "ssh_keys":null,
    "enable_bastion":true,
-   "enable_deployer":false,
+   "enable_deployer":true,
    "deployer_instance_profile":"mx2-4x32",
    "bastion_ssh_keys": null,
    "bastion_subnets_cidr":"10.0.0.0/24",
@@ -25,24 +25,10 @@
    ],
    "compute_subnets_cidr":"10.10.20.0/24",
    "compute_ssh_keys": null,
-   "management_instances":[
+   "compute_instances":[
       {
          "profile":"cx2-2x4",
          "count":3,
-         "image":"ibm-redhat-8-10-minimal-amd64-2"
-      }
-   ],
-   "static_compute_instances":[
-      {
-         "profile":"cx2-2x4",
-         "count":0,
-         "image":"ibm-redhat-8-10-minimal-amd64-2"
-      }
-   ],
-   "dynamic_compute_instances":[
-      {
-         "profile":"cx2-2x4",
-         "count":5000,
          "image":"ibm-redhat-8-10-minimal-amd64-2"
       }
    ],
@@ -67,18 +53,6 @@
    ],
    "storage_gui_username":"admin",
    "storage_gui_password": "hpc@IBMCloud",
-   "file_shares":[
-      {
-         "mount_path":"/mnt/binaries",
-         "size":100,
-         "iops":1000
-      },
-      {
-         "mount_path":"/mnt/data",
-         "size":100,
-         "iops":1000
-      }
-   ],
    "dns_instance_id":null,
    "dns_custom_resolver_id":null,
    "dns_domain_names":{

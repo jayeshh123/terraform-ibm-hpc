@@ -180,7 +180,7 @@ variable "compute_ssh_keys" {
   description = "The key pair to use to launch the compute host."
 }
 
-variable "management_instances" {
+variable "compute_instances" {
   type = list(
     object({
       profile = string
@@ -190,42 +190,10 @@ variable "management_instances" {
   )
   default = [{
     profile = "cx2-2x4"
-    count   = 2
+    count   = 3
     image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
-  description = "Number of instances to be launched for management."
-}
-
-variable "static_compute_instances" {
-  type = list(
-    object({
-      profile = string
-      count   = number
-      image   = string
-    })
-  )
-  default = [{
-    profile = "cx2-2x4"
-    count   = 1
-    image   = "ibm-redhat-8-10-minimal-amd64-2"
-  }]
-  description = "Min Number of instances to be launched for compute cluster."
-}
-
-variable "dynamic_compute_instances" {
-  type = list(
-    object({
-      profile = string
-      count   = number
-      image   = string
-    })
-  )
-  default = [{
-    profile = "cx2-2x4"
-    count   = 1024
-    image   = "ibm-redhat-8-10-minimal-amd64-2"
-  }]
-  description = "MaxNumber of instances to be launched for compute cluster."
+  description = "Total Number of instances to be launched for compute cluster."
 }
 
 variable "compute_gui_username" {
@@ -309,26 +277,6 @@ variable "storage_gui_password" {
   default     = "hpc@IBMCloud"
   sensitive   = true
   description = "Password for storage cluster GUI"
-}
-
-variable "file_shares" {
-  type = list(
-    object({
-      mount_path = string,
-      size       = number,
-      iops       = number
-    })
-  )
-  default = [{
-    mount_path = "/mnt/binaries"
-    size       = 100
-    iops       = 1000
-    }, {
-    mount_path = "/mnt/data"
-    size       = 100
-    iops       = 1000
-  }]
-  description = "Custom file shares to access shared storage"
 }
 
 ##############################################################################
