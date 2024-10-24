@@ -9,6 +9,7 @@ module "hpc_basic_example" {
   prefix           = var.prefix
   zones            = var.zones
   resource_group   = var.resource_group
+  allowed_cidr     = var.allowed_cidr
   bastion_ssh_keys = var.ssh_keys
   client_ssh_keys  = var.ssh_keys
   compute_ssh_keys = var.ssh_keys

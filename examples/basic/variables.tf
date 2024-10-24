@@ -49,3 +49,9 @@ variable "ssh_keys" {
   # TODO: Temp fix
   default = ["geretain-hpc-ssh-key"]
 }
+
+variable "allowed_cidr" {
+  type        = list(string)
+  default     = ["10.0.0.0/8"]
+  description = "Network CIDR to access the VPC. This is used to manage network ACL rules for accessing the cluster."
+}
