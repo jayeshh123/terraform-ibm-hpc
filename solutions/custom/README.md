@@ -5,8 +5,6 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
 | <a name="requirement_ansible"></a> [ansible](#requirement\_ansible) | ~> 1.3.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.68.1, < 2.0.0 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.4.3, < 4.0.0 |
-| <a name="requirement_time"></a> [time](#requirement\_time) | >= 0.9.1, < 1.0.0 |
 
 ## Providers
 
@@ -18,18 +16,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_compute_dns_records"></a> [compute\_dns\_records](#module\_compute\_dns\_records) | ./modules/dns_record | n/a |
-| <a name="module_compute_inventory"></a> [compute\_inventory](#module\_compute\_inventory) | ./modules/inventory | n/a |
-| <a name="module_compute_playbook"></a> [compute\_playbook](#module\_compute\_playbook) | ./modules/playbook | n/a |
-| <a name="module_deployer"></a> [deployer](#module\_deployer) | ./modules/deployer | n/a |
-| <a name="module_dns"></a> [dns](#module\_dns) | ./modules/dns | n/a |
-| <a name="module_file_storage"></a> [file\_storage](#module\_file\_storage) | ./modules/file_storage | n/a |
-| <a name="module_landing_zone"></a> [landing\_zone](#module\_landing\_zone) | ./modules/landing_zone | n/a |
-| <a name="module_landing_zone_vsi"></a> [landing\_zone\_vsi](#module\_landing\_zone\_vsi) | ./modules/landing_zone_vsi | n/a |
-| <a name="module_protocol_dns_records"></a> [protocol\_dns\_records](#module\_protocol\_dns\_records) | ./modules/dns_record | n/a |
-| <a name="module_storage_dns_records"></a> [storage\_dns\_records](#module\_storage\_dns\_records) | ./modules/dns_record | n/a |
-| <a name="module_storage_inventory"></a> [storage\_inventory](#module\_storage\_inventory) | ./modules/inventory | n/a |
-| <a name="module_storage_playbook"></a> [storage\_playbook](#module\_storage\_playbook) | ./modules/playbook | n/a |
+| <a name="module_lsf"></a> [lsf](#module\_lsf) | ./../.. | n/a |
 
 ## Resources
 
@@ -41,7 +28,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_allowed_cidr"></a> [allowed\_cidr](#input\_allowed\_cidr) | Network CIDR to access the VPC. This is used to manage network ACL rules for accessing the cluster. | `list(string)` | <pre>[<br>  "10.0.0.0/8"<br>]</pre> | no |
+| <a name="input_allowed_cidr"></a> [allowed\_cidr](#input\_allowed\_cidr) | Network CIDR to access the VPC. This is used to manage network ACL rules for accessing the cluster. | `list(string)` | n/a | yes |
 | <a name="input_bastion_ssh_keys"></a> [bastion\_ssh\_keys](#input\_bastion\_ssh\_keys) | The key pair to use to access the bastion host. | `list(string)` | `null` | no |
 | <a name="input_bastion_subnets_cidr"></a> [bastion\_subnets\_cidr](#input\_bastion\_subnets\_cidr) | Subnet CIDR block to launch the bastion host. | `list(string)` | <pre>[<br>  "10.0.0.0/24"<br>]</pre> | no |
 | <a name="input_client_instances"></a> [client\_instances](#input\_client\_instances) | Number of instances to be launched for client. | <pre>list(<br>    object({<br>      profile = string<br>      count   = number<br>      image   = string<br>    })<br>  )</pre> | <pre>[<br>  {<br>    "count": 2,<br>    "image": "ibm-redhat-8-10-minimal-amd64-2",<br>    "profile": "cx2-2x4"<br>  }<br>]</pre> | no |
@@ -60,23 +47,24 @@
 | <a name="input_enable_atracker"></a> [enable\_atracker](#input\_enable\_atracker) | Enable Activity tracker | `bool` | `true` | no |
 | <a name="input_enable_bastion"></a> [enable\_bastion](#input\_enable\_bastion) | The solution supports multiple ways to connect to your HPC cluster for example, using bastion node, via VPN or direct connection. If connecting to the HPC cluster via VPN or direct connection, set this value to false. | `bool` | `true` | no |
 | <a name="input_enable_cos_integration"></a> [enable\_cos\_integration](#input\_enable\_cos\_integration) | Integrate COS with HPC solution | `bool` | `true` | no |
-| <a name="input_enable_deployer"></a> [enable\_deployer](#input\_enable\_deployer) | Deployer should be only used for better deployment performance | `bool` | `true` | no |
+| <a name="input_enable_deployer"></a> [enable\_deployer](#input\_enable\_deployer) | Deployer should be only used for better deployment performance | `bool` | `false` | no |
 | <a name="input_enable_vpc_flow_logs"></a> [enable\_vpc\_flow\_logs](#input\_enable\_vpc\_flow\_logs) | Enable Activity tracker | `bool` | `true` | no |
 | <a name="input_enable_vpn"></a> [enable\_vpn](#input\_enable\_vpn) | The solution supports multiple ways to connect to your HPC cluster for example, using bastion node, via VPN or direct connection. If connecting to the HPC cluster via VPN, set this value to true. | `bool` | `false` | no |
 | <a name="input_file_shares"></a> [file\_shares](#input\_file\_shares) | Custom file shares to access shared storage | <pre>list(<br>    object({<br>      mount_path = string,<br>      size       = number,<br>      iops       = number<br>    })<br>  )</pre> | <pre>[<br>  {<br>    "iops": 1000,<br>    "mount_path": "/mnt/binaries",<br>    "size": 100<br>  },<br>  {<br>    "iops": 1000,<br>    "mount_path": "/mnt/data",<br>    "size": 100<br>  }<br>]</pre> | no |
 | <a name="input_hpcs_instance_name"></a> [hpcs\_instance\_name](#input\_hpcs\_instance\_name) | Hyper Protect Crypto Service instance | `string` | `null` | no |
-| <a name="input_ibm_customer_number"></a> [ibm\_customer\_number](#input\_ibm\_customer\_number) | Comma-separated list of the IBM Customer Number(s) (ICN) that is used for the Bring Your Own License (BYOL) entitlement check. For more information on how to find your ICN, see [What is my IBM Customer Number (ICN)?](https://www.ibm.com/support/pages/what-my-ibm-customer-number-icn). | `string` | `null` | no |
+| <a name="input_ibm_customer_number"></a> [ibm\_customer\_number](#input\_ibm\_customer\_number) | Comma-separated list of the IBM Customer Number(s) (ICN) that is used for the Bring Your Own License (BYOL) entitlement check. For more information on how to find your ICN, see [What is my IBM Customer Number (ICN)?](https://www.ibm.com/support/pages/what-my-ibm-customer-number-icn). | `string` | n/a | yes |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | IBM Cloud API Key that will be used for authentication in scripts run in this module. Only required if certain options are required. | `string` | n/a | yes |
 | <a name="input_key_management"></a> [key\_management](#input\_key\_management) | null/key\_protect/hs\_crypto | `string` | `"key_protect"` | no |
 | <a name="input_management_instances"></a> [management\_instances](#input\_management\_instances) | Number of instances to be launched for management. | <pre>list(<br>    object({<br>      profile = string<br>      count   = number<br>      image   = string<br>    })<br>  )</pre> | <pre>[<br>  {<br>    "count": 2,<br>    "image": "ibm-redhat-8-10-minimal-amd64-2",<br>    "profile": "cx2-2x4"<br>  }<br>]</pre> | no |
 | <a name="input_network_cidr"></a> [network\_cidr](#input\_network\_cidr) | Network CIDR for the VPC. This is used to manage network ACL rules for cluster provisioning. | `string` | `"10.0.0.0/8"` | no |
 | <a name="input_nsd_details"></a> [nsd\_details](#input\_nsd\_details) | Storage scale NSD details | <pre>list(<br>    object({<br>      profile  = string<br>      capacity = optional(number)<br>      iops     = optional(number)<br>    })<br>  )</pre> | <pre>[<br>  {<br>    "capacity": 100,<br>    "iops": 1000,<br>    "profile": "custom"<br>  }<br>]</pre> | no |
+| <a name="input_override"></a> [override](#input\_override) | Override default values with custom JSON template. This uses the file `override.json` to allow users to create a fully customized environment. | `bool` | `false` | no |
+| <a name="input_override_json_string"></a> [override\_json\_string](#input\_override\_json\_string) | Override default values with a JSON object. Any JSON other than an empty string overrides other configuration changes. | `string` | `null` | no |
 | <a name="input_placement_strategy"></a> [placement\_strategy](#input\_placement\_strategy) | VPC placement groups to create (null / host\_spread / power\_spread) | `string` | `null` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | A unique identifier for resources. Must begin with a letter and end with a letter or number. This prefix will be prepended to any resources provisioned by this template. Prefixes must be 16 or fewer characters. | `string` | `"lsf"` | no |
 | <a name="input_protocol_instances"></a> [protocol\_instances](#input\_protocol\_instances) | Number of instances to be launched for protocol hosts. | <pre>list(<br>    object({<br>      profile = string<br>      count   = number<br>      image   = string<br>    })<br>  )</pre> | <pre>[<br>  {<br>    "count": 2,<br>    "image": "ibm-redhat-8-10-minimal-amd64-2",<br>    "profile": "bx2-2x8"<br>  }<br>]</pre> | no |
 | <a name="input_protocol_subnets_cidr"></a> [protocol\_subnets\_cidr](#input\_protocol\_subnets\_cidr) | Subnet CIDR block to launch the storage cluster host. | `list(string)` | <pre>[<br>  "10.10.40.0/24",<br>  "10.20.40.0/24",<br>  "10.30.40.0/24"<br>]</pre> | no |
 | <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group) | String describing resource groups to create or reference | `string` | `"Default"` | no |
-| <a name="input_scheduler"></a> [scheduler](#input\_scheduler) | Select one of the scheduler (LSF/Symphony/Slurm/null) | `string` | `"LSF"` | no |
 | <a name="input_ssh_keys"></a> [ssh\_keys](#input\_ssh\_keys) | The key pair to use to access the HPC cluster. | `list(string)` | `null` | no |
 | <a name="input_static_compute_instances"></a> [static\_compute\_instances](#input\_static\_compute\_instances) | Min Number of instances to be launched for compute cluster. | <pre>list(<br>    object({<br>      profile = string<br>      count   = number<br>      image   = string<br>    })<br>  )</pre> | <pre>[<br>  {<br>    "count": 1,<br>    "image": "ibm-redhat-8-10-minimal-amd64-2",<br>    "profile": "cx2-2x4"<br>  }<br>]</pre> | no |
 | <a name="input_storage_gui_password"></a> [storage\_gui\_password](#input\_storage\_gui\_password) | Password for storage cluster GUI | `string` | `"hpc@IBMCloud"` | no |
