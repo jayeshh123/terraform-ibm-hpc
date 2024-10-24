@@ -95,13 +95,8 @@ variable "client_subnets" {
 
 variable "client_ssh_keys" {
   type        = list(string)
+  default     = null
   description = "The key pair to use to launch the client host."
-}
-
-variable "client_image_name" {
-  type        = string
-  default     = "ibm-redhat-8-10-minimal-amd64-2"
-  description = "Image name to use for provisioning the client instances."
 }
 
 variable "client_instances" {
@@ -109,11 +104,13 @@ variable "client_instances" {
     object({
       profile = string
       count   = number
+      image   = string
     })
   )
   default = [{
     profile = "cx2-2x4"
-    count   = 1
+    count   = 2
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Number of instances to be launched for client."
 }
@@ -131,13 +128,8 @@ variable "compute_subnets" {
 
 variable "compute_ssh_keys" {
   type        = list(string)
+  default     = null
   description = "The key pair to use to launch the compute host."
-}
-
-variable "management_image_name" {
-  type        = string
-  default     = "ibm-redhat-8-10-minimal-amd64-2"
-  description = "Image name to use for provisioning the management cluster instances."
 }
 
 variable "management_instances" {
@@ -145,11 +137,13 @@ variable "management_instances" {
     object({
       profile = string
       count   = number
+      image   = string
     })
   )
   default = [{
     profile = "cx2-2x4"
-    count   = 3
+    count   = 2
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Number of instances to be launched for management."
 }
@@ -159,11 +153,13 @@ variable "static_compute_instances" {
     object({
       profile = string
       count   = number
+      image   = string
     })
   )
   default = [{
     profile = "cx2-2x4"
-    count   = 0
+    count   = 1
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Min Number of instances to be launched for compute cluster."
 }
@@ -173,19 +169,29 @@ variable "dynamic_compute_instances" {
     object({
       profile = string
       count   = number
+      image   = string
     })
   )
   default = [{
     profile = "cx2-2x4"
     count   = 250
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "MaxNumber of instances to be launched for compute cluster."
 }
 
-variable "compute_image_name" {
+variable "compute_gui_username" {
   type        = string
-  default     = "ibm-redhat-8-10-minimal-amd64-2"
-  description = "Image name to use for provisioning the compute cluster instances."
+  default     = "admin"
+  sensitive   = true
+  description = "GUI user to perform system management and monitoring tasks on compute cluster."
+}
+
+variable "compute_gui_password" {
+  type        = string
+  default     = "hpc@IBMCloud"
+  sensitive   = true
+  description = "Password for compute cluster GUI"
 }
 
 ##############################################################################
@@ -211,21 +217,19 @@ variable "storage_ssh_keys" {
 variable "storage_instances" {
   type = list(
     object({
-      profile = string
-      count   = number
+      profile         = string
+      count           = number
+      image           = string
+      filesystem_name = optional(string)
     })
   )
   default = [{
-    profile = "bx2-2x8"
-    count   = 3
+    profile         = "bx2-2x8"
+    count           = 2
+    image           = "ibm-redhat-8-10-minimal-amd64-2"
+    filesystem_name = "fs1"
   }]
   description = "Number of instances to be launched for storage cluster."
-}
-
-variable "storage_image_name" {
-  type        = string
-  default     = "ibm-redhat-8-10-minimal-amd64-2"
-  description = "Image name to use for provisioning the storage cluster instances."
 }
 
 variable "protocol_subnets" {
@@ -244,11 +248,13 @@ variable "protocol_instances" {
     object({
       profile = string
       count   = number
+      image   = string
     })
   )
   default = [{
     profile = "bx2-2x8"
     count   = 2
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Number of instances to be launched for protocol hosts."
 }

@@ -80,11 +80,11 @@ locals {
   protocol_image_name   = var.storage_image_name
   */
 
-  management_image_id = data.ibm_is_image.management.id
-  client_image_id     = data.ibm_is_image.client.id
-  compute_image_id    = data.ibm_is_image.compute.id
-  storage_image_id    = data.ibm_is_image.storage.id
-  protocol_image_id   = data.ibm_is_image.storage.id
+  management_image_id = data.ibm_is_image.management[*].id
+  client_image_id     = data.ibm_is_image.client[*].id
+  compute_image_id    = data.ibm_is_image.compute[*].id
+  storage_image_id    = data.ibm_is_image.storage[*].id
+  protocol_image_id   = data.ibm_is_image.storage[*].id
 
   storage_ssh_keys    = [for name in var.storage_ssh_keys : data.ibm_is_ssh_key.storage[name].id]
   compute_ssh_keys    = [for name in var.compute_ssh_keys : data.ibm_is_ssh_key.compute[name].id]

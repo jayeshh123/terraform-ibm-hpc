@@ -51,7 +51,7 @@ module "client_vsi" {
   vsi_per_subnet                = var.client_instances[count.index]["count"]
   create_security_group         = false
   security_group                = null
-  image_id                      = local.client_image_id
+  image_id                      = local.client_image_id[count.index]
   machine_type                  = var.client_instances[count.index]["profile"]
   prefix                        = count.index == 0 ? local.client_node_name : format("%s-%s", local.client_node_name, count.index)
   resource_group_id             = local.resource_group_id
@@ -74,7 +74,7 @@ module "management_vsi" {
   vsi_per_subnet                = var.management_instances[count.index]["count"]
   create_security_group         = false
   security_group                = null
-  image_id                      = local.management_image_id
+  image_id                      = local.management_image_id[count.index]
   machine_type                  = var.management_instances[count.index]["profile"]
   prefix                        = count.index == 0 ? local.management_node_name : format("%s-%s", local.management_node_name, count.index)
   resource_group_id             = local.resource_group_id
@@ -99,7 +99,7 @@ module "compute_vsi" {
   vsi_per_subnet                = var.static_compute_instances[count.index]["count"]
   create_security_group         = false
   security_group                = null
-  image_id                      = local.compute_image_id
+  image_id                      = local.compute_image_id[count.index]
   machine_type                  = var.static_compute_instances[count.index]["profile"]
   prefix                        = count.index == 0 ? local.compute_node_name : format("%s-%s", local.compute_node_name, count.index)
   resource_group_id             = local.resource_group_id
@@ -124,7 +124,7 @@ module "storage_vsi" {
   vsi_per_subnet                = var.storage_instances[count.index]["count"]
   create_security_group         = false
   security_group                = null
-  image_id                      = local.storage_image_id
+  image_id                      = local.storage_image_id[count.index]
   machine_type                  = var.storage_instances[count.index]["profile"]
   prefix                        = count.index == 0 ? local.storage_node_name : format("%s-%s", local.storage_node_name, count.index)
   resource_group_id             = local.resource_group_id
@@ -150,7 +150,7 @@ module "protocol_vsi" {
   vsi_per_subnet                = var.protocol_instances[count.index]["count"]
   create_security_group         = false
   security_group                = null
-  image_id                      = local.protocol_image_id
+  image_id                      = local.protocol_image_id[count.index]
   machine_type                  = var.protocol_instances[count.index]["profile"]
   prefix                        = count.index == 0 ? local.protocol_node_name : format("%s-%s", local.protocol_node_name, count.index)
   resource_group_id             = local.resource_group_id

@@ -22,19 +22,28 @@ data "ibm_is_instance_profile" "protocol" {
 */
 
 data "ibm_is_image" "client" {
-  name = var.client_image_name
+  count = length(var.client_instances)
+  name  = var.client_instances[count.index]["image"]
 }
 
 data "ibm_is_image" "management" {
-  name = var.management_image_name
+  count = length(var.management_instances)
+  name  = var.management_instances[count.index]["image"]
 }
 
 data "ibm_is_image" "compute" {
-  name = var.compute_image_name
+  count = length(var.static_compute_instances)
+  name  = var.static_compute_instances[count.index]["image"]
 }
 
 data "ibm_is_image" "storage" {
-  name = var.storage_image_name
+  count = length(var.storage_instances)
+  name  = var.storage_instances[count.index]["image"]
+}
+
+data "ibm_is_image" "protocol" {
+  count = length(var.protocol_instances)
+  name  = var.protocol_instances[count.index]["image"]
 }
 
 
