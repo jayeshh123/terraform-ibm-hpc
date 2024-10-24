@@ -4,7 +4,7 @@
 variable "scheduler" {
   type        = string
   default     = "LSF"
-  description = "Select one of the scheduler (LSF/Symphony/Slurm/None)"
+  description = "Select one of the scheduler (LSF/Symphony/Slurm/null)"
 }
 
 variable "ibm_customer_number" {
@@ -23,36 +23,49 @@ variable "ibm_customer_number" {
 # Account Variables
 ##############################################################################
 variable "ibmcloud_api_key" {
-  description = "IBM Cloud API Key that will be used for authentication in scripts run in this module. Only required if certain options are required."
   type        = string
   sensitive   = true
+  description = "IBM Cloud API Key that will be used for authentication in scripts run in this module. Only required if certain options are required."
 }
 
 ##############################################################################
-# Resource Groups Variables
+# Cluster Level Variables
 ##############################################################################
-variable "resource_group" {
-  description = "String describing resource groups to create or reference"
-  type        = string
+variable "zones" {
+  type        = list(string)
+  description = "Region where VPC will be created. To find your VPC region, use `ibmcloud is regions` command to find available regions."
+}
+
+variable "ssh_keys" {
+  type        = list(string)
   default     = null
+  description = "The key pair to use to access the HPC cluster."
+  
 }
 
-##############################################################################
-# Module Level Variables
-##############################################################################
-variable "prefix" {
-  description = "A unique identifier for resources. Must begin with a letter and end with a letter or number. This prefix will be prepended to any resources provisioned by this template. Prefixes must be 16 or fewer characters."
-  type        = string
+variable "allowed_cidr" {
+  type        = list(string)
+  description = "Network CIDR to access the VPC. This is used to manage network ACL rules for accessing the cluster."
+}
 
+variable "prefix" {
+  type        = string
+  default     = "lsf"
+  description = "A unique identifier for resources. Must begin with a letter and end with a letter or number. This prefix will be prepended to any resources provisioned by this template. Prefixes must be 16 or fewer characters."
   validation {
     error_message = "Prefix must begin and end with a letter and contain only letters, numbers, and - characters."
     condition     = can(regex("^([A-z]|[a-z][-a-z0-9]*[a-z0-9])$", var.prefix))
   }
 }
 
-variable "zones" {
-  description = "Region where VPC will be created. To find your VPC region, use `ibmcloud is regions` command to find available regions."
-  type        = list(string)
+##############################################################################
+# Resource Groups Variables
+##############################################################################
+variable "resource_group" {
+  type        = string
+  default     = "Default"
+  description = "String describing resource groups to create or reference"
+
 }
 
 ##############################################################################
@@ -60,14 +73,14 @@ variable "zones" {
 ##############################################################################
 variable "vpc" {
   type        = string
-  description = "Name of an existing VPC in which the cluster resources will be deployed. If no value is given, then a new VPC will be provisioned for the cluster. [Learn more](https://cloud.ibm.com/docs/vpc)"
   default     = null
+  description = "Name of an existing VPC in which the cluster resources will be deployed. If no value is given, then a new VPC will be provisioned for the cluster. [Learn more](https://cloud.ibm.com/docs/vpc)"
 }
 
 variable "network_cidr" {
-  description = "Network CIDR for the VPC. This is used to manage network ACL rules for cluster provisioning."
   type        = string
   default     = "10.0.0.0/8"
+  description = "Network CIDR for the VPC. This is used to manage network ACL rules for cluster provisioning."
 }
 
 variable "placement_strategy" {
@@ -99,6 +112,7 @@ variable "bootstrap_instance_profile" {
 
 variable "bastion_ssh_keys" {
   type        = list(string)
+  default     = null
   description = "The key pair to use to access the bastion host."
 }
 
@@ -132,12 +146,6 @@ variable "vpn_preshared_key" {
   description = "The pre-shared key for the VPN."
 }
 
-variable "allowed_cidr" {
-  description = "Network CIDR to access the VPC. This is used to manage network ACL rules for accessing the cluster."
-  type        = list(string)
-  default     = ["10.0.0.0/8"]
-}
-
 ##############################################################################
 # Compute Variables
 ##############################################################################
@@ -149,6 +157,7 @@ variable "login_subnets_cidr" {
 
 variable "login_ssh_keys" {
   type        = list(string)
+  default     = null
   description = "The key pair to use to launch the login host."
 }
 
@@ -180,6 +189,7 @@ variable "compute_subnets_cidr" {
 
 variable "compute_ssh_keys" {
   type        = list(string)
+  default     = null
   description = "The key pair to use to launch the compute host."
 }
 
@@ -246,6 +256,7 @@ variable "compute_gui_username" {
 
 variable "compute_gui_password" {
   type        = string
+  default     = "hpc@IBMCloud"
   sensitive   = true
   description = "Password for compute cluster GUI"
 }
@@ -261,6 +272,7 @@ variable "storage_subnets_cidr" {
 
 variable "storage_ssh_keys" {
   type        = list(string)
+  default     = null
   description = "The key pair to use to launch the storage cluster host."
 }
 
@@ -313,8 +325,21 @@ variable "storage_gui_username" {
 
 variable "storage_gui_password" {
   type        = string
+  default     = "hpc@IBMCloud"
   sensitive   = true
   description = "Password for storage cluster GUI"
+}
+
+variable "nsd_details" {
+  type = list(
+    object({
+      profile  = string
+      capacity = optional(number)
+      iops     = optional(number)
+    })
+  )
+  default = null
+  description = "Storage scale NSD details"
 }
 
 variable "file_shares" {
@@ -335,22 +360,6 @@ variable "file_shares" {
     iops       = 1000
   }]
   description = "Custom file shares to access shared storage"
-}
-
-variable "nsd_details" {
-  type = list(
-    object({
-      profile  = string
-      capacity = optional(number)
-      iops     = optional(number)
-    })
-  )
-  default = [{
-    profile = "custom"
-    size    = 100
-    iops    = 100
-  }]
-  description = "Storage scale NSD details"
 }
 
 ##############################################################################

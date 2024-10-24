@@ -1,6 +1,14 @@
 module "lsf" {
   source                     = "./../.."
-  allowed_cidr               = local.env.allowed_cidr
+  scheduler                  = "LSF"
+  ibm_customer_number        = var.ibm_customer_number
+  ibmcloud_api_key           = var.ibmcloud_api_key
+  zones                      = var.zones
+  allowed_cidr               = var.allowed_cidr
+  prefix                     = local.env.prefix
+  resource_group             = local.env.resource_group
+
+
   bootstrap_instance_profile = local.env.bootstrap_instance_profile
   bastion_ssh_keys           = local.env.bastion_ssh_keys
   bastion_subnets_cidr       = local.env.bastion_subnets_cidr
@@ -21,9 +29,7 @@ module "lsf" {
   enable_vpc_flow_logs       = local.env.enable_vpc_flow_logs
   enable_vpn                 = local.env.enable_vpn
   file_shares                = local.env.file_shares
-  hpcs_instance_name         = local.env.hpcs_instance_name
-  ibm_customer_number        = local.env.ibm_customer_number
-  ibmcloud_api_key           = local.env.ibmcloud_api_key
+  hpcs_instance_name         = local.env.hpcs_instance_name 
   key_management             = local.env.key_management
   login_image_name           = local.env.login_image_name
   login_instances            = local.env.login_instances
@@ -34,11 +40,8 @@ module "lsf" {
   network_cidr               = local.env.network_cidr
   nsd_details                = local.env.nsd_details
   placement_strategy         = local.env.placement_strategy
-  prefix                     = local.env.prefix
   protocol_instances         = local.env.protocol_instances
   protocol_subnets_cidr      = local.env.protocol_subnets_cidr
-  resource_group             = local.env.resource_group
-  scheduler                  = local.env.scheduler
   static_compute_instances   = local.env.static_compute_instances
   storage_gui_password       = local.env.storage_gui_password
   storage_gui_username       = local.env.storage_gui_username
@@ -50,5 +53,4 @@ module "lsf" {
   vpn_peer_address           = local.env.vpn_peer_address
   vpn_peer_cidr              = local.env.vpn_peer_cidr
   vpn_preshared_key          = local.env.vpn_preshared_key
-  zones                      = local.env.zones
 }

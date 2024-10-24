@@ -10,7 +10,7 @@ locals {
   # TODO: explore (DA always keep it true)
   skip_iam_authorization_policy = true
 
-  block_storage_volumes = [for volume in var.nsd_details : {
+  block_storage_volumes = [for volume in coalesce(var.nsd_details, []) : {
     name           = format("nsd-%s", index(var.nsd_details, volume) + 1)
     profile        = volume["profile"]
     capacity       = volume["capacity"]

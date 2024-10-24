@@ -261,11 +261,7 @@ variable "nsd_details" {
       iops     = optional(number)
     })
   )
-  default = [{
-    profile = "custom"
-    size    = 100
-    iops    = 100
-  }]
+  default = null
   description = "NSD details"
 }
 

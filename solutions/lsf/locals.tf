@@ -4,32 +4,23 @@ locals {
   region = join("-", slice(split("-", var.zones[0]), 0, 2))
 }
 
-##############################################################################
-# Dynamically Create Default Configuration
-##############################################################################
 
 locals {
-  # If override is true, parse the JSON from override.json otherwise parse empty string
-  # Default override.json location can be replaced by using var.override_json_path
-  # Empty string is used to avoid type conflicts with unary operators
-  # override.json will take prefreence over terraform.tfvars
   override_json_path = abspath("./override.json")
   override = {
-    override = jsondecode(var.override && var.override_json_string == "" ?
+    override = jsondecode(var.override && var.override_json_string == null ?
       (local.override_json_path == "" ? file("${path.root}/override.json") : file(local.override_json_path))
       :
     "{}")
-    override_json_string = jsondecode(var.override_json_string == "" ? "{}" : var.override_json_string)
+    override_json_string = jsondecode(var.override_json_string == null ? "{}" : var.override_json_string)
   }
-  override_type = var.override_json_string == "" ? "override" : "override_json_string"
+  override_type = var.override_json_string == null ? "override" : "override_json_string"
 }
 
-##############################################################################
-# Dynamic configuration for landing zone environment
-##############################################################################
 
 locals {
   config = {
+    resource_group             = var.resource_group
     allowed_cidr               = var.allowed_cidr
     bootstrap_instance_profile = var.bootstrap_instance_profile
     bastion_ssh_keys           = var.bastion_ssh_keys
@@ -52,8 +43,6 @@ locals {
     enable_vpn                 = var.enable_vpn
     file_shares                = var.file_shares
     hpcs_instance_name         = var.hpcs_instance_name
-    ibm_customer_number        = var.ibm_customer_number
-    ibmcloud_api_key           = var.ibmcloud_api_key
     key_management             = var.key_management
     login_image_name           = var.login_image_name
     login_instances            = var.login_instances
@@ -67,8 +56,6 @@ locals {
     prefix                     = var.prefix
     protocol_instances         = var.protocol_instances
     protocol_subnets_cidr      = var.protocol_subnets_cidr
-    resource_group             = var.resource_group
-    scheduler                  = var.scheduler
     static_compute_instances   = var.static_compute_instances
     storage_gui_password       = var.storage_gui_password
     storage_gui_username       = var.storage_gui_username
@@ -80,15 +67,14 @@ locals {
     vpn_peer_address           = var.vpn_peer_address
     vpn_peer_cidr              = var.vpn_peer_cidr
     vpn_preshared_key          = var.vpn_preshared_key
-    zones                      = var.zones
   }
 }
 
-##############################################################################
+
 # Compile Environment for Config output
-##############################################################################
 locals {
   env = {
+    resource_group             = lookup(local.override[local.override_type], "resource_group", local.config.resource_group)
     allowed_cidr               = lookup(local.override[local.override_type], "allowed_cidr", local.config.allowed_cidr)
     bootstrap_instance_profile = lookup(local.override[local.override_type], "bootstrap_instance_profile", local.config.bootstrap_instance_profile)
     bastion_ssh_keys           = lookup(local.override[local.override_type], "bastion_ssh_keys", local.config.bastion_ssh_keys)
@@ -111,8 +97,6 @@ locals {
     enable_vpn                 = lookup(local.override[local.override_type], "enable_vpn", local.config.enable_vpn)
     file_shares                = lookup(local.override[local.override_type], "file_shares", local.config.file_shares)
     hpcs_instance_name         = lookup(local.override[local.override_type], "hpcs_instance_name", local.config.hpcs_instance_name)
-    ibm_customer_number        = lookup(local.override[local.override_type], "ibm_customer_number", local.config.ibm_customer_number)
-    ibmcloud_api_key           = lookup(local.override[local.override_type], "ibmcloud_api_key", local.config.ibmcloud_api_key)
     key_management             = lookup(local.override[local.override_type], "key_management", local.config.key_management)
     login_image_name           = lookup(local.override[local.override_type], "login_image_name", local.config.login_image_name)
     login_instances            = lookup(local.override[local.override_type], "login_instances", local.config.login_instances)
@@ -126,8 +110,6 @@ locals {
     prefix                     = lookup(local.override[local.override_type], "prefix", local.config.prefix)
     protocol_instances         = lookup(local.override[local.override_type], "protocol_instances", local.config.protocol_instances)
     protocol_subnets_cidr      = lookup(local.override[local.override_type], "protocol_subnets_cidr", local.config.protocol_subnets_cidr)
-    resource_group             = lookup(local.override[local.override_type], "resource_group", local.config.resource_group)
-    scheduler                  = lookup(local.override[local.override_type], "scheduler", local.config.scheduler)
     static_compute_instances   = lookup(local.override[local.override_type], "static_compute_instances", local.config.static_compute_instances)
     storage_gui_password       = lookup(local.override[local.override_type], "storage_gui_password", local.config.storage_gui_password)
     storage_gui_username       = lookup(local.override[local.override_type], "storage_gui_username", local.config.storage_gui_username)
@@ -139,6 +121,5 @@ locals {
     vpn_peer_address           = lookup(local.override[local.override_type], "vpn_peer_address", local.config.vpn_peer_address)
     vpn_peer_cidr              = lookup(local.override[local.override_type], "vpn_peer_cidr", local.config.vpn_peer_cidr)
     vpn_preshared_key          = lookup(local.override[local.override_type], "vpn_preshared_key", local.config.vpn_preshared_key)
-    zones                      = lookup(local.override[local.override_type], "zones", local.config.zones)
   }
 }

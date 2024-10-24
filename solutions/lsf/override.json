@@ -1,11 +1,13 @@
 {
-    "scheduler":"LSF",
     "prefix":"lsf",
+    "resource_group": "Default",
+    "vpc": null,
     "network_cidr":"10.0.0.0/8",
     "placement_strategy":null,
     "enable_bastion":true,
     "enable_bootstrap":false,
     "bootstrap_instance_profile":"mx2-4x32",
+    "bastion_ssh_keys": null,
     "bastion_subnets_cidr":[
        "10.0.0.0/24"
     ],
@@ -13,12 +15,10 @@
     "vpn_peer_cidr":null,
     "vpn_peer_address":null,
     "vpn_preshared_key":null,
-    "allowed_cidr":[
-       "10.0.0.0/8"
-    ],
     "login_subnets_cidr":[
        "10.10.10.0/24"
     ],
+    "login_ssh_keys": null,
     "login_image_name":"ibm-redhat-8-10-minimal-amd64-2",
     "login_instances":[
        {
@@ -31,6 +31,7 @@
        "10.20.20.0/24",
        "10.30.20.0/24"
     ],
+    "compute_ssh_keys": null,
     "management_image_name":"ibm-redhat-8-10-minimal-amd64-2",
     "management_instances":[
        {
@@ -51,12 +52,14 @@
        }
     ],
     "compute_image_name":"ibm-redhat-8-10-minimal-amd64-2",
-    "compute_gui_username":"lsfadmin",
+    "compute_gui_username":"admin",
+    "compute_gui_password": "hpc@IBMCloud",
     "storage_subnets_cidr":[
        "10.10.30.0/24",
        "10.20.30.0/24",
        "10.30.30.0/24"
     ],
+    "storage_ssh_keys": null,
     "storage_instances":[
        {
           "profile":"cx2-2x4",
@@ -76,6 +79,8 @@
        }
     ],
     "storage_gui_username":"admin",
+    "storage_gui_password": "hpc@IBMCloud",
+    "nsd_details":null,
     "file_shares":[
        {
           "mount_path":"/mnt/binaries",
@@ -87,9 +92,6 @@
           "size":100,
           "iops":1000
        }
-    ],
-    "nsd_details":[
-       
     ],
     "dns_instance_id":null,
     "dns_custom_resolver_id":null,
