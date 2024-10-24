@@ -47,7 +47,7 @@ module "deployer" {
   boot_volume_encryption_key = local.boot_volume_encryption_key
   existing_kms_instance_guid = local.existing_kms_instance_guid
 }
-/*
+
 module "landing_zone_vsi" {
   source                     = "./modules/landing_zone_vsi"
   ibmcloud_api_key           = var.ibmcloud_api_key
@@ -151,4 +151,4 @@ module "storage_playbook" {
   playbook_path    = local.storage_playbook_path
   depends_on       = [module.storage_inventory]
 }
-*/
+

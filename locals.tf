@@ -24,7 +24,7 @@ locals {
   # Future use
   # skip_iam_authorization_policy = true
 }
-/*
+
 
 # locals needed for landing_zone_vsi
 locals {
@@ -147,4 +147,4 @@ locals {
   compute_playbook_path    = "compute_ssh.yaml"
   storage_playbook_path    = "storage_ssh.yaml"
 }
-*/
+
