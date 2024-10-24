@@ -40,23 +40,23 @@ module "bastion_vsi" {
   existing_kms_instance_guid    = var.existing_kms_instance_guid
 }
 
-module "bootstrap_vsi" {
-  count                         = local.enable_bootstrap ? 1 : 0
+module "deployer_vsi" {
+  count                         = local.enable_deployer ? 1 : 0
   source                        = "terraform-ibm-modules/landing-zone-vsi/ibm"
   version                       = "4.2.0"
   vsi_per_subnet                = 1
   create_security_group         = false
   security_group                = null
-  image_id                      = local.bootstrap_image_id
-  machine_type                  = var.bootstrap_instance_profile
-  prefix                        = local.bootstrap_node_name
+  image_id                      = local.deployer_image_id
+  machine_type                  = var.deployer_instance_profile
+  prefix                        = local.deployer_node_name
   resource_group_id             = local.resource_group_id
   enable_floating_ip            = false
   security_group_ids            = module.bastion_sg[*].security_group_id
   ssh_key_ids                   = local.bastion_ssh_keys
   subnets                       = local.bastion_subnets
   tags                          = local.tags
-  user_data                     = data.template_file.bootstrap_user_data.rendered
+  user_data                     = data.template_file.deployer_user_data.rendered
   vpc_id                        = var.vpc_id
   kms_encryption_enabled        = var.kms_encryption_enabled
   skip_iam_authorization_policy = var.enable_bastion ? true : false

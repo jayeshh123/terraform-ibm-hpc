@@ -97,16 +97,16 @@ variable "enable_bastion" {
   description = "The solution supports multiple ways to connect to your HPC cluster for example, using bastion node, via VPN or direct connection. If connecting to the HPC cluster via VPN or direct connection, set this value to false."
 }
 
-variable "enable_bootstrap" {
+variable "enable_deployer" {
   type        = bool
   default     = false
-  description = "Bootstrap should be only used for better deployment performance"
+  description = "Deployer should be only used for better deployment performance"
 }
 
-variable "bootstrap_instance_profile" {
+variable "deployer_instance_profile" {
   type        = string
   default     = "mx2-4x32"
-  description = "Bootstrap should be only used for better deployment performance"
+  description = "Deployer should be only used for better deployment performance"
 }
 
 variable "bastion_ssh_keys" {
@@ -148,25 +148,25 @@ variable "vpn_preshared_key" {
 ##############################################################################
 # Compute Variables
 ##############################################################################
-variable "login_subnets_cidr" {
+variable "client_subnets_cidr" {
   type        = list(string)
   default     = ["10.10.10.0/24"]
-  description = "Subnet CIDR block to launch the login host."
+  description = "Subnet CIDR block to launch the client host."
 }
 
-variable "login_ssh_keys" {
+variable "client_ssh_keys" {
   type        = list(string)
   default     = null
-  description = "The key pair to use to launch the login host."
+  description = "The key pair to use to launch the client host."
 }
 
-variable "login_image_name" {
+variable "client_image_name" {
   type        = string
   default     = "ibm-redhat-8-10-minimal-amd64-2"
-  description = "Image name to use for provisioning the login instances."
+  description = "Image name to use for provisioning the client instances."
 }
 
-variable "login_instances" {
+variable "client_instances" {
   type = list(
     object({
       profile = string
@@ -177,7 +177,7 @@ variable "login_instances" {
     profile = "cx2-2x4"
     count   = 1
   }]
-  description = "Number of instances to be launched for login."
+  description = "Number of instances to be launched for client."
 }
 
 variable "compute_subnets_cidr" {

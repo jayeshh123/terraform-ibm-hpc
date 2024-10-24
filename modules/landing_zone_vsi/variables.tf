@@ -82,7 +82,7 @@ variable "bastion_public_key_content" {
 # Compute Variables
 ##############################################################################
 
-variable "login_subnets" {
+variable "client_subnets" {
   type = list(object({
     name = string
     id   = string
@@ -90,21 +90,21 @@ variable "login_subnets" {
     cidr = string
   }))
   default     = []
-  description = "Subnets to launch the login hosts."
+  description = "Subnets to launch the client hosts."
 }
 
-variable "login_ssh_keys" {
+variable "client_ssh_keys" {
   type        = list(string)
-  description = "The key pair to use to launch the login host."
+  description = "The key pair to use to launch the client host."
 }
 
-variable "login_image_name" {
+variable "client_image_name" {
   type        = string
   default     = "ibm-redhat-8-10-minimal-amd64-2"
-  description = "Image name to use for provisioning the login instances."
+  description = "Image name to use for provisioning the client instances."
 }
 
-variable "login_instances" {
+variable "client_instances" {
   type = list(
     object({
       profile = string
@@ -115,7 +115,7 @@ variable "login_instances" {
     profile = "cx2-2x4"
     count   = 1
   }]
-  description = "Number of instances to be launched for login."
+  description = "Number of instances to be launched for client."
 }
 
 variable "compute_subnets" {

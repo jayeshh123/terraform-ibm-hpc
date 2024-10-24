@@ -3,8 +3,8 @@ output "landing-zone" {
   value = module.landing-zone
 }
 
-output "bootstrap" {
-  value     = module.bootstrap
+output "deployer" {
+  value     = module.deployer
   sensitive = true
 }
 
@@ -14,6 +14,6 @@ output "landing-zone-vsi" {
 
 output "ssh_command" {
   description = "SSH command to connect to HPC cluster"
-  value       = "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${module.bootstrap.bastion_fip} vpcuser@${local.compute_hosts[0]}"
+  value       = "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -J ubuntu@${module.deployer.bastion_fip} vpcuser@${local.compute_hosts[0]}"
 }
 */

@@ -32,7 +32,7 @@
 | [ibm_is_instance_profile.storage](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_instance_profile) | data source |
 | [ibm_is_region.itself](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_region) | data source |
 | [ibm_is_ssh_key.compute](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_ssh_key) | data source |
-| [ibm_is_ssh_key.login](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_ssh_key) | data source |
+| [ibm_is_ssh_key.client](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_ssh_key) | data source |
 | [ibm_is_ssh_key.management](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_ssh_key) | data source |
 | [ibm_is_ssh_key.storage](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_ssh_key) | data source |
 | [ibm_is_vpc.itself](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/is_vpc) | data source |
@@ -44,7 +44,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_allowed_cidr"></a> [allowed\_cidr](#input\_allowed\_cidr) | Network CIDR to access the VPC. This is used to manage network ACL rules for accessing the cluster. | `list(string)` | <pre>[<br>  "10.0.0.0/8"<br>]</pre> | no |
-| <a name="input_bootstrap_ssh_keys"></a> [bootstrap\_ssh\_keys](#input\_bootstrap\_ssh\_keys) | The key pair to use to access the bootstrap host. | `list(string)` | n/a | yes |
+| <a name="input_deployer_ssh_keys"></a> [deployer\_ssh\_keys](#input\_deployer\_ssh\_keys) | The key pair to use to access the deployer host. | `list(string)` | n/a | yes |
 | <a name="input_compute_dns_domain"></a> [compute\_dns\_domain](#input\_compute\_dns\_domain) | IBM Cloud DNS domain name to be used for compute cluster. | `string` | `"comp.com"` | no |
 | <a name="input_compute_dns_service_id"></a> [compute\_dns\_service\_id](#input\_compute\_dns\_service\_id) | IBM Cloud compute cluster DNS service resource id. | `string` | `null` | no |
 | <a name="input_compute_dns_zone_id"></a> [compute\_dns\_zone\_id](#input\_compute\_dns\_zone\_id) | IBM Cloud compute cluster DNS zone id. | `string` | `null` | no |
@@ -56,17 +56,17 @@
 | <a name="input_compute_subnets_cidr"></a> [compute\_subnets\_cidr](#input\_compute\_subnets\_cidr) | Subnet CIDR block to launch the compute cluster host. | `list(string)` | <pre>[<br>  "10.10.10.0/24",<br>  "10.20.10.0/24",<br>  "10.30.10.0/24"<br>]</pre> | no |
 | <a name="input_cos_instance_name"></a> [cos\_instance\_name](#input\_cos\_instance\_name) | Exiting COS instance name | `string` | `null` | no |
 | <a name="input_enable_atracker"></a> [enable\_atracker](#input\_enable\_atracker) | Enable Activity tracker | `bool` | `true` | no |
-| <a name="input_enable_bootstrap"></a> [enable\_bootstrap](#input\_enable\_bootstrap) | Bootstrap should be only used for better deployment performance | `bool` | `false` | no |
+| <a name="input_enable_deployer"></a> [enable\_deployer](#input\_enable\_deployer) | deployer should be only used for better deployment performance | `bool` | `false` | no |
 | <a name="input_enable_cos_integration"></a> [enable\_cos\_integration](#input\_enable\_cos\_integration) | Integrate COS with HPC solution | `bool` | `true` | no |
-| <a name="input_enable_login"></a> [enable\_login](#input\_enable\_login) | The solution supports multiple ways to connect to your HPC cluster for example, using login node, via VPN or direct connection. If connecting to the HPC cluster via VPN or direct connection, set this value to false. | `bool` | `true` | no |
+| <a name="input_enable_client"></a> [enable\_client](#input\_enable\_client) | The solution supports multiple ways to connect to your HPC cluster for example, using client node, via VPN or direct connection. If connecting to the HPC cluster via VPN or direct connection, set this value to false. | `bool` | `true` | no |
 | <a name="input_enable_vpc_flow_logs"></a> [enable\_vpc\_flow\_logs](#input\_enable\_vpc\_flow\_logs) | Enable Activity tracker | `bool` | `true` | no |
-| <a name="input_enable_vpn"></a> [enable\_vpn](#input\_enable\_vpn) | The solution supports multiple ways to connect to your HPC cluster for example, using login node, via VPN or direct connection. If connecting to the HPC cluster via VPN, set this value to true. | `bool` | `false` | no |
+| <a name="input_enable_vpn"></a> [enable\_vpn](#input\_enable\_vpn) | The solution supports multiple ways to connect to your HPC cluster for example, using client node, via VPN or direct connection. If connecting to the HPC cluster via VPN, set this value to true. | `bool` | `false` | no |
 | <a name="input_hpcs_instance_name"></a> [hpcs\_instance\_name](#input\_hpcs\_instance\_name) | Hyper Protect Crypto Service instance | `string` | `null` | no |
 | <a name="input_ibm_customer_number"></a> [ibm\_customer\_number](#input\_ibm\_customer\_number) | Comma-separated list of the IBM Customer Number(s) (ICN) that is used for the Bring Your Own License (BYOL) entitlement check. For more information on how to find your ICN, see [What is my IBM Customer Number (ICN)?](https://www.ibm.com/support/pages/what-my-ibm-customer-number-icn). | `string` | `""` | no |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | IBM Cloud API Key that will be used for authentication in scripts run in this module. Only required if certain options are required. | `string` | `null` | no |
 | <a name="input_key_management"></a> [key\_management](#input\_key\_management) | null/key\_protect/hs\_crypto | `string` | `null` | no |
-| <a name="input_login_ssh_keys"></a> [login\_ssh\_keys](#input\_login\_ssh\_keys) | The key pair to use to access the login host. | `list(string)` | n/a | yes |
-| <a name="input_login_subnets_cidr"></a> [login\_subnets\_cidr](#input\_login\_subnets\_cidr) | Subnet CIDR block to launch the login host. | `list(string)` | <pre>[<br>  "10.0.0.0/24"<br>]</pre> | no |
+| <a name="input_client_ssh_keys"></a> [client\_ssh\_keys](#input\_client\_ssh\_keys) | The key pair to use to access the client host. | `list(string)` | n/a | yes |
+| <a name="input_client_subnets_cidr"></a> [client\_subnets\_cidr](#input\_client\_subnets\_cidr) | Subnet CIDR block to launch the client host. | `list(string)` | <pre>[<br>  "10.0.0.0/24"<br>]</pre> | no |
 | <a name="input_management_image_name"></a> [management\_image\_name](#input\_management\_image\_name) | Image name to use for provisioning the management cluster instances. | `string` | `"ibm-redhat-8-10-minimal-amd64-2"` | no |
 | <a name="input_management_instances"></a> [management\_instances](#input\_management\_instances) | Number of instances to be launched for management. | `number` | `3` | no |
 | <a name="input_management_profile"></a> [management\_profile](#input\_management\_profile) | Profile to be used for management virtual server instance. | `string` | `"cx2-2x4"` | no |

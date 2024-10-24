@@ -1,11 +1,11 @@
-data "template_file" "login_user_data" {
-  template = file("${path.module}/templates/login_user_data.tpl")
+data "template_file" "client_user_data" {
+  template = file("${path.module}/templates/client_user_data.tpl")
   vars = {
     bastion_public_key_content = var.bastion_public_key_content != null ? var.bastion_public_key_content : ""
-    login_public_key_content   = local.enable_login ? module.compute_key[0].public_key_content : ""
-    login_private_key_content  = local.enable_login ? module.compute_key[0].private_key_content : ""
-    login_interfaces           = var.storage_type == "scratch" ? local.vsi_interfaces[0] : local.bms_interfaces[0]
-    login_dns_domain           = var.dns_domain_names["compute"]
+    client_public_key_content   = local.enable_client ? module.compute_key[0].public_key_content : ""
+    client_private_key_content  = local.enable_client ? module.compute_key[0].private_key_content : ""
+    client_interfaces           = var.storage_type == "scratch" ? local.vsi_interfaces[0] : local.bms_interfaces[0]
+    client_dns_domain           = var.dns_domain_names["compute"]
   }
 }
 

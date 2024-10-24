@@ -10,14 +10,14 @@ module "storage_key" {
   private_key_path = "storage_id_rsa" #checkov:skip=CKV_SECRET_6
 }
 
-module "login_sg" {
-  count                        = local.enable_login ? 1 : 0
+module "client_sg" {
+  count                        = local.enable_client ? 1 : 0
   source                       = "terraform-ibm-modules/security-group/ibm"
   version                      = "2.6.2"
   add_ibm_cloud_internal_rules = true
   resource_group               = local.resource_group_id
-  security_group_name          = format("%s-login-sg", local.prefix)
-  security_group_rules         = local.login_security_group_rules
+  security_group_name          = format("%s-client-sg", local.prefix)
+  security_group_rules         = local.client_security_group_rules
   vpc_id                       = var.vpc_id
 }
 
@@ -44,23 +44,23 @@ module "storage_sg" {
 }
 
 
-module "login_vsi" {
-  count                         = length(var.login_instances)
+module "client_vsi" {
+  count                         = length(var.client_instances)
   source                        = "terraform-ibm-modules/landing-zone-vsi/ibm"
   version                       = "4.2.0"
-  vsi_per_subnet                = var.login_instances[count.index]["count"]
+  vsi_per_subnet                = var.client_instances[count.index]["count"]
   create_security_group         = false
   security_group                = null
-  image_id                      = local.login_image_id
-  machine_type                  = var.login_instances[count.index]["profile"]
-  prefix                        = count.index == 0 ? local.login_node_name : format("%s-%s", local.login_node_name, count.index)
+  image_id                      = local.client_image_id
+  machine_type                  = var.client_instances[count.index]["profile"]
+  prefix                        = count.index == 0 ? local.client_node_name : format("%s-%s", local.client_node_name, count.index)
   resource_group_id             = local.resource_group_id
   enable_floating_ip            = false
-  security_group_ids            = module.login_sg[*].security_group_id
-  ssh_key_ids                   = local.login_ssh_keys
-  subnets                       = local.login_subnets
+  security_group_ids            = module.client_sg[*].security_group_id
+  ssh_key_ids                   = local.client_ssh_keys
+  subnets                       = local.client_subnets
   tags                          = local.tags
-  user_data                     = data.template_file.login_user_data.rendered
+  user_data                     = data.template_file.client_user_data.rendered
   vpc_id                        = var.vpc_id
   kms_encryption_enabled        = var.kms_encryption_enabled
   skip_iam_authorization_policy = local.skip_iam_authorization_policy

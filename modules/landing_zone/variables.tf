@@ -115,13 +115,13 @@ variable "allowed_cidr" {
 ##############################################################################
 # Compute Variables
 ##############################################################################
-variable "login_subnets_cidr" {
+variable "client_subnets_cidr" {
   type        = list(string)
   default     = ["10.10.10.0/24", "10.20.10.0/24", "10.30.10.0/24"]
-  description = "Subnet CIDR block to launch the login host."
+  description = "Subnet CIDR block to launch the client host."
 }
 
-variable "login_instances" {
+variable "client_instances" {
   type = list(
     object({
       profile = string
@@ -132,7 +132,7 @@ variable "login_instances" {
     profile = "cx2-2x4"
     count   = 1
   }]
-  description = "Number of instances to be launched for login."
+  description = "Number of instances to be launched for client."
 }
 
 variable "compute_subnets_cidr" {

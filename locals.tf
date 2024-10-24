@@ -8,13 +8,13 @@ locals {
   bastion_ssh_keys    = setunion(coalesce(var.bastion_ssh_keys, []), coalesce(var.ssh_keys, []))
   storage_ssh_keys    = setunion(coalesce(var.storage_ssh_keys, []), coalesce(var.ssh_keys, []))
   compute_ssh_keys    = setunion(coalesce(var.compute_ssh_keys, []), coalesce(var.ssh_keys, []))
-  login_ssh_keys      = setunion(coalesce(var.login_ssh_keys, []), coalesce(var.ssh_keys, []))
+  client_ssh_keys      = setunion(coalesce(var.client_ssh_keys, []), coalesce(var.ssh_keys, []))
 }
 
 
-# locals needed for bootstrap
+# locals needed for deployer
 locals {
-  # dependency: landing_zone -> bootstrap
+  # dependency: landing_zone -> deployer
   vpc_id                     = var.vpc == null ? one(module.landing_zone.vpc_id) : var.vpc
   bastion_subnets            = module.landing_zone.bastion_subnets
   kms_encryption_enabled     = var.key_management != null ? true : false
@@ -28,12 +28,12 @@ locals {
 
 # locals needed for landing_zone_vsi
 locals {
-  # dependency: landing_zone -> bootstrap -> landing_zone_vsi
-  bastion_security_group_id  = module.bootstrap.bastion_security_group_id
-  bastion_public_key_content = module.bootstrap.bastion_public_key_content
+  # dependency: landing_zone -> deployer -> landing_zone_vsi
+  bastion_security_group_id  = module.deployer.bastion_security_group_id
+  bastion_public_key_content = module.deployer.bastion_public_key_content
 
   # dependency: landing_zone -> landing_zone_vsi
-  login_subnets    = module.landing_zone.login_subnets
+  client_subnets    = module.landing_zone.client_subnets
   compute_subnets  = module.landing_zone.compute_subnets
   storage_subnets  = module.landing_zone.storage_subnets
   protocol_subnets = module.landing_zone.protocol_subnets
@@ -141,7 +141,7 @@ locals {
 
 # locals needed for playbook
 locals {
-  bastion_fip              = module.bootstrap.bastion_fip
+  bastion_fip              = module.deployer.bastion_fip
   compute_private_key_path = "compute_id_rsa" #checkov:skip=CKV_SECRET_6
   storage_private_key_path = "storage_id_rsa" #checkov:skip=CKV_SECRET_6
   compute_playbook_path    = "compute_ssh.yaml"

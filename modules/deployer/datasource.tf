@@ -6,8 +6,8 @@ data "ibm_is_image" "bastion" {
   name = local.bastion_image_name
 }
 
-data "ibm_is_image" "bootstrap" {
-  name = local.bootstrap_image_name
+data "ibm_is_image" "deployer" {
+  name = local.deployer_image_name
 }
 
 data "ibm_is_ssh_key" "bastion" {

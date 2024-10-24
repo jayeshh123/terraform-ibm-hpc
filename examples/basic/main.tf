@@ -10,7 +10,7 @@ module "hpc_basic_example" {
   zones            = var.zones
   resource_group   = var.resource_group
   bastion_ssh_keys = var.ssh_keys
-  login_ssh_keys   = var.ssh_keys
+  client_ssh_keys   = var.ssh_keys
   compute_ssh_keys = var.ssh_keys
   storage_ssh_keys = var.ssh_keys
 }

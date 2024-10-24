@@ -29,8 +29,8 @@ module "landing_zone" {
   zones                  = var.zones
 }
 
-module "bootstrap" {
-  source                     = "./modules/bootstrap"
+module "deployer" {
+  source                     = "./modules/deployer"
   ibmcloud_api_key           = var.ibmcloud_api_key
   resource_group             = var.resource_group
   prefix                     = var.prefix
@@ -39,8 +39,8 @@ module "bootstrap" {
   network_cidr               = var.network_cidr
   enable_bastion             = var.enable_bastion
   bastion_subnets            = local.bastion_subnets
-  enable_bootstrap           = var.enable_bootstrap
-  bootstrap_instance_profile = var.bootstrap_instance_profile
+  enable_deployer           = var.enable_deployer
+  deployer_instance_profile = var.deployer_instance_profile
   ssh_keys                   = local.bastion_ssh_keys
   allowed_cidr               = var.allowed_cidr
   kms_encryption_enabled     = local.kms_encryption_enabled
@@ -57,10 +57,10 @@ module "landing_zone_vsi" {
   vpc_id                     = local.vpc_id
   bastion_security_group_id  = local.bastion_security_group_id
   bastion_public_key_content = local.bastion_public_key_content
-  login_subnets              = local.login_subnets
-  login_ssh_keys             = local.login_ssh_keys
-  login_image_name           = var.login_image_name
-  login_instances            = var.login_instances
+  client_subnets              = local.client_subnets
+  client_ssh_keys             = local.client_ssh_keys
+  client_image_name           = var.client_image_name
+  client_instances            = var.client_instances
   compute_subnets            = local.compute_subnets
   compute_ssh_keys           = local.compute_ssh_keys
   management_image_name      = var.management_image_name

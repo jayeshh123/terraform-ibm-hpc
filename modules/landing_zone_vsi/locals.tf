@@ -43,7 +43,7 @@ locals {
   protocol_instance_count       = sum(var.protocol_instances[*]["count"])
   static_compute_instance_count = sum(var.static_compute_instances[*]["count"])
 
-  enable_login      = local.management_instance_count > 0
+  enable_client      = local.management_instance_count > 0
   enable_management = local.management_instance_count > 0
   enable_compute    = local.management_instance_count > 0 || local.static_compute_instance_count > 0 || local.protocol_instance_count > 0
   enable_storage    = local.storage_instance_count > 0
@@ -54,7 +54,7 @@ locals {
   # TODO: Fix the logic
   # enable_load_balancer = false
 
-  login_node_name      = format("%s-%s", local.prefix, "login")
+  client_node_name      = format("%s-%s", local.prefix, "client")
   management_node_name = format("%s-%s", local.prefix, "mgmt")
   compute_node_name    = format("%s-%s", local.prefix, "comp")
   storage_node_name    = format("%s-%s", local.prefix, "strg")
@@ -73,7 +73,7 @@ locals {
 
   # Future use
   /*
-  login_image_name      = var.login_image_name
+  client_image_name      = var.client_image_name
   management_image_name = var.management_image_name
   compute_image_name    = var.compute_image_name
   storage_image_name    = var.storage_image_name
@@ -81,14 +81,14 @@ locals {
   */
 
   management_image_id = data.ibm_is_image.management.id
-  login_image_id      = data.ibm_is_image.login.id
+  client_image_id      = data.ibm_is_image.client.id
   compute_image_id    = data.ibm_is_image.compute.id
   storage_image_id    = data.ibm_is_image.storage.id
   protocol_image_id   = data.ibm_is_image.storage.id
 
   storage_ssh_keys    = [for name in var.storage_ssh_keys : data.ibm_is_ssh_key.storage[name].id]
   compute_ssh_keys    = [for name in var.compute_ssh_keys : data.ibm_is_ssh_key.compute[name].id]
-  login_ssh_keys      = [for name in var.login_ssh_keys : data.ibm_is_ssh_key.login[name].id]
+  client_ssh_keys      = [for name in var.client_ssh_keys : data.ibm_is_ssh_key.client[name].id]
   management_ssh_keys = local.compute_ssh_keys
   protocol_ssh_keys   = local.storage_ssh_keys
 
@@ -110,7 +110,7 @@ locals {
   # TODO: DNS configs
 
   # Security group rules
-  login_security_group_rules = [
+  client_security_group_rules = [
     {
       name      = "allow-all-bastion-in"
       direction = "inbound"
@@ -147,9 +147,9 @@ locals {
       remote    = var.bastion_security_group_id
     },
     {
-      name      = "allow-all-login-in"
+      name      = "allow-all-client-in"
       direction = "inbound"
-      remote    = module.login_sg[0].security_group_id
+      remote    = module.client_sg[0].security_group_id
     },
     {
       name      = "allow-all-bastion-out"
@@ -157,9 +157,9 @@ locals {
       remote    = var.bastion_security_group_id
     },
     {
-      name      = "allow-all-login-out"
+      name      = "allow-all-client-out"
       direction = "outbound"
-      remote    = module.login_sg[0].security_group_id
+      remote    = module.client_sg[0].security_group_id
     }
   ]
   storage_security_group_rules = [
@@ -192,7 +192,7 @@ locals {
   # Subnets
   # TODO: Multi-zone multi-vNIC VSIs deployment support (bug #https://github.ibm.com/GoldenEye/issues/issues/5830)
   # Findings: Singe zone multi-vNICs VSIs deployment & multi-zone single vNIC VSIs deployment are supported.
-  login_subnets    = var.login_subnets
+  client_subnets    = var.client_subnets
   compute_subnets  = var.compute_subnets
   storage_subnets  = var.storage_subnets
   protocol_subnets = var.protocol_subnets

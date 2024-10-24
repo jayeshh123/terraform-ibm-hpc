@@ -5,8 +5,8 @@ data "template_file" "bastion_user_data" {
   }
 }
 
-data "template_file" "bootstrap_user_data" {
-  template = file("${path.module}/templates/bootstrap_user_data.tpl")
+data "template_file" "deployer_user_data" {
+  template = file("${path.module}/templates/deployer_user_data.tpl")
   vars = {
     bastion_public_key_content = local.enable_bastion ? module.ssh_key[0].public_key_content : ""
   }

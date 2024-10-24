@@ -49,14 +49,14 @@ output "bastion_subnets" {
   ]
 }
 
-output "login_subnets" {
-  description = "Login subnets"
+output "client_subnets" {
+  description = "client subnets"
   value = [for subnet in flatten(module.landing_zone[*].subnet_data) : {
     name = subnet["name"]
     id   = subnet["id"]
     zone = subnet["zone"]
     cidr = subnet["cidr"]
-    } if strcontains(subnet["name"], "-hpc-login-subnet")
+    } if strcontains(subnet["name"], "-hpc-client-subnet")
   ]
 }
 

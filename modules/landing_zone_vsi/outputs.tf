@@ -1,6 +1,6 @@
-output "login_vsi_data" {
-  description = "Login VSI data"
-  value       = module.login_vsi[*]["list"]
+output "client_vsi_data" {
+  description = "client VSI data"
+  value       = module.client_vsi[*]["list"]
 }
 
 output "management_vsi_data" {

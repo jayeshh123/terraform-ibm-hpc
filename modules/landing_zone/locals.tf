@@ -46,7 +46,7 @@ locals {
   # For the variables looking for resource group names only (transit_gateway, key_management, atracker)
   resource_group = var.resource_group == null ? "service-rg" : var.resource_group
 
-  login_instance_count          = sum(var.login_instances[*]["count"])
+  client_instance_count          = sum(var.client_instances[*]["count"])
   management_instance_count     = sum(var.management_instances[*]["count"])
   static_compute_instance_count = sum(var.compute_instances[*]["count"])
   storage_instance_count        = sum(var.storage_instances[*]["count"])
@@ -65,7 +65,7 @@ locals {
   # Address Prefixes calculation
   address_prefixes = {
     for zone in local.zones : zone => contains(local.active_zones, zone) ? distinct(compact([
-      local.login_instance_count != 0 && local.management_instance_count != 0 ? var.login_subnets_cidr[index(local.active_zones, zone)] : null,
+      local.client_instance_count != 0 && local.management_instance_count != 0 ? var.client_subnets_cidr[index(local.active_zones, zone)] : null,
       var.compute_subnets_cidr[index(local.active_zones, zone)],
       local.storage_instance_count != 0 ? var.storage_subnets_cidr[index(local.active_zones, zone)] : null,
       local.storage_instance_count != 0 && local.protocol_instance_count != 0 ? var.protocol_subnets_cidr[index(local.active_zones, zone)] : null,
@@ -77,10 +77,10 @@ locals {
   # Subnet calculation
   active_subnets = {
     for zone in local.zones : zone => contains(local.active_zones, zone) ? [
-      local.login_instance_count != 0 && local.management_instance_count != 0 ? {
-        name           = "login-subnet-${zone}"
+      local.client_instance_count != 0 && local.management_instance_count != 0 ? {
+        name           = "client-subnet-${zone}"
         acl_name       = "hpc-acl"
-        cidr           = var.login_subnets_cidr[index(local.active_zones, zone)]
+        cidr           = var.client_subnets_cidr[index(local.active_zones, zone)]
         public_gateway = false
       } : null,
       {

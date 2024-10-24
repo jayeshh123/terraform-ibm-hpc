@@ -21,8 +21,8 @@ data "ibm_is_instance_profile" "protocol" {
 }
 */
 
-data "ibm_is_image" "login" {
-  name = var.login_image_name
+data "ibm_is_image" "client" {
+  name = var.client_image_name
 }
 
 data "ibm_is_image" "management" {
@@ -38,8 +38,8 @@ data "ibm_is_image" "storage" {
 }
 
 
-data "ibm_is_ssh_key" "login" {
-  for_each = toset(var.login_ssh_keys)
+data "ibm_is_ssh_key" "client" {
+  for_each = toset(var.client_ssh_keys)
   name     = each.key
 }
 

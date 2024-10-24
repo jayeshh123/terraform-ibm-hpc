@@ -72,16 +72,16 @@ variable "bastion_subnets" {
   description = "Subnets to launch the bastion host."
 }
 
-variable "enable_bootstrap" {
+variable "enable_deployer" {
   type        = bool
   default     = false
-  description = "Bootstrap should be only used for better deployment performance"
+  description = "deployer should be only used for better deployment performance"
 }
 
-variable "bootstrap_instance_profile" {
+variable "deployer_instance_profile" {
   type        = string
   default     = "mx2-4x32"
-  description = "Bootstrap should be only used for better deployment performance"
+  description = "deployer should be only used for better deployment performance"
 }
 
 variable "ssh_keys" {

@@ -9,7 +9,7 @@ module "lsf" {
   resource_group             = local.env.resource_group
 
 
-  bootstrap_instance_profile = local.env.bootstrap_instance_profile
+  deployer_instance_profile = local.env.deployer_instance_profile
   bastion_ssh_keys           = local.env.bastion_ssh_keys
   bastion_subnets_cidr       = local.env.bastion_subnets_cidr
   compute_gui_password       = local.env.compute_gui_password
@@ -24,17 +24,17 @@ module "lsf" {
   dynamic_compute_instances  = local.env.dynamic_compute_instances
   enable_atracker            = local.env.enable_atracker
   enable_bastion             = local.env.enable_bastion
-  enable_bootstrap           = local.env.enable_bootstrap
+  enable_deployer           = local.env.enable_deployer
   enable_cos_integration     = local.env.enable_cos_integration
   enable_vpc_flow_logs       = local.env.enable_vpc_flow_logs
   enable_vpn                 = local.env.enable_vpn
   file_shares                = local.env.file_shares
   hpcs_instance_name         = local.env.hpcs_instance_name 
   key_management             = local.env.key_management
-  login_image_name           = local.env.login_image_name
-  login_instances            = local.env.login_instances
-  login_ssh_keys             = local.env.login_ssh_keys
-  login_subnets_cidr         = local.env.login_subnets_cidr
+  client_image_name           = local.env.client_image_name
+  client_instances            = local.env.client_instances
+  client_ssh_keys             = local.env.client_ssh_keys
+  client_subnets_cidr         = local.env.client_subnets_cidr
   management_image_name      = local.env.management_image_name
   management_instances       = local.env.management_instances
   network_cidr               = local.env.network_cidr

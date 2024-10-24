@@ -5,8 +5,8 @@
     "network_cidr":"10.0.0.0/8",
     "placement_strategy":null,
     "enable_bastion":true,
-    "enable_bootstrap":false,
-    "bootstrap_instance_profile":"mx2-4x32",
+    "enable_deployer":false,
+    "deployer_instance_profile":"mx2-4x32",
     "bastion_ssh_keys": null,
     "bastion_subnets_cidr":[
        "10.0.0.0/24"
@@ -15,12 +15,12 @@
     "vpn_peer_cidr":null,
     "vpn_peer_address":null,
     "vpn_preshared_key":null,
-    "login_subnets_cidr":[
+    "client_subnets_cidr":[
        "10.10.10.0/24"
     ],
-    "login_ssh_keys": null,
-    "login_image_name":"ibm-redhat-8-10-minimal-amd64-2",
-    "login_instances":[
+    "client_ssh_keys": null,
+    "client_image_name":"ibm-redhat-8-10-minimal-amd64-2",
+    "client_instances":[
        {
           "profile":"cx2-2x4",
           "count":2

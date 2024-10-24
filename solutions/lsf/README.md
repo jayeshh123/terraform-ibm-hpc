@@ -14,7 +14,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_bootstrap"></a> [bootstrap](#module\_bootstrap) | ./../../modules/bootstrap | n/a |
+| <a name="module_deployer"></a> [deployer](#module\_deployer) | ./../../modules/deployer | n/a |
 | <a name="module_compute_dns_records"></a> [compute\_dns\_records](#module\_compute\_dns\_records) | ./../../modules/dns_record | n/a |
 | <a name="module_compute_inventory"></a> [compute\_inventory](#module\_compute\_inventory) | ./../../modules/inventory | n/a |
 | <a name="module_compute_playbook"></a> [compute\_playbook](#module\_compute\_playbook) | ./../../modules/playbook | n/a |
@@ -44,7 +44,7 @@
 | <a name="input_bastion_ssh_keys"></a> [bastion\_ssh\_keys](#input\_bastion\_ssh\_keys) | The key pair to use to access the bastion host. | `list(string)` | n/a | yes |
 | <a name="input_bastion_subnets_cidr"></a> [bastion\_subnets\_cidr](#input\_bastion\_subnets\_cidr) | Subnet CIDR block to launch the bastion host. | `list(string)` | <pre>[<br>  "10.0.0.0/24"<br>]</pre> | no |
 | <a name="input_boot_volume_encryption_enabled"></a> [boot\_volume\_encryption\_enabled](#input\_boot\_volume\_encryption\_enabled) | Set to true when key management is set | `bool` | `true` | no |
-| <a name="input_bootstrap_instance_profile"></a> [bootstrap\_instance\_profile](#input\_bootstrap\_instance\_profile) | Bootstrap should be only used for better deployment performance | `string` | `"mx2-4x32"` | no |
+| <a name="input_deployer_instance_profile"></a> [deployer\_instance\_profile](#input\_deployer\_instance\_profile) | deployer should be only used for better deployment performance | `string` | `"mx2-4x32"` | no |
 | <a name="input_compute_gui_password"></a> [compute\_gui\_password](#input\_compute\_gui\_password) | Password for compute cluster GUI | `string` | n/a | yes |
 | <a name="input_compute_gui_username"></a> [compute\_gui\_username](#input\_compute\_gui\_username) | GUI user to perform system management and monitoring tasks on compute cluster. | `string` | `"admin"` | no |
 | <a name="input_compute_image_name"></a> [compute\_image\_name](#input\_compute\_image\_name) | Image name to use for provisioning the compute cluster instances. | `string` | `"ibm-redhat-8-10-minimal-amd64-2"` | no |
@@ -57,7 +57,7 @@
 | <a name="input_dynamic_compute_instances"></a> [dynamic\_compute\_instances](#input\_dynamic\_compute\_instances) | MaxNumber of instances to be launched for compute cluster. | <pre>list(<br>    object({<br>      profile = string<br>      count   = number<br>    })<br>  )</pre> | <pre>[<br>  {<br>    "count": 250,<br>    "profile": "cx2-2x4"<br>  }<br>]</pre> | no |
 | <a name="input_enable_atracker"></a> [enable\_atracker](#input\_enable\_atracker) | Enable Activity tracker | `bool` | `true` | no |
 | <a name="input_enable_bastion"></a> [enable\_bastion](#input\_enable\_bastion) | The solution supports multiple ways to connect to your HPC cluster for example, using bastion node, via VPN or direct connection. If connecting to the HPC cluster via VPN or direct connection, set this value to false. | `bool` | `true` | no |
-| <a name="input_enable_bootstrap"></a> [enable\_bootstrap](#input\_enable\_bootstrap) | Bootstrap should be only used for better deployment performance | `bool` | `false` | no |
+| <a name="input_enable_deployer"></a> [enable\_deployer](#input\_enable\_deployer) | deployer should be only used for better deployment performance | `bool` | `false` | no |
 | <a name="input_enable_cos_integration"></a> [enable\_cos\_integration](#input\_enable\_cos\_integration) | Integrate COS with HPC solution | `bool` | `true` | no |
 | <a name="input_enable_vpc_flow_logs"></a> [enable\_vpc\_flow\_logs](#input\_enable\_vpc\_flow\_logs) | Enable Activity tracker | `bool` | `true` | no |
 | <a name="input_enable_vpn"></a> [enable\_vpn](#input\_enable\_vpn) | The solution supports multiple ways to connect to your HPC cluster for example, using bastion node, via VPN or direct connection. If connecting to the HPC cluster via VPN, set this value to true. | `bool` | `false` | no |
@@ -66,10 +66,10 @@
 | <a name="input_ibm_customer_number"></a> [ibm\_customer\_number](#input\_ibm\_customer\_number) | Comma-separated list of the IBM Customer Number(s) (ICN) that is used for the Bring Your Own License (BYOL) entitlement check. For more information on how to find your ICN, see [What is my IBM Customer Number (ICN)?](https://www.ibm.com/support/pages/what-my-ibm-customer-number-icn). | `string` | `""` | no |
 | <a name="input_ibmcloud_api_key"></a> [ibmcloud\_api\_key](#input\_ibmcloud\_api\_key) | IBM Cloud API Key that will be used for authentication in scripts run in this module. Only required if certain options are required. | `string` | `null` | no |
 | <a name="input_key_management"></a> [key\_management](#input\_key\_management) | null/key\_protect/hs\_crypto | `string` | `"key_protect"` | no |
-| <a name="input_login_image_name"></a> [login\_image\_name](#input\_login\_image\_name) | Image name to use for provisioning the login instances. | `string` | `"ibm-redhat-8-10-minimal-amd64-2"` | no |
-| <a name="input_login_instances"></a> [login\_instances](#input\_login\_instances) | Number of instances to be launched for login. | <pre>list(<br>    object({<br>      profile = string<br>      count   = number<br>    })<br>  )</pre> | <pre>[<br>  {<br>    "count": 1,<br>    "profile": "cx2-2x4"<br>  }<br>]</pre> | no |
-| <a name="input_login_ssh_keys"></a> [login\_ssh\_keys](#input\_login\_ssh\_keys) | The key pair to use to launch the login host. | `list(string)` | n/a | yes |
-| <a name="input_login_subnets_cidr"></a> [login\_subnets\_cidr](#input\_login\_subnets\_cidr) | Subnet CIDR block to launch the login host. | `list(string)` | <pre>[<br>  "10.10.10.0/24",<br>  "10.20.10.0/24",<br>  "10.30.10.0/24"<br>]</pre> | no |
+| <a name="input_client_image_name"></a> [client\_image\_name](#input\_client\_image\_name) | Image name to use for provisioning the client instances. | `string` | `"ibm-redhat-8-10-minimal-amd64-2"` | no |
+| <a name="input_client_instances"></a> [client\_instances](#input\_client\_instances) | Number of instances to be launched for client. | <pre>list(<br>    object({<br>      profile = string<br>      count   = number<br>    })<br>  )</pre> | <pre>[<br>  {<br>    "count": 1,<br>    "profile": "cx2-2x4"<br>  }<br>]</pre> | no |
+| <a name="input_client_ssh_keys"></a> [client\_ssh\_keys](#input\_client\_ssh\_keys) | The key pair to use to launch the client host. | `list(string)` | n/a | yes |
+| <a name="input_client_subnets_cidr"></a> [client\_subnets\_cidr](#input\_client\_subnets\_cidr) | Subnet CIDR block to launch the client host. | `list(string)` | <pre>[<br>  "10.10.10.0/24",<br>  "10.20.10.0/24",<br>  "10.30.10.0/24"<br>]</pre> | no |
 | <a name="input_management_image_name"></a> [management\_image\_name](#input\_management\_image\_name) | Image name to use for provisioning the management cluster instances. | `string` | `"ibm-redhat-8-10-minimal-amd64-2"` | no |
 | <a name="input_management_instances"></a> [management\_instances](#input\_management\_instances) | Number of instances to be launched for management. | <pre>list(<br>    object({<br>      profile = string<br>      count   = number<br>    })<br>  )</pre> | <pre>[<br>  {<br>    "count": 3,<br>    "profile": "cx2-2x4"<br>  }<br>]</pre> | no |
 | <a name="input_network_cidr"></a> [network\_cidr](#input\_network\_cidr) | Network CIDR for the VPC. This is used to manage network ACL rules for cluster provisioning. | `string` | `"10.0.0.0/8"` | no |
