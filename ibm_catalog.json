@@ -2,7 +2,7 @@
     "products": [
         {
             "name": "terraform-ibm-modules-terraform-ibm-hpc-scale",
-            "label": "HPC Deployable Architecture",
+            "label": "HPC Deployable Architecture (Scale)",
             "product_kind": "solution",
             "tags": [
                 "Deployable Architecture",
@@ -149,7 +149,7 @@
         },
         {
             "name": "terraform-ibm-modules-terraform-ibm-hpc-lsf",
-            "label": "HPC Deployable Architecture",
+            "label": "HPC Deployable Architecture (LSF)",
             "product_kind": "solution",
             "tags": [
                 "Deployable Architecture",
