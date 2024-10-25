@@ -3,7 +3,7 @@
 ##############################################################################
 variable "scheduler" {
   type        = string
-  default     = "LSF"
+  default     = null
   description = "Select one of the scheduler (LSF/Symphony/Slurm/null)"
 }
 
@@ -45,7 +45,7 @@ variable "allowed_cidr" {
 
 variable "prefix" {
   type        = string
-  default     = "lsf"
+  default     = "hpc"
   description = "A unique identifier for resources. Must begin with a letter and end with a letter or number. This prefix will be prepended to any resources provisioned by this template. Prefixes must be 16 or fewer characters."
   validation {
     error_message = "Prefix must begin and end with a letter and contain only letters, numbers, and - characters."
@@ -89,7 +89,7 @@ variable "placement_strategy" {
 ##############################################################################
 variable "enable_deployer" {
   type        = bool
-  default     = true
+  default     = false
   description = "Deployer should be only used for better deployment performance"
 }
 
@@ -166,7 +166,7 @@ variable "client_instances" {
   )
   default = [{
     profile = "cx2-2x4"
-    count   = 2
+    count   = 0
     image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Number of instances to be launched for client."
@@ -194,7 +194,7 @@ variable "management_instances" {
   )
   default = [{
     profile = "cx2-2x4"
-    count   = 2
+    count   = 0
     image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Number of instances to be launched for management."
@@ -210,7 +210,7 @@ variable "static_compute_instances" {
   )
   default = [{
     profile = "cx2-2x4"
-    count   = 1
+    count   = 0
     image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Min Number of instances to be launched for compute cluster."
@@ -272,7 +272,7 @@ variable "storage_instances" {
   )
   default = [{
     profile         = "bx2-2x8"
-    count           = 2
+    count           = 0
     image           = "ibm-redhat-8-10-minimal-amd64-2"
     filesystem_name = "fs1"
   }]
@@ -295,7 +295,7 @@ variable "protocol_instances" {
   )
   default = [{
     profile = "bx2-2x8"
-    count   = 2
+    count   = 0
     image   = "ibm-redhat-8-10-minimal-amd64-2"
   }]
   description = "Number of instances to be launched for protocol hosts."
@@ -323,11 +323,7 @@ variable "nsd_details" {
       iops     = optional(number)
     })
   )
-  default = [{
-    capacity = 100
-    iops     = 1000
-    profile  = "custom"
-  }]
+  default = null
   description = "Storage scale NSD details"
 }
 
@@ -339,15 +335,7 @@ variable "file_shares" {
       iops       = number
     })
   )
-  default = [{
-    mount_path = "/mnt/binaries"
-    size       = 100
-    iops       = 1000
-    }, {
-    mount_path = "/mnt/data"
-    size       = 100
-    iops       = 1000
-  }]
+  default = null
   description = "Custom file shares to access shared storage"
 }
 
@@ -386,7 +374,7 @@ variable "dns_domain_names" {
 ##############################################################################
 variable "key_management" {
   type        = string
-  default     = "key_protect"
+  default     = null
   description = "null/key_protect/hs_crypto"
 }
 
@@ -401,7 +389,7 @@ variable "hpcs_instance_name" {
 ##############################################################################
 variable "enable_cos_integration" {
   type        = bool
-  default     = true
+  default     = false
   description = "Integrate COS with HPC solution"
 }
 
@@ -413,12 +401,12 @@ variable "cos_instance_name" {
 
 variable "enable_atracker" {
   type        = bool
-  default     = true
+  default     = false
   description = "Enable Activity tracker"
 }
 
 variable "enable_vpc_flow_logs" {
   type        = bool
-  default     = true
+  default     = false
   description = "Enable Activity tracker"
 }
