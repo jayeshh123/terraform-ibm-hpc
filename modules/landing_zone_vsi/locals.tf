@@ -38,18 +38,20 @@ locals {
   }]
   */
 
+  client_instance_count         = sum(var.client_instances[*]["count"])
   management_instance_count     = sum(var.management_instances[*]["count"])
   storage_instance_count        = sum(var.storage_instances[*]["count"])
   protocol_instance_count       = sum(var.protocol_instances[*]["count"])
   static_compute_instance_count = sum(var.static_compute_instances[*]["count"])
 
-  enable_client     = local.management_instance_count > 0
+  enable_client     = local.client_instance_count > 0
   enable_management = local.management_instance_count > 0
-  enable_compute    = local.management_instance_count > 0 || local.static_compute_instance_count > 0 || local.protocol_instance_count > 0
+  enable_compute    = local.management_instance_count > 0 || local.static_compute_instance_count > 0
   enable_storage    = local.storage_instance_count > 0
+  enable_protocol   = local.storage_instance_count > 0 && local.protocol_instance_count > 0
   # TODO: Fix the logic
   enable_block_storage = var.storage_type == "scratch" ? true : false
-  enable_protocol      = local.storage_instance_count > 0 && local.protocol_instance_count > 0
+  
   # Future use
   # TODO: Fix the logic
   # enable_load_balancer = false
@@ -73,7 +75,7 @@ locals {
 
   # Future use
   /*
-  client_image_name      = var.client_image_name
+  client_image_name     = var.client_image_name
   management_image_name = var.management_image_name
   compute_image_name    = var.compute_image_name
   storage_image_name    = var.storage_image_name
@@ -108,8 +110,55 @@ locals {
   region = join("-", slice(split("-", var.zones[0]), 0, 2))
 
   # TODO: DNS configs
-
   # Security group rules
+  # client_security_group = local.enable_client ? module.client_sg[0].security_group_id : null 
+  # compute_security_group = local.enable_compute ? module.compute_sg[0].security_group_id : null 
+  # storage_security_group = local.enable_storage ? module.storage_sg[0].security_group_id : null 
+
+  # client_security_group_remote  = compact([var.bastion_security_group_id])
+  # compute_security_group_remote = compact([var.bastion_security_group_id])
+  # storage_security_group_remote = compact([var.bastion_security_group_id])
+  
+  # client_security_group_rules = flatten([
+  #   [for sg in local.client_security_group_remote : {
+  #     name      = format("allow-variable-inbound-%s", index(local.client_security_group_remote, sg) + 1)
+  #     direction = "inbound"
+  #     remote    = sg
+  #   }],
+  #   [for sg in local.client_security_group_remote : {
+  #     name      = format("allow-variable-outbound-%s", index(local.client_security_group_remote, sg) + 1)
+  #     direction = "outbound"
+  #     remote    = sg
+  #   }]
+  # ])
+
+  # compute_security_group_rules = flatten([
+  #   [for sg in local.compute_security_group_remote : {
+  #     name      = format("allow-variable-inbound-%s", index(local.compute_security_group_remote, sg) + 1)
+  #     direction = "inbound"
+  #     remote    = sg
+  #   }],
+  #   [for sg in local.compute_security_group_remote : {
+  #     name      = format("allow-variable-outbound-%s", index(local.compute_security_group_remote, sg) + 1)
+  #     direction = "outbound"
+  #     remote    = sg
+  #   }]
+  # ])
+
+  # storage_security_group_rules = flatten([
+  #   [for sg in local.storage_security_group_remote : {
+  #     name      = format("allow-variable-inbound-%s", index(local.storage_security_group_remote, sg) + 1)
+  #     direction = "inbound"
+  #     remote    = sg
+  #   }],
+  #   [for sg in local.storage_security_group_remote : {
+  #     name      = format("allow-variable-outbound-%s", index(local.storage_security_group_remote, sg) + 1)
+  #     direction = "outbound"
+  #     remote    = sg
+  #   }]
+  # ])
+  
+
   client_security_group_rules = [
     {
       name      = "allow-all-bastion-in"
@@ -146,21 +195,25 @@ locals {
       direction = "inbound"
       remote    = var.bastion_security_group_id
     },
+    /*
     {
       name      = "allow-all-client-in"
       direction = "inbound"
       remote    = module.client_sg[0].security_group_id
     },
+    */
     {
       name      = "allow-all-bastion-out"
       direction = "outbound"
       remote    = var.bastion_security_group_id
     },
+    /*
     {
       name      = "allow-all-client-out"
       direction = "outbound"
       remote    = module.client_sg[0].security_group_id
     }
+    */
   ]
   storage_security_group_rules = [
     {
@@ -168,21 +221,26 @@ locals {
       direction = "inbound"
       remote    = var.bastion_security_group_id
     },
+    /*
     {
       name      = "allow-all-compute-in"
       direction = "inbound"
       remote    = module.compute_sg[0].security_group_id
     },
+    */
     {
       name      = "allow-all-bastion-out"
       direction = "outbound"
       remote    = var.bastion_security_group_id
     },
+    /*
     {
       name      = "allow-all-compute-out"
       direction = "outbound"
       remote    = module.compute_sg[0].security_group_id
-  }]
+    }
+    */
+  ]
 
 
   # Derived configs

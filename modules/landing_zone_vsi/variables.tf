@@ -8,17 +8,6 @@ variable "storage_type" {
 }
 
 ##############################################################################
-# Account Variables
-##############################################################################
-
-variable "ibmcloud_api_key" {
-  description = "IBM Cloud API Key that will be used for authentication in scripts run in this module. Only required if certain options are required."
-  type        = string
-  sensitive   = true
-  default     = null
-}
-
-##############################################################################
 # Resource Groups Variables
 ##############################################################################
 

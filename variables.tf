@@ -15,19 +15,11 @@ variable "ibm_customer_number" {
 }
 
 ##############################################################################
-# Account Variables
-##############################################################################
-variable "ibmcloud_api_key" {
-  type        = string
-  sensitive   = true
-  description = "IBM Cloud API Key that will be used for authentication in scripts run in this module. Only required if certain options are required."
-}
-
-##############################################################################
 # Cluster Level Variables
 ##############################################################################
 variable "zones" {
   type        = list(string)
+  default     = [ "us-south-1" ]
   description = "Region where VPC will be created. To find your VPC region, use `ibmcloud is regions` command to find available regions."
 }
 

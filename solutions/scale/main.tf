@@ -2,7 +2,6 @@ module "scale" {
   source                    = "./../.."
   scheduler                 = null
   ibm_customer_number       = var.ibm_customer_number
-  ibmcloud_api_key          = var.ibmcloud_api_key
   zones                     = [var.zone]
   allowed_cidr              = var.allowed_cidr
   prefix                    = local.env.prefix
