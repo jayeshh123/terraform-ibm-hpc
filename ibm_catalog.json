@@ -1,7 +1,7 @@
 {
     "products": [
         {
-            "name": "terraform-ibm-modules-terraform-ibm-hpc-ad6e71e",
+            "name": "terraform-ibm-modules-terraform-ibm-hpc-scale",
             "label": "HPC Deployable Architecture",
             "product_kind": "solution",
             "tags": [
@@ -144,7 +144,51 @@
                             }
                         ]
                     }
+                }
+            ]
+        },
+        {
+            "name": "terraform-ibm-modules-terraform-ibm-hpc-lsf",
+            "label": "HPC Deployable Architecture",
+            "product_kind": "solution",
+            "tags": [
+                "Deployable Architecture",
+                "DA",
+                "HPC",
+                "IBM Cloud HPC",
+                "ibm_created",
+                "target_terraform",
+                "terraform",
+                "reference_architecture",
+                "solution"
+            ],
+            "keywords": [
+                "HPC",
+                "vpc",
+                "DA",
+                "Deployable Architecture",
+                "terraform",
+                "solution"
+            ],
+            "short_description": "Deploy your high performance computing (HPC) cluster with IBM scheduling software for compute intensive workloads.",
+            "long_description": "**Before you begin deploying IBM Cloud HPC, make sure that you meet the prerequisites listed in [the step-by-step guide](https://cloud.ibm.com/docs/allowlist/hpc-service?topic=hpc-service-before-you-begin-deploying).**\n\nIBM Cloud HPC is a deployable architecture where you can deploy both cloud compute resources (vCPU resources) and HPC scheduling software for your compute-intensive HPC workloads. You can reserve capacity on a recurring hourly basis from a dedicated IBM Cloud HPC resource pool.",
+            "provider_name": "IBM",
+            "offering_docs_url": "https://cloud.ibm.com/docs/allowlist/hpc-service?topic=hpc-service-overview",
+            "features": [
+                {
+                    "title": "Reserve HPC compute on an hourly basis",
+                    "description": "Reserve HPC compute capacity on a recurring hourly basis. This reserved time slot and capacity cannot be preempted by IBM."
                 },
+                {
+                    "title": "HPC infrastructure bundled with LSF scheduling software",
+                    "description": "Create a cluster with IBM Spectrum LSF in its own subnet and security group for HPC administrators to log in, submit, and manage HPC jobs."
+                },
+                {
+                    "title": "Automatic compute scaling with LSF resource connector",
+                    "description": "Automatically scale up compute resources based on workload demand. Compute resources are automatically scaled down when no longer required."
+                }
+            ],
+            "flavors": [
                 {
                     "label": "LSF",
                     "name": "lsf",
@@ -250,5 +294,6 @@
                 }
             ]
         }
+        
     ]
 }
