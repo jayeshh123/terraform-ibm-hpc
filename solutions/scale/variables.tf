@@ -41,7 +41,7 @@ variable "allowed_cidr" {
 
 variable "prefix" {
   type        = string
-  default     = "lsf"
+  default     = "scale"
   description = "A unique identifier for resources. Must begin with a letter and end with a letter or number. This prefix will be prepended to any resources provisioned by this template. Prefixes must be 16 or fewer characters."
   validation {
     error_message = "Prefix must begin and end with a letter and contain only letters, numbers, and - characters."
