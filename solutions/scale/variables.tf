@@ -228,17 +228,17 @@ variable "storage_ssh_keys" {
 variable "storage_instances" {
   type = list(
     object({
-      profile         = string
-      count           = number
-      image           = string
-      filesystem_name = optional(string)
+      profile    = string
+      count      = number
+      image      = string
+      filesystem = optional(string)
     })
   )
   default = [{
-    profile         = "bx2-2x8"
-    count           = 2
-    image           = "ibm-redhat-8-10-minimal-amd64-2"
-    filesystem_name = "fs1"
+    profile    = "bx2-2x8"
+    count      = 2
+    image      = "ibm-redhat-8-10-minimal-amd64-2"
+    filesystem = "fs1"
   }]
   description = "Number of instances to be launched for storage cluster."
 }

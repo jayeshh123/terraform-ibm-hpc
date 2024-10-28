@@ -256,17 +256,17 @@ variable "storage_ssh_keys" {
 variable "storage_instances" {
   type = list(
     object({
-      profile         = string
-      count           = number
-      image           = string
-      filesystem_name = optional(string)
+      profile    = string
+      count      = number
+      image      = string
+      filesystem = optional(string)
     })
   )
   default = [{
-    profile         = "bx2-2x8"
-    count           = 0
-    image           = "ibm-redhat-8-10-minimal-amd64-2"
-    filesystem_name = "fs1"
+    profile    = "bx2-2x8"
+    count      = 0
+    image      = "ibm-redhat-8-10-minimal-amd64-2"
+    filesystem = "fs1"
   }]
   description = "Number of instances to be launched for storage cluster."
 }
@@ -423,7 +423,7 @@ variable "filesystem_config" {
     max_metadata_replica     = number
     mount_point              = string
   }))
-  default = null
+  default     = null
   description = "File system configurations."
 }
 
@@ -435,7 +435,7 @@ variable "filesets_config" {
     client_mount_path = string
     quota             = number
   }))
-  default = null
+  default     = null
   description = "Fileset configurations."
 }
 
