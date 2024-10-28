@@ -242,6 +242,58 @@ variable "compute_gui_password" {
   description = "Password for compute cluster GUI"
 }
 
+variable "cluster_id" {
+  type        = string
+  default     = "HPCCluster"
+  description = "Unique ID of the cluster used by LSF for configuration of resources. This can be up to 39 alphanumeric characters."
+  validation {
+    condition     = 0 < length(var.cluster_id) && length(var.cluster_id) < 40 && can(regex("^[a-zA-Z0-9_.-]+$", var.cluster_id))
+    error_message = "The ID can be up to 39 alphanumeric characters including the underscore (_), the hyphen (-), and the period (.) characters."
+  }
+}
+
+variable "enable_hyperthreading" {
+  type        = bool
+  default     = true
+  description = "Setting this to true will enable hyper-threading in the worker nodes of the cluster (default). Otherwise, hyper-threading will be disabled."
+}
+
+variable "enable_dedicated_host" {
+  type        = bool
+  default     = false
+  description = "Set to true to use dedicated hosts for compute hosts (default: false)."
+}
+
+variable "dedicated_host_placement" {
+  type        = string
+  default     = "spread"
+  description = "Specify 'pack' or 'spread'. The 'pack' option will deploy VSIs on one dedicated host until full before moving on to the next dedicated host."
+  validation {
+    condition     = var.dedicated_host_placement == "spread" || var.dedicated_host_placement == "pack"
+    error_message = "Supported values for dedicated_host_placement: spread or pack."
+  }
+}
+
+variable "enable_app_center" {
+  type        = bool
+  default     = false
+  description = "Set to true to install and enable use of the IBM Spectrum LSF Application Center GUI."
+}
+
+variable "app_center_gui_password" {
+  type        = string
+  default     = "hpc@IBMCloud"
+  sensitive   = true
+  description = "Password for IBM Spectrum LSF Application Center GUI."
+}
+
+variable "app_center_db_password" {
+  type        = string
+  default     = "hpc@IBMCloud"
+  sensitive   = true
+  description = "Password for IBM Spectrum LSF Application Center database GUI."
+}
+
 ##############################################################################
 # Storage Scale Variables
 ##############################################################################

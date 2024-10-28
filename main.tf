@@ -2,6 +2,7 @@ module "landing_zone" {
   source                 = "./modules/landing_zone"
   allowed_cidr           = var.allowed_cidr
   compute_subnets_cidr   = var.compute_subnets_cidr
+  clusters               = var.clusters
   cos_instance_name      = var.cos_instance_name
   enable_atracker        = var.enable_atracker
   enable_cos_integration = var.enable_cos_integration
@@ -94,24 +95,24 @@ module "dns" {
 }
 
 module "compute_dns_records" {
-  source           = "./modules/dns_record"
-  dns_instance_id  = local.dns_instance_id
-  dns_zone_id      = local.compute_dns_zone_id
-  dns_records      = local.compute_dns_records
+  source          = "./modules/dns_record"
+  dns_instance_id = local.dns_instance_id
+  dns_zone_id     = local.compute_dns_zone_id
+  dns_records     = local.compute_dns_records
 }
 
 module "storage_dns_records" {
-  source           = "./modules/dns_record"
-  dns_instance_id  = local.dns_instance_id
-  dns_zone_id      = local.storage_dns_zone_id
-  dns_records      = local.storage_dns_records
+  source          = "./modules/dns_record"
+  dns_instance_id = local.dns_instance_id
+  dns_zone_id     = local.storage_dns_zone_id
+  dns_records     = local.storage_dns_records
 }
 
 module "protocol_dns_records" {
-  source           = "./modules/dns_record"
-  dns_instance_id  = local.dns_instance_id
-  dns_zone_id      = local.protocol_dns_zone_id
-  dns_records      = local.protocol_dns_records
+  source          = "./modules/dns_record"
+  dns_instance_id = local.dns_instance_id
+  dns_zone_id     = local.protocol_dns_zone_id
+  dns_records     = local.protocol_dns_records
 }
 
 module "compute_inventory" {

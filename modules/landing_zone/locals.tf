@@ -374,6 +374,9 @@ locals {
     }
   ]
 
+  # Variables to explore
+  clusters = coalesce(var.clusters, [])
+
   # Unexplored variables
   security_groups           = []
   virtual_private_endpoints = []
@@ -384,7 +387,6 @@ locals {
     collector_bucket_name = "atracker-bucket"
     add_route             = var.enable_atracker
   }
-  clusters  = []
   wait_till = "IngressReady"
   appid = {
     use_appid = false

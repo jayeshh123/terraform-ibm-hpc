@@ -265,6 +265,12 @@ variable "protocol_instances" {
   description = "Number of instances to be launched for protocol hosts."
 }
 
+variable "colocate_protocol_instances" {
+  type        = bool
+  default     = true
+  description = "Enable it to use storage instances as protocol instances"
+}
+
 variable "storage_gui_username" {
   type        = string
   default     = "admin"
@@ -277,6 +283,86 @@ variable "storage_gui_password" {
   default     = "hpc@IBMCloud"
   sensitive   = true
   description = "Password for storage cluster GUI"
+}
+
+variable "filesystem_config" {
+  type = list(object({
+    filesystem               = string
+    block_size               = string
+    default_data_replica     = number
+    default_metadata_replica = number
+    max_data_replica         = number
+    max_metadata_replica     = number
+    mount_point              = string
+  }))
+  default = [{
+    filesystem               = "fs1"
+    block_size               = "4M"
+    default_data_replica     = 2
+    default_metadata_replica = 2
+    max_data_replica         = 3
+    max_metadata_replica     = 3
+    mount_point              = "/ibm/fs1"
+  }]
+  description = "File system configurations."
+}
+
+variable "filesets_config" {
+  type = list(object({
+    fileset           = string
+    filesystem        = string
+    junction_path     = string
+    client_mount_path = string
+    quota             = number
+  }))
+  default = [{
+    fileset           = "fileset1"
+    filesystem        = "fs1"
+    junction_path     = "/ibm/fs1/fileset1"
+    client_mount_path = "/mnt"
+    quota             = 100
+  }]
+  description = "Fileset configurations."
+}
+
+variable "afm_instances" {
+  type = list(
+    object({
+      profile = string
+      count   = number
+      image   = string
+    })
+  )
+  default = [{
+    profile = "bx2-2x8"
+    count   = 0
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
+  }]
+  description = "Number of instances to be launched for afm hosts."
+}
+
+variable "afm_cos_config" {
+  type = list(object({
+    afm_fileset          = string,
+    mode                 = string,
+    cos_instance         = string,
+    bucket_name          = string,
+    bucket_region        = string,
+    cos_service_cred_key = string,
+    bucket_type          = string,
+    bucket_storage_class = string
+  }))
+  default = [{
+    afm_fileset          = "afm_fileset"
+    mode                 = "iw"
+    cos_instance         = null
+    bucket_name          = null
+    bucket_region        = "us-south"
+    cos_service_cred_key = ""
+    bucket_storage_class = "smart"
+    bucket_type          = "region_location"
+  }]
+  description = "AFM configurations."
 }
 
 ##############################################################################

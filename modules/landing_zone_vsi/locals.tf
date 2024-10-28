@@ -51,7 +51,7 @@ locals {
   enable_protocol   = local.storage_instance_count > 0 && local.protocol_instance_count > 0
   # TODO: Fix the logic
   enable_block_storage = var.storage_type == "scratch" ? true : false
-  
+
   # Future use
   # TODO: Fix the logic
   # enable_load_balancer = false
@@ -118,7 +118,7 @@ locals {
   # client_security_group_remote  = compact([var.bastion_security_group_id])
   # compute_security_group_remote = compact([var.bastion_security_group_id])
   # storage_security_group_remote = compact([var.bastion_security_group_id])
-  
+
   # client_security_group_rules = flatten([
   #   [for sg in local.client_security_group_remote : {
   #     name      = format("allow-variable-inbound-%s", index(local.client_security_group_remote, sg) + 1)
@@ -157,7 +157,7 @@ locals {
   #     remote    = sg
   #   }]
   # ])
-  
+
 
   client_security_group_rules = [
     {
