@@ -390,6 +390,69 @@ variable "dns_domain_names" {
 }
 
 ##############################################################################
+# Auth Variables
+##############################################################################
+variable "enable_ldap" {
+  type        = bool
+  default     = false
+  description = "Set this option to true to enable LDAP for IBM Cloud HPC, with the default value set to false."
+}
+
+variable "ldap_basedns" {
+  type        = string
+  default     = "ldapscale.com"
+  description = "The dns domain name is used for configuring the LDAP server. If an LDAP server is already in existence, ensure to provide the associated DNS domain name."
+}
+
+variable "ldap_server" {
+  type        = string
+  default     = null
+  description = "Provide the IP address for the existing LDAP server. If no address is given, a new LDAP server will be created."
+}
+
+variable "ldap_admin_password" {
+  type        = string
+  sensitive   = true
+  default     = "hpc@IBMCloud"
+  description = "The LDAP administrative password should be 8 to 20 characters long, with a mix of at least three alphabetic characters."
+}
+
+variable "ldap_user_name" {
+  type        = string
+  default     = "admin"
+  description = "Custom LDAP User for performing cluster operations. Note: Username should be between 4 to 32 characters."
+}
+
+variable "ldap_user_password" {
+  type        = string
+  sensitive   = true
+  default     = "hpc@IBMCloud"
+  description = "The LDAP user password should be 8 to 20 characters long, with a mix of at least three alphabetic character."
+}
+
+variable "ldap_ssh_keys" {
+  type        = list(string)
+  default     = null
+  description = "Name of the SSH key configured in your IBM Cloud account that is used to establish a connection to the LDAP Server."
+}
+
+variable "ldap_instances" {
+  type = list(
+    object({
+      profile = string
+      count   = number
+      image   = string
+    })
+  )
+  default = [{
+    profile = "bx2-2x8"
+    count   = 0
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
+  }]
+  description = "Number of instances to be launched for ldap hosts."
+}
+
+##############################################################################
 # Encryption Variables
 ##############################################################################
 variable "key_management" {
