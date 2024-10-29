@@ -340,7 +340,6 @@ variable "file_shares" {
 ##############################################################################
 # DNS Variables
 ##############################################################################
-
 variable "dns_instance_id" {
   type        = string
   default     = null
@@ -412,7 +411,6 @@ variable "enable_vpc_flow_logs" {
 ##############################################################################
 # Scale specific Variables
 ##############################################################################
-
 variable "filesystem_config" {
   type = list(object({
     filesystem               = string
@@ -470,11 +468,9 @@ variable "afm_cos_config" {
   description = "AFM configurations."
 }
 
-
 ##############################################################################
 # LSF specific Variables
 ##############################################################################
-
 variable "cluster_id" {
   type        = string
   default     = "HPCCluster"
@@ -527,7 +523,6 @@ variable "app_center_db_password" {
   description = "Password for IBM Spectrum LSF Application Center database GUI."
 }
 
-
 ##############################################################################
 # Symphony specific Variables
 ##############################################################################
@@ -539,7 +534,6 @@ variable "app_center_db_password" {
 ##############################################################################
 # Landing Zone Variables
 ##############################################################################
-
 variable "clusters" {
   default     = null
   description = "A list describing clusters workloads to create"
