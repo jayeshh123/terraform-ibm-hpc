@@ -80,9 +80,16 @@
           "image":"ibm-redhat-8-10-minimal-amd64-2"
        }
     ],
+    "colocate_protocol_instances":false,
     "storage_gui_username":"admin",
     "storage_gui_password": "hpc@IBMCloud",
-    "nsd_details":null,
+    "nsd_details":[
+      {
+         "capacity":100,
+         "iops":1000,
+         "profile":"custom"
+      }
+   ],
     "file_shares":[
        {
           "mount_path":"/mnt/binaries",
