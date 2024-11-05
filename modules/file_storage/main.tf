@@ -1,6 +1,7 @@
 resource "ibm_is_share" "share" {
   count               = var.file_shares != null ? length(var.file_shares) : 0
   name                = format("%s-fs", var.file_shares[count.index]["name"])
+  resource_group      = var.resource_group_id
   access_control_mode = var.security_group_ids != null ? "security_group" : "vpc"
   size                = var.file_shares[count.index]["size"]
   profile             = "dp2"

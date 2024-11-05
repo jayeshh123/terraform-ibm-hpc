@@ -77,6 +77,7 @@ module "landing_zone_vsi" {
 module "file_storage" {
   source             = "./modules/file_storage"
   zone               = var.zones[0] # always the first zone
+  resource_group_id  = local.resource_group_id
   file_shares        = local.file_shares
   encryption_key_crn = local.boot_volume_encryption_key
   security_group_ids = local.compute_security_group_id

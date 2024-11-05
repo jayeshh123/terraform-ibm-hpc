@@ -3,6 +3,12 @@ variable "zone" {
   type        = string
 }
 
+variable "resource_group_id" {
+  description = "String describing resource groups to create or reference"
+  type        = string
+  default     = null
+}
+
 variable "file_shares" {
   type = list(
     object({
