@@ -47,6 +47,12 @@ locals {
   scale_cloud_infra_repo_name   = "ibm-spectrum-scale-install-infra"
   scale_cloud_infra_repo_tag    = "ibmcloud_v2.6.0"
 
+  bootstrap_path      = "/opt/IBM"
+  remote_ansible_path = format("%s/terraform-ibm-hpc", local.bootstrap_path)
+  #remote_terraform_path = format("%s/terraform-ibm-hpc/solutions/scale", local.bootstrap_path)
+  da_hpc_repo_url     = "https://github.com/digvijay-ukirde/terraform-ibm-hpc"
+  da_hpc_repo_tag     = "dv-scale" ###### change it to main in future
+
   # Region and Zone calculations
   region = join("-", slice(split("-", var.zones[0]), 0, 2))
 

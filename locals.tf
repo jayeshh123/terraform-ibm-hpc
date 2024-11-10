@@ -29,8 +29,8 @@ locals {
 # locals needed for landing_zone_vsi
 locals {
   # dependency: landing_zone -> deployer -> landing_zone_vsi
-  bastion_security_group_id  = module.deployer.bastion_security_group_id
-  bastion_public_key_content = module.deployer.bastion_public_key_content
+  bastion_security_group_id  = var.enable_bastion == true && var.enable_deployer == false ? module.deployer.bastion_security_group_id : ""
+  bastion_public_key_content = var.enable_bastion == true && var.enable_deployer == false ?  module.deployer.bastion_public_key_content : ""
 
   # dependency: landing_zone -> landing_zone_vsi
   client_subnets   = module.landing_zone.client_subnets
@@ -53,7 +53,7 @@ locals {
 
   # dependency: landing_zone_vsi -> file-share
   compute_subnet_id         = local.compute_subnets[0].id
-  compute_security_group_id = module.landing_zone_vsi.compute_sg_id
+  compute_security_group_id = var.enable_bastion == true && var.enable_deployer == false ? module.landing_zone_vsi.compute_sg_id : ""
   management_instance_count = sum(var.management_instances[*]["count"])
   default_share = local.management_instance_count > 0 ? [
     {
@@ -92,21 +92,21 @@ locals {
 # locals needed for dns-records
 locals {
   # dependency: dns -> dns-records
-  dns_instance_id = module.dns.dns_instance_id
-  compute_dns_zone_id = one(flatten([
+  dns_instance_id = var.enable_bastion == true && var.enable_deployer == false ? module.dns.dns_instance_id : ""
+  compute_dns_zone_id = var.enable_bastion == true && var.enable_deployer == false ? one(flatten([
     for dns_zone in module.dns.dns_zone_maps : values(dns_zone) if one(keys(dns_zone)) == var.dns_domain_names["compute"]
-  ]))
-  storage_dns_zone_id = one(flatten([
+  ])) : ""
+  storage_dns_zone_id = var.enable_bastion == true && var.enable_deployer == false ? one(flatten([
     for dns_zone in module.dns.dns_zone_maps : values(dns_zone) if one(keys(dns_zone)) == var.dns_domain_names["storage"]
-  ]))
-  protocol_dns_zone_id = one(flatten([
+  ])) : ""
+  protocol_dns_zone_id = var.enable_bastion == true && var.enable_deployer == false ? one(flatten([
     for dns_zone in module.dns.dns_zone_maps : values(dns_zone) if one(keys(dns_zone)) == var.dns_domain_names["protocol"]
-  ]))
+  ])) : ""
 
   # dependency: landing_zone_vsi -> dns-records
-  compute_instances  = flatten([module.landing_zone_vsi.management_vsi_data, module.landing_zone_vsi.compute_vsi_data])
-  storage_instances  = flatten([module.landing_zone_vsi.storage_vsi_data, module.landing_zone_vsi.protocol_vsi_data])
-  protocol_instances = flatten([module.landing_zone_vsi.protocol_vsi_data])
+  compute_instances  = var.enable_bastion == true && var.enable_deployer == false ? flatten([module.landing_zone_vsi.management_vsi_data, module.landing_zone_vsi.compute_vsi_data]) : []
+  storage_instances  = var.enable_bastion == true && var.enable_deployer == false ? flatten([module.landing_zone_vsi.storage_vsi_data, module.landing_zone_vsi.protocol_vsi_data]) : []
+  protocol_instances = var.enable_bastion == true && var.enable_deployer == false ? flatten([module.landing_zone_vsi.protocol_vsi_data]) : []
 
   compute_dns_records = [
     for instance in local.compute_instances :
@@ -141,7 +141,7 @@ locals {
 
 # locals needed for playbook
 locals {
-  bastion_fip              = module.deployer.bastion_fip
+  bastion_fip              =  var.enable_bastion == true && var.enable_deployer == false ? module.deployer.bastion_fip : ""
   compute_private_key_path = "compute_id_rsa" #checkov:skip=CKV_SECRET_6
   storage_private_key_path = "storage_id_rsa" #checkov:skip=CKV_SECRET_6
   compute_playbook_path    = "compute_ssh.yaml"

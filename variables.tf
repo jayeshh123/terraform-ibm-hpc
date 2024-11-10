@@ -621,3 +621,28 @@ variable "TF_LOG" {
   default     = "ERROR"
   description = "The Terraform log level used for output in the Schematics workspace."
 }
+
+
+# New Variables
+
+variable "ibmcloud_api_key" {
+  type        = string
+  sensitive   = true
+  description = "IBM Cloud API Key that will be used for authentication in scripts run in this module. Only required if certain options are required."
+}
+
+variable "compute_instances" {
+  type = list(
+    object({
+      profile = string
+      count   = number
+      image   = string
+    })
+  )
+  default = [{
+    profile = "cx2-2x4"
+    count   = 0
+    image   = "ibm-redhat-8-10-minimal-amd64-2"
+  }]
+  description = "Min Number of instances to be launched for compute cluster."
+}
