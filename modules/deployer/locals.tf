@@ -50,8 +50,8 @@ locals {
   bootstrap_path      = "/opt/IBM"
   remote_ansible_path = format("%s/terraform-ibm-hpc", local.bootstrap_path)
   #remote_terraform_path = format("%s/terraform-ibm-hpc/solutions/scale", local.bootstrap_path)
-  da_hpc_repo_url     = "https://github.com/digvijay-ukirde/terraform-ibm-hpc"
-  da_hpc_repo_tag     = "dv-scale" ###### change it to main in future
+  da_hpc_repo_url     = "https://github.com/jayeshh123/terraform-ibm-hpc.git"
+  da_hpc_repo_tag     = "jay_da_chngs" ###### change it to main in future
 
   # Region and Zone calculations
   region = join("-", slice(split("-", var.zones[0]), 0, 2))
