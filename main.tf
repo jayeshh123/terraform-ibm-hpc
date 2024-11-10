@@ -61,10 +61,11 @@ module "deployer" {
   protocol_subnets           = local.protocol_subnets
   compute_subnets            = local.compute_subnets
   client_subnets             = local.client_subnets
+  bastion_fip                = local.bastion_fip
 }
 
 module "landing_zone_vsi" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source                     = "./modules/landing_zone_vsi"
   resource_group             = var.resource_group
   prefix                     = var.prefix
@@ -92,7 +93,7 @@ module "landing_zone_vsi" {
 }
 
 module "file_storage" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source             = "./modules/file_storage"
   zone               = var.zones[0] # always the first zone
   resource_group_id  = local.resource_group_id
@@ -103,7 +104,7 @@ module "file_storage" {
 }
 
 module "dns" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source                 = "./modules/dns"
   prefix                 = var.prefix
   resource_group_id      = local.resource_group_id
@@ -115,7 +116,7 @@ module "dns" {
 }
 
 module "compute_dns_records" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source          = "./modules/dns_record"
   dns_instance_id = local.dns_instance_id
   dns_zone_id     = local.compute_dns_zone_id
@@ -123,7 +124,7 @@ module "compute_dns_records" {
 }
 
 module "storage_dns_records" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source          = "./modules/dns_record"
   dns_instance_id = local.dns_instance_id
   dns_zone_id     = local.storage_dns_zone_id
@@ -131,7 +132,7 @@ module "storage_dns_records" {
 }
 
 module "protocol_dns_records" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source          = "./modules/dns_record"
   dns_instance_id = local.dns_instance_id
   dns_zone_id     = local.protocol_dns_zone_id
@@ -139,21 +140,21 @@ module "protocol_dns_records" {
 }
 
 module "compute_inventory" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source         = "./modules/inventory"
   hosts          = local.compute_hosts
   inventory_path = local.compute_inventory_path
 }
 
 module "storage_inventory" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source         = "./modules/inventory"
   hosts          = local.storage_hosts
   inventory_path = local.storage_inventory_path
 }
 
 module "compute_playbook" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source           = "./modules/playbook"
   bastion_fip      = local.bastion_fip
   private_key_path = local.compute_private_key_path
@@ -163,7 +164,7 @@ module "compute_playbook" {
 }
 
 module "storage_playbook" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source           = "./modules/playbook"
   bastion_fip      = local.bastion_fip
   private_key_path = local.storage_private_key_path

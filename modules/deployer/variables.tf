@@ -244,3 +244,9 @@ variable "client_subnets" {
   default     = null
   description = "Subnets to launch the client host."
 }
+
+variable "bastion_fip" {
+  type        = string
+  default     = null
+  description = "bastion fip"
+}

@@ -76,6 +76,7 @@ if [ ${enable_bastion} = true ]; then
         -var 'enable_vpc_flow_logs=${enable_vpc_flow_logs}' \
         -var 'key_management=${key_management}' \
         -var 'allowed_cidr=${allowed_cidr}' \
+        -var 'bastion_fip=${bastion_fip}' \
         -var 'vpc_id=${vpc_id}' \
         -var 'storage_subnets=${storage_subnets}' \
         -var 'protocol_subnets=${protocol_subnets}' \
