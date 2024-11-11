@@ -86,7 +86,7 @@ if [ ${enable_bastion} = true ]; then
         -var 'protocol_subnets=${protocol_subnets}' \
         -var 'compute_subnets=${compute_subnets}' \
         -var 'client_subnets=${client_subnets}' \
-        -var 'dns_domain_names=${dns_domain_names}' \
+        -var 'dns_instance_id=${dns_instance_id}' \
         -var 'dns_custom_resolver_id=${dns_custom_resolver_id}' \
         -var 'dns_domain_names=${dns_domain_names}' 
 fi

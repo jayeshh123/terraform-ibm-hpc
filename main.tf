@@ -62,6 +62,9 @@ module "deployer" {
   compute_subnets            = local.compute_subnets
   client_subnets             = local.client_subnets
   bastion_fip                = local.bastion_fip
+  dns_instance_id            = local.dns_instance_id
+  dns_custom_resolver_id     = local.dns_custom_resolver_id
+  dns_domain_names           = var.dns_domain_names
 }
 
 module "landing_zone_vsi" {

@@ -35,7 +35,7 @@ data "template_file" "deployer_user_data" {
     compute_subnets              = local.enable_bastion ? jsonencode(local.compute_subnets) : ""
     client_subnets               = local.enable_bastion ? jsonencode(local.client_subnets) : ""
     bastion_fip                  = local.enable_bastion ? var.bastion_fip : ""
-    dns_domain_names             = local.enable_bastion ? var.dns_instance_id : ""
+    dns_instance_id              = local.enable_bastion ? var.dns_instance_id : ""
     dns_custom_resolver_id       = local.enable_bastion ? var.dns_custom_resolver_id : ""
     dns_domain_names             = local.enable_bastion ? jsonencode(var.dns_domain_names) : ""
   }
