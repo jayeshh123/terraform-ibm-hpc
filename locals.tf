@@ -141,7 +141,7 @@ locals {
 
 # locals needed for playbook
 locals {
-  bastion_fip              =  var.enable_bastion == true && var.enable_deployer == false ? module.deployer.bastion_fip : ""
+  bastion_fip              =  var.enable_bastion == true && var.enable_deployer == true ? module.deployer.bastion_fip : ""
   compute_private_key_path = "compute_id_rsa" #checkov:skip=CKV_SECRET_6
   storage_private_key_path = "storage_id_rsa" #checkov:skip=CKV_SECRET_6
   compute_playbook_path    = "compute_ssh.yaml"

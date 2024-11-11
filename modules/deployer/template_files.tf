@@ -34,6 +34,6 @@ data "template_file" "deployer_user_data" {
     protocol_subnets           = local.enable_bastion ? jsonencode(var.protocol_subnets) : null
     compute_subnets            = local.enable_bastion ? jsonencode(var.compute_subnets) : null
     client_subnets             = local.enable_bastion ? jsonencode(var.client_subnets) : null
-    bastion_fip                = local.enable_bastion ? jsonencode(var.bastion_fip) : null
+    bastion_fip                = local.enable_bastion ? var.bastion_fip : null
   }
 }

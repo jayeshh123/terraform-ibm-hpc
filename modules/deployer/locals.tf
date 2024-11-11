@@ -53,6 +53,8 @@ locals {
   da_hpc_repo_url     = "https://github.com/jayeshh123/terraform-ibm-hpc.git"
   da_hpc_repo_tag     = "jay_da_chngs" ###### change it to main in future
 
+  
+
   # Region and Zone calculations
   region = join("-", slice(split("-", var.zones[0]), 0, 2))
 
