@@ -46,15 +46,15 @@ fi
 
 # TODO: run terraform
 
-dnf install -y git unzip wget python3-dnf-plugin-versionlock bind-utils
-dnf update --security -y
-dnf versionlock list
-dnf versionlock add git unzip wget python3-dnf-plugin-versionlock bind-utils
-dnf versionlock list
-wget https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip
-unzip terraform_1.5.7_linux_amd64.zip
-rm -rf terraform_1.5.7_linux_amd64.zip
-mv terraform /usr/bin
+# dnf install -y git unzip wget python3-dnf-plugin-versionlock bind-utils
+# dnf update --security -y
+# dnf versionlock list
+# dnf versionlock add git unzip wget python3-dnf-plugin-versionlock bind-utils
+# dnf versionlock list
+# wget https://releases.hashicorp.com/terraform/1.5.7/terraform_1.5.7_linux_amd64.zip
+# unzip terraform_1.5.7_linux_amd64.zip
+# rm -rf terraform_1.5.7_linux_amd64.zip
+# mv terraform /usr/bin
 
 if [ ${enable_bastion} = true ]; then
     if [ ! -d ${remote_ansible_path} ]; then sudo git clone -b ${da_hpc_repo_tag} ${da_hpc_repo_url} ${remote_ansible_path}; fi
