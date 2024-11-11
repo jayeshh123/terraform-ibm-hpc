@@ -652,3 +652,33 @@ variable "enable_landing_zone" {
   default     = true
   description = "Run landing zone module."
 }
+
+variable "storage_subnets" {
+  # type        = string
+  default     = null
+  description = "Subnets to launch the storage host."
+}
+
+variable "protocol_subnets" {
+  # type        = string
+  default     = null
+  description = "Subnets to launch the protocol host."
+}
+
+variable "compute_subnets" {
+  # type        = string
+  default     = null
+  description = "Subnets to launch the compute host."
+}
+
+variable "client_subnets" {
+  # type        = string
+  default     = null
+  description = "Subnets to launch the client host."
+}
+
+variable "bastion_fip" {
+  type        = string
+  default     = null
+  description = "bastion fip"
+}

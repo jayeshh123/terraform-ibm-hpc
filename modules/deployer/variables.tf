@@ -276,3 +276,9 @@ variable "dns_domain_names" {
   }
   description = "IBM Cloud HPC DNS domain names."
 }
+
+variable "vpc" {
+  type        = string
+  default     = null
+  description = "Name of an existing VPC in which the cluster resources will be deployed. If no value is given, then a new VPC will be provisioned for the cluster. [Learn more](https://cloud.ibm.com/docs/vpc)"
+}

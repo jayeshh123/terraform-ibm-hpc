@@ -30,6 +30,7 @@ data "template_file" "deployer_user_data" {
     enable_vpc_flow_logs         = local.enable_bastion ? var.enable_vpc_flow_logs : ""
     key_management               = local.enable_bastion ? jsonencode(var.key_management) : ""
     vpc_id                       = local.enable_bastion ? var.vpc_id : ""
+    vpc                          = local.enable_bastion ? var.vpc : ""
     storage_subnets              = local.enable_bastion ? jsonencode(local.storage_subnets) : ""
     protocol_subnets             = local.enable_bastion ? jsonencode(local.protocol_subnets) : ""
     compute_subnets              = local.enable_bastion ? jsonencode(local.compute_subnets) : ""

@@ -65,6 +65,7 @@ module "deployer" {
   dns_instance_id            = local.dns_instance_id
   dns_custom_resolver_id     = local.dns_custom_resolver_id
   dns_domain_names           = var.dns_domain_names
+  vpc                        = local.vpc
 }
 
 module "landing_zone_vsi" {

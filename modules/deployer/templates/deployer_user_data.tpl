@@ -58,7 +58,7 @@ fi
 
 if [ ${enable_bastion} = true ]; then
     if [ ! -d ${remote_ansible_path} ]; then sudo git clone -b ${da_hpc_repo_tag} ${da_hpc_repo_url} ${remote_ansible_path}; fi
-    sudo -E terraform -chdir=${remote_ansible_path}/solutions/scale init && sudo -E terraform -chdir=${remote_ansible_path} apply -auto-approve \
+    sudo -E terraform -chdir=${remote_ansible_path} init && sudo -E terraform -chdir=${remote_ansible_path} apply -auto-approve \
         -var 'resource_group=${resource_group}' \
         -var 'prefix=${prefix}' \
         -var 'zone=${zones}' \
@@ -82,6 +82,7 @@ if [ ${enable_bastion} = true ]; then
         -var 'allowed_cidr=${allowed_cidr}' \
         -var 'bastion_fip=${bastion_fip}' \
         -var 'vpc_id=${vpc_id}' \
+        -var 'vpc=${vpc}' \
         -var 'storage_subnets=${storage_subnets}' \
         -var 'protocol_subnets=${protocol_subnets}' \
         -var 'compute_subnets=${compute_subnets}' \
