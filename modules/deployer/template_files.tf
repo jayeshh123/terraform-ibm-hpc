@@ -12,13 +12,6 @@ data "template_file" "deployer_user_data" {
     remote_ansible_path          = local.enable_bastion ? local.remote_ansible_path : null
     da_hpc_repo_tag              = local.enable_bastion ? local.da_hpc_repo_tag : null
     da_hpc_repo_url              = local.enable_bastion ? local.da_hpc_repo_url : null
-    scale_cloud_deployer_path    = local.enable_bastion ? local.scale_cloud_deployer_path : null
-    scale_cloud_install_repo_name= local.enable_bastion ? local.scale_cloud_install_repo_name : null
-    scale_cloud_install_repo_url = local.enable_bastion ? local.scale_cloud_install_repo_url : null
-    scale_cloud_install_tag      = local.enable_bastion ? local.scale_cloud_install_tag : null
-    scale_cloud_infra_repo_name  = local.enable_bastion ? local.scale_cloud_infra_repo_name : null
-    scale_cloud_infra_repo_url   = local.enable_bastion ? local.scale_cloud_infra_repo_url : null
-    scale_cloud_infra_repo_tag   = local.enable_bastion ? local.scale_cloud_infra_repo_tag : null
     ibmcloud_api_key             = local.enable_bastion ? var.ibmcloud_api_key : null
     ibm_customer_number          = local.enable_bastion ? var.ibm_customer_number : null
     resource_group               = local.enable_bastion ? var.resource_group : null
