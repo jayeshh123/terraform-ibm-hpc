@@ -488,3 +488,9 @@ variable "bastion_fip" {
   default     = null
   description = "bastion fip"
 }
+
+variable "enable_landing_zone" {
+  type        = bool
+  default     = true
+  description = "Run landing zone module."
+}
