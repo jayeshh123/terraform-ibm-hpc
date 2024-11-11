@@ -476,3 +476,8 @@ variable "client_subnets" {
   default     = null
   description = "Subnets to launch the client host."
 }
+
+variable "vpc_id" {
+  type        = string
+  description = "ID of an existing VPC in which the cluster resources will be deployed."
+}
