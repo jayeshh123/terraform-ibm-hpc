@@ -250,3 +250,29 @@ variable "bastion_fip" {
   default     = null
   description = "bastion fip"
 }
+
+variable "dns_instance_id" {
+  type        = string
+  default     = null
+  description = "IBM Cloud HPC DNS service instance id."
+}
+
+variable "dns_custom_resolver_id" {
+  type        = string
+  default     = null
+  description = "IBM Cloud DNS custom resolver id."
+}
+
+variable "dns_domain_names" {
+  type = object({
+    compute  = string
+    storage  = string
+    protocol = string
+  })
+  default = {
+    compute  = "comp.com"
+    storage  = "strg.com"
+    protocol = "ces.com"
+  }
+  description = "IBM Cloud HPC DNS domain names."
+}

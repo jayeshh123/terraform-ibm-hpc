@@ -15,7 +15,7 @@ locals {
 # locals needed for deployer
 locals {
   # dependency: landing_zone -> deployer
-  vpc_id                     = var.vpc == null ? one(module.landing_zone.vpc_id) : var.vpc
+  vpc_id                     = var.vpc == null ? one(module.landing_zone.vpc_id) : data.ibm_is_vpc.itself[0].id
   bastion_subnets            = module.landing_zone.bastion_subnets
   kms_encryption_enabled     = var.key_management != null ? true : false
   boot_volume_encryption_key = var.key_management != null ? one(module.landing_zone.boot_volume_encryption_key)["crn"] : null

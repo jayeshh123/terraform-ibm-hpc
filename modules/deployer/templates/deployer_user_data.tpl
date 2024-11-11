@@ -58,7 +58,7 @@ fi
 
 if [ ${enable_bastion} = true ]; then
     if [ ! -d ${remote_ansible_path} ]; then sudo git clone -b ${da_hpc_repo_tag} ${da_hpc_repo_url} ${remote_ansible_path}; fi
-    sudo -E terraform -chdir=${remote_ansible_path}/solutions/scale init && sudo -E terraform -chdir=${remote_ansible_path}/solutions/scale apply -auto-approve \
+    sudo -E terraform -chdir=${remote_ansible_path}/solutions/scale init && sudo -E terraform -chdir=${remote_ansible_path} apply -auto-approve \
         -var 'resource_group=${resource_group}' \
         -var 'prefix=${prefix}' \
         -var 'zone=${zones}' \
@@ -85,5 +85,8 @@ if [ ${enable_bastion} = true ]; then
         -var 'storage_subnets=${storage_subnets}' \
         -var 'protocol_subnets=${protocol_subnets}' \
         -var 'compute_subnets=${compute_subnets}' \
-        -var 'client_subnets=${client_subnets}'
+        -var 'client_subnets=${client_subnets}' \
+        -var 'dns_domain_names=${dns_domain_names}' \
+        -var 'dns_custom_resolver_id=${dns_custom_resolver_id}' \
+        -var 'dns_domain_names=${dns_domain_names}' 
 fi

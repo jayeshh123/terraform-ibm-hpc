@@ -24,17 +24,17 @@ output "resource_group_id" {
 
 output "vpc_name" {
   description = "VPC name"
-  value       = module.landing_zone[*].vpc_data[0].vpc_name
+  value       = var.enable_landing_zone ? module.landing_zone[*].vpc_data[0].vpc_name : []
 }
 
 output "vpc_id" {
   description = "VPC ID"
-  value       = module.landing_zone[*].vpc_data[0].vpc_id
+  value       = var.enable_landing_zone ? module.landing_zone[*].vpc_data[0].vpc_id : []
 }
 
 output "vpc_crn" {
   description = "VPC CRN"
-  value       = module.landing_zone[*].vpc_data[0].vpc_crn
+  value       = var.enable_landing_zone ? module.landing_zone[*].vpc_data[0].vpc_crn : []
 }
 
 
