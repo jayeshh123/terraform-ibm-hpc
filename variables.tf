@@ -646,3 +646,9 @@ variable "compute_instances" {
   }]
   description = "Min Number of instances to be launched for compute cluster."
 }
+
+variable "enable_landing_zone" {
+  type        = bool
+  default     = true
+  description = "Run landing zone module."
+}

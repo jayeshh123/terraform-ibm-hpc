@@ -43,6 +43,14 @@ locals {
   #resource_group_id = data.ibm_resource_group.itself.id
   #vpc_id            = var.vpc == null ? module.landing_zone.vpc_id[0] : data.ibm_is_vpc.itself[0].id
   #vpc_crn           = var.vpc == null ? module.landing_zone.vpc_crn[0] : data.ibm_is_vpc.itself[0].crn
+  
+  # dependency: landing_zone_vsi -> dns-records
+  client_instances_count          = var.enable_deployer ? [] : var.client_instances
+  static_compute_instances_count  = var.enable_deployer ? [] : var.static_compute_instances
+  management_instances_count      = var.enable_deployer ? [] : var.management_instances
+  storage_instances_count         = var.enable_deployer ? [] : var.storage_instances
+  protocol_instances_count        = var.enable_deployer ? [] : var.protocol_instances
+  dynamic_compute_instances_count = var.enable_deployer ? [] : var.dynamic_compute_instances
 }
 
 # locals needed for file-storage
@@ -53,7 +61,7 @@ locals {
 
   # dependency: landing_zone_vsi -> file-share
   compute_subnet_id         = local.compute_subnets[0].id
-  compute_security_group_id = var.enable_bastion == true && var.enable_deployer == false ? module.landing_zone_vsi.compute_sg_id : ""
+  compute_security_group_id = var.enable_bastion == true && var.enable_deployer == false ? module.landing_zone_vsi.compute_sg_id : []
   management_instance_count = sum(var.management_instances[*]["count"])
   default_share = local.management_instance_count > 0 ? [
     {
@@ -92,38 +100,38 @@ locals {
 # locals needed for dns-records
 locals {
   # dependency: dns -> dns-records
-  dns_instance_id = var.enable_bastion == true && var.enable_deployer == false ? module.dns.dns_instance_id : ""
-  compute_dns_zone_id = var.enable_bastion == true && var.enable_deployer == false ? one(flatten([
+  dns_instance_id = module.dns.dns_instance_id
+  compute_dns_zone_id = one(flatten([
     for dns_zone in module.dns.dns_zone_maps : values(dns_zone) if one(keys(dns_zone)) == var.dns_domain_names["compute"]
-  ])) : ""
-  storage_dns_zone_id = var.enable_bastion == true && var.enable_deployer == false ? one(flatten([
+  ]))
+  storage_dns_zone_id = one(flatten([
     for dns_zone in module.dns.dns_zone_maps : values(dns_zone) if one(keys(dns_zone)) == var.dns_domain_names["storage"]
-  ])) : ""
-  protocol_dns_zone_id = var.enable_bastion == true && var.enable_deployer == false ? one(flatten([
+  ]))
+  protocol_dns_zone_id = one(flatten([
     for dns_zone in module.dns.dns_zone_maps : values(dns_zone) if one(keys(dns_zone)) == var.dns_domain_names["protocol"]
-  ])) : ""
+  ]))
 
   # dependency: landing_zone_vsi -> dns-records
-  compute_instances  = var.enable_bastion == true && var.enable_deployer == false ? flatten([module.landing_zone_vsi.management_vsi_data, module.landing_zone_vsi.compute_vsi_data]) : []
-  storage_instances  = var.enable_bastion == true && var.enable_deployer == false ? flatten([module.landing_zone_vsi.storage_vsi_data, module.landing_zone_vsi.protocol_vsi_data]) : []
-  protocol_instances = var.enable_bastion == true && var.enable_deployer == false ? flatten([module.landing_zone_vsi.protocol_vsi_data]) : []
+  compute_instances_data  =  var.enable_deployer ? [] : flatten([module.landing_zone_vsi.management_vsi_data, module.landing_zone_vsi.compute_vsi_data])
+  storage_instances_data  =  var.enable_deployer ? [] : flatten([module.landing_zone_vsi.storage_vsi_data, module.landing_zone_vsi.protocol_vsi_data])
+  protocol_instances_data =  var.enable_deployer ? [] : flatten([module.landing_zone_vsi.protocol_vsi_data])
 
-  compute_dns_records = [
-    for instance in local.compute_instances :
+  compute_dns_records = var.enable_deployer ? [] : [
+    for instance in local.compute_instances_data :
     {
       name  = instance["name"]
       rdata = instance["ipv4_address"]
     }
   ]
-  storage_dns_records = [
-    for instance in local.storage_instances :
+  storage_dns_records = var.enable_deployer ? [] : [
+    for instance in local.storage_instances_data :
     {
       name  = instance["name"]
       rdata = instance["ipv4_address"]
     }
   ]
-  protocol_dns_records = [
-    for instance in local.protocol_instances :
+  protocol_dns_records = var.enable_deployer ? [] : [
+    for instance in local.protocol_instances_data :
     {
       name  = instance["name"]
       rdata = instance["ipv4_address"]
@@ -133,8 +141,8 @@ locals {
 
 # locals needed for inventory
 locals {
-  compute_hosts          = local.compute_instances[*]["ipv4_address"]
-  storage_hosts          = local.storage_instances[*]["ipv4_address"]
+  compute_hosts          = local.compute_instances_data[*]["ipv4_address"]
+  storage_hosts          = local.storage_instances_data[*]["ipv4_address"]
   compute_inventory_path = "compute.ini"
   storage_inventory_path = "storage.ini"
 }
@@ -147,4 +155,3 @@ locals {
   compute_playbook_path    = "compute_ssh.yaml"
   storage_playbook_path    = "storage_ssh.yaml"
 }
-

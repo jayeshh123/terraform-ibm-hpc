@@ -1,6 +1,6 @@
 module "landing_zone" {
-  #count                  = var.vpc == "" ? 1 : 0
   source                 = "./modules/landing_zone"
+  enable_landing_zone    = var.enable_landing_zone
   allowed_cidr           = var.allowed_cidr
   compute_subnets_cidr   = var.compute_subnets_cidr
   clusters               = var.clusters
@@ -65,7 +65,7 @@ module "deployer" {
 }
 
 module "landing_zone_vsi" {
-  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source                     = "./modules/landing_zone_vsi"
   resource_group             = var.resource_group
   prefix                     = var.prefix
@@ -75,17 +75,17 @@ module "landing_zone_vsi" {
   bastion_public_key_content = local.bastion_public_key_content
   client_subnets             = local.client_subnets
   client_ssh_keys            = local.client_ssh_keys
-  client_instances           = var.client_instances
+  client_instances           = local.client_instances_count
   compute_subnets            = local.compute_subnets
   compute_ssh_keys           = local.compute_ssh_keys
-  management_instances       = var.management_instances
-  static_compute_instances   = var.static_compute_instances
-  dynamic_compute_instances  = var.dynamic_compute_instances
+  management_instances       = local.management_instances_count
+  static_compute_instances   = local.static_compute_instances_count
+  dynamic_compute_instances  = local.dynamic_compute_instances_count
   storage_subnets            = local.storage_subnets
   storage_ssh_keys           = local.storage_ssh_keys
-  storage_instances          = var.storage_instances
+  storage_instances          = local.storage_instances_count
   protocol_subnets           = local.protocol_subnets
-  protocol_instances         = var.protocol_instances
+  protocol_instances         = local.protocol_instances_count
   nsd_details                = var.nsd_details
   dns_domain_names           = var.dns_domain_names
   kms_encryption_enabled     = local.kms_encryption_enabled
@@ -93,7 +93,7 @@ module "landing_zone_vsi" {
 }
 
 module "file_storage" {
-  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source             = "./modules/file_storage"
   zone               = var.zones[0] # always the first zone
   resource_group_id  = local.resource_group_id
@@ -104,7 +104,7 @@ module "file_storage" {
 }
 
 module "dns" {
-  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source                 = "./modules/dns"
   prefix                 = var.prefix
   resource_group_id      = local.resource_group_id
@@ -116,7 +116,7 @@ module "dns" {
 }
 
 module "compute_dns_records" {
-  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source          = "./modules/dns_record"
   dns_instance_id = local.dns_instance_id
   dns_zone_id     = local.compute_dns_zone_id
@@ -124,7 +124,7 @@ module "compute_dns_records" {
 }
 
 module "storage_dns_records" {
-  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source          = "./modules/dns_record"
   dns_instance_id = local.dns_instance_id
   dns_zone_id     = local.storage_dns_zone_id
@@ -132,7 +132,7 @@ module "storage_dns_records" {
 }
 
 module "protocol_dns_records" {
-  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source          = "./modules/dns_record"
   dns_instance_id = local.dns_instance_id
   dns_zone_id     = local.protocol_dns_zone_id
@@ -140,21 +140,21 @@ module "protocol_dns_records" {
 }
 
 module "compute_inventory" {
-  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source         = "./modules/inventory"
   hosts          = local.compute_hosts
   inventory_path = local.compute_inventory_path
 }
 
 module "storage_inventory" {
-  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source         = "./modules/inventory"
   hosts          = local.storage_hosts
   inventory_path = local.storage_inventory_path
 }
 
 module "compute_playbook" {
-  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source           = "./modules/playbook"
   bastion_fip      = local.bastion_fip
   private_key_path = local.compute_private_key_path
@@ -164,7 +164,7 @@ module "compute_playbook" {
 }
 
 module "storage_playbook" {
-  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source           = "./modules/playbook"
   bastion_fip      = local.bastion_fip
   private_key_path = local.storage_private_key_path
