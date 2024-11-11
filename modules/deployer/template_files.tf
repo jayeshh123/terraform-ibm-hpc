@@ -13,8 +13,10 @@ data "template_file" "deployer_user_data" {
     da_hpc_repo_tag              = local.enable_bastion ? local.da_hpc_repo_tag : null
     da_hpc_repo_url              = local.enable_bastion ? local.da_hpc_repo_url : null
     scale_cloud_deployer_path    = local.enable_bastion ? local.scale_cloud_deployer_path : null
+    scale_cloud_install_repo_name= local.enable_bastion ? local.scale_cloud_install_repo_name : null
     scale_cloud_install_repo_url = local.enable_bastion ? local.scale_cloud_install_repo_url : null
     scale_cloud_install_tag      = local.enable_bastion ? local.scale_cloud_install_tag : null
+    scale_cloud_infra_repo_name  = local.enable_bastion ? local.scale_cloud_infra_repo_name : null
     scale_cloud_infra_repo_url   = local.enable_bastion ? local.scale_cloud_infra_repo_url : null
     scale_cloud_infra_repo_tag   = local.enable_bastion ? local.scale_cloud_infra_repo_tag : null
     ibmcloud_api_key             = local.enable_bastion ? var.ibmcloud_api_key : null
