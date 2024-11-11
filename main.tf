@@ -65,7 +65,7 @@ module "deployer" {
 }
 
 module "landing_zone_vsi" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
+  count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source                     = "./modules/landing_zone_vsi"
   resource_group             = var.resource_group
   prefix                     = var.prefix

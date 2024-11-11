@@ -494,3 +494,9 @@ variable "enable_landing_zone" {
   default     = true
   description = "Run landing zone module."
 }
+
+variable "bastion_public_key_content" {
+  type        = string
+  default     = null
+  description = "bastion fip"
+}
