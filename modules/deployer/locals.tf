@@ -53,7 +53,10 @@ locals {
   da_hpc_repo_url     = "https://github.com/jayeshh123/terraform-ibm-hpc.git"
   da_hpc_repo_tag     = "jay_da_chngs" ###### change it to main in future
 
-  
+  storage_subnets  = [for subnet in var.storage_subnets : subnet.id]
+  protocol_subnets = [for subnet in var.protocol_subnets : subnet.id]
+  compute_subnets  = [for subnet in var.compute_subnets : subnet.id]
+  client_subnets   = [for subnet in var.storage_subnets : subnet.id]
 
   # Region and Zone calculations
   region = join("-", slice(split("-", var.zones[0]), 0, 2))

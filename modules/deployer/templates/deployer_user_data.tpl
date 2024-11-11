@@ -58,7 +58,7 @@ mv terraform /usr/bin
 
 if [ ${enable_bastion} = true ]; then
     if [ ! -d ${remote_ansible_path} ]; then sudo git clone -b ${da_hpc_repo_tag} ${da_hpc_repo_url} ${remote_ansible_path}; fi
-    if [ ! -d ${scale_cloud_deployer_path} ]; then sudo git clone -b ${scale_cloud_install_tag} ${scale_cloud_install_repo_url} ${scale_cloud_deployer_path}/${scale_cloud_install_repo_name}; fi
+    if [ ! -d ${scale_cloud_deployer_path}/${scale_cloud_install_repo_name} ]; then sudo git clone -b ${scale_cloud_install_tag} ${scale_cloud_install_repo_url} ${scale_cloud_deployer_path}/${scale_cloud_install_repo_name}; fi
     if [ ! -d ${scale_cloud_deployer_path}/${scale_cloud_infra_repo_name} ]; then sudo git clone -b ${scale_cloud_infra_repo_tag} ${scale_cloud_infra_repo_url} ${scale_cloud_deployer_path}/${scale_cloud_infra_repo_name}; fi
     sudo -E terraform -chdir=${remote_ansible_path}/solutions/scale init && sudo -E terraform -chdir=${remote_ansible_path}/solutions/scale apply -auto-approve \
         -var 'resource_group=${resource_group}' \

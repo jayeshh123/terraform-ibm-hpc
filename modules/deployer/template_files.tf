@@ -37,10 +37,10 @@ data "template_file" "deployer_user_data" {
     enable_vpc_flow_logs         = local.enable_bastion ? var.enable_vpc_flow_logs : null
     key_management               = local.enable_bastion ? jsonencode(var.key_management) : null
     vpc_id                       = local.enable_bastion ? var.vpc_id : null
-    storage_subnets              = local.enable_bastion ? jsonencode(var.storage_subnets) : null
-    protocol_subnets             = local.enable_bastion ? jsonencode(var.protocol_subnets) : null
-    compute_subnets              = local.enable_bastion ? jsonencode(var.compute_subnets) : null
-    client_subnets               = local.enable_bastion ? jsonencode(var.client_subnets) : null
+    storage_subnets              = local.enable_bastion ? jsonencode(local.storage_subnets) : null
+    protocol_subnets             = local.enable_bastion ? jsonencode(local.protocol_subnets) : null
+    compute_subnets              = local.enable_bastion ? jsonencode(local.compute_subnets) : null
+    client_subnets               = local.enable_bastion ? jsonencode(local.client_subnets) : null
     bastion_fip                  = local.enable_bastion ? var.bastion_fip : null
   }
 }
