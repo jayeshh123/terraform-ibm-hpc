@@ -39,5 +39,6 @@ data "template_file" "deployer_user_data" {
     dns_instance_id              = local.enable_bastion ? var.dns_instance_id : ""
     dns_custom_resolver_id       = local.enable_bastion ? var.dns_custom_resolver_id : ""
     dns_domain_names             = local.enable_bastion ? jsonencode(var.dns_domain_names) : ""
+    resource_group_id            = local.enable_bastion ? jsonencode(var.resource_group_id) : ""
   }
 }

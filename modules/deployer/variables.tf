@@ -282,3 +282,9 @@ variable "vpc" {
   default     = null
   description = "Name of an existing VPC in which the cluster resources will be deployed. If no value is given, then a new VPC will be provisioned for the cluster. [Learn more](https://cloud.ibm.com/docs/vpc)"
 }
+
+variable "resource_group_id" {
+  description = "String describing resource groups to create or reference"
+  type        = string
+  default     = null
+}

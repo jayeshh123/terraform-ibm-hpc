@@ -682,3 +682,28 @@ variable "bastion_fip" {
   default     = null
   description = "bastion fip"
 }
+
+variable "vpc_id" {
+  type        = string
+  default     = null
+  description = "ID of an existing VPC in which the cluster resources will be deployed."
+}
+
+variable "bastion_public_key_content" {
+  type        = string
+  sensitive   = true
+  default     = null
+  description = "Bastion security group id."
+}
+
+variable "boot_volume_encryption_key" {
+  type        = string
+  default     = null
+  description = "CRN of boot volume encryption key"
+}
+
+variable "resource_group_id" {
+  description = "String describing resource groups to create or reference"
+  type        = string
+  default     = null
+}

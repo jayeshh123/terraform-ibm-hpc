@@ -61,7 +61,7 @@ if [ ${enable_bastion} = true ]; then
     sudo -E terraform -chdir=${remote_ansible_path} init && sudo -E terraform -chdir=${remote_ansible_path} apply -auto-approve \
         -var 'resource_group=${resource_group}' \
         -var 'prefix=${prefix}' \
-        -var 'zone=${zones}' \
+        -var 'zones=${zones}' \
         -var 'compute_ssh_keys=${compute_ssh_keys}' \
         -var 'storage_ssh_keys=${storage_ssh_keys}' \
         -var 'enable_bastion=false' \
@@ -89,5 +89,6 @@ if [ ${enable_bastion} = true ]; then
         -var 'client_subnets=${client_subnets}' \
         -var 'dns_instance_id=${dns_instance_id}' \
         -var 'dns_custom_resolver_id=${dns_custom_resolver_id}' \
-        -var 'dns_domain_names=${dns_domain_names}' 
+        -var 'dns_domain_names=${dns_domain_names}' \
+        -var 'resource_group_id=${resource_group_id}'
 fi

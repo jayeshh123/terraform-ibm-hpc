@@ -33,7 +33,7 @@ module "landing_zone" {
 module "deployer" {
   #scount = var.enable_bastion == true && var.enable_deployer == true ? 1 : 0
   source                     = "./modules/deployer"
-  resource_group             = var.resource_group
+  resource_group             = var.resource_group #local.resource_group
   prefix                     = var.prefix
   zones                      = var.zones
   vpc_id                     = local.vpc_id
@@ -66,12 +66,12 @@ module "deployer" {
   dns_custom_resolver_id     = local.dns_custom_resolver_id
   dns_domain_names           = var.dns_domain_names
   vpc                        = local.vpc
+  #resource_group_id          = local.resource_group_ids["workload_rg"]
 }
 
 module "landing_zone_vsi" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source                     = "./modules/landing_zone_vsi"
-  resource_group             = var.resource_group
+  resource_group             = var.resource_group#local.resource_group_ids["workload_rg"]
   prefix                     = var.prefix
   zones                      = var.zones
   vpc_id                     = local.vpc_id
@@ -97,10 +97,9 @@ module "landing_zone_vsi" {
 }
 
 module "file_storage" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source             = "./modules/file_storage"
   zone               = var.zones[0] # always the first zone
-  resource_group_id  = local.resource_group_id
+  resource_group_id  = local.resource_group_ids["service_rg"]
   file_shares        = local.file_shares
   encryption_key_crn = local.boot_volume_encryption_key
   security_group_ids = local.compute_security_group_id
@@ -108,10 +107,9 @@ module "file_storage" {
 }
 
 module "dns" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source                 = "./modules/dns"
   prefix                 = var.prefix
-  resource_group_id      = local.resource_group_id
+  resource_group_id      = local.resource_group_ids["service_rg"]
   vpc_crn                = local.vpc_crn
   subnets_crn            = local.subnets_crn
   dns_instance_id        = var.dns_instance_id
@@ -120,7 +118,6 @@ module "dns" {
 }
 
 module "compute_dns_records" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source          = "./modules/dns_record"
   dns_instance_id = local.dns_instance_id
   dns_zone_id     = local.compute_dns_zone_id
@@ -128,7 +125,6 @@ module "compute_dns_records" {
 }
 
 module "storage_dns_records" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source          = "./modules/dns_record"
   dns_instance_id = local.dns_instance_id
   dns_zone_id     = local.storage_dns_zone_id
@@ -136,7 +132,6 @@ module "storage_dns_records" {
 }
 
 module "protocol_dns_records" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source          = "./modules/dns_record"
   dns_instance_id = local.dns_instance_id
   dns_zone_id     = local.protocol_dns_zone_id
@@ -144,21 +139,18 @@ module "protocol_dns_records" {
 }
 
 module "compute_inventory" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source         = "./modules/inventory"
   hosts          = local.compute_hosts
   inventory_path = local.compute_inventory_path
 }
 
 module "storage_inventory" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source         = "./modules/inventory"
   hosts          = local.storage_hosts
   inventory_path = local.storage_inventory_path
 }
 
 module "compute_playbook" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source           = "./modules/playbook"
   bastion_fip      = local.bastion_fip
   private_key_path = local.compute_private_key_path
@@ -168,7 +160,6 @@ module "compute_playbook" {
 }
 
 module "storage_playbook" {
-  # count = var.enable_bastion == true && var.enable_deployer == false ? 1 : 0
   source           = "./modules/playbook"
   bastion_fip      = local.bastion_fip
   private_key_path = local.storage_private_key_path
