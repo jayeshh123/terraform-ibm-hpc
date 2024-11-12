@@ -98,7 +98,7 @@ module "landing_zone_vsi" {
 }
 
 module "file_storage" {
-  count              = var.enable_deployer == false ? 1 : 0
+  # count              = var.enable_deployer == false ? 1 : 0
   source             = "./modules/file_storage"
   ibmcloud_api_key   = var.ibmcloud_api_key
   zone               = var.zones[0] # always the first zone
@@ -110,7 +110,7 @@ module "file_storage" {
 }
 
 module "dns" {
-  count                  = var.enable_deployer == false ? 1 : 0
+  # count                  = var.enable_deployer == false ? 1 : 0
   source                 = "./modules/dns"
   ibmcloud_api_key       = var.ibmcloud_api_key
   prefix                 = var.prefix
@@ -120,10 +120,11 @@ module "dns" {
   dns_instance_id        = var.dns_instance_id
   dns_custom_resolver_id = var.dns_custom_resolver_id
   dns_domain_names       = values(var.dns_domain_names)
+  enable_deployer        = var.enable_deployer
 }
 
 module "compute_dns_records" {
-  count            = var.enable_deployer == false ? 1 : 0
+  # count            = var.enable_deployer == false ? 1 : 0
   source           = "./modules/dns_record"
   ibmcloud_api_key = var.ibmcloud_api_key
   dns_instance_id  = local.dns_instance_id
@@ -132,7 +133,7 @@ module "compute_dns_records" {
 }
 
 module "storage_dns_records" {
-  count            = var.enable_deployer == false ? 1 : 0
+  # count            = var.enable_deployer == false ? 1 : 0
   source           = "./modules/dns_record"
   ibmcloud_api_key = var.ibmcloud_api_key
   dns_instance_id  = local.dns_instance_id
@@ -141,7 +142,7 @@ module "storage_dns_records" {
 }
 
 module "protocol_dns_records" {
-  count            = var.enable_deployer == false ? 1 : 0
+  # count            = var.enable_deployer == false ? 1 : 0
   source           = "./modules/dns_record"
   ibmcloud_api_key = var.ibmcloud_api_key
   dns_instance_id  = local.dns_instance_id
@@ -150,21 +151,21 @@ module "protocol_dns_records" {
 }
 
 module "compute_inventory" {
-  count          = var.enable_deployer == false ? 1 : 0
+  # count          = var.enable_deployer == false ? 1 : 0
   source         = "./modules/inventory"
   hosts          = local.compute_hosts
   inventory_path = local.compute_inventory_path
 }
 
 module "storage_inventory" {
-  count          = var.enable_deployer == false ? 1 : 0
+  # count          = var.enable_deployer == false ? 1 : 0
   source         = "./modules/inventory"
   hosts          = local.storage_hosts
   inventory_path = local.storage_inventory_path
 }
 
 module "compute_playbook" {
-  count            = var.enable_deployer == false ? 1 : 0
+  # count            = var.enable_deployer == false ? 1 : 0
   source           = "./modules/playbook"
   bastion_fip      = local.bastion_fip
   private_key_path = local.compute_private_key_path
@@ -174,7 +175,7 @@ module "compute_playbook" {
 }
 
 module "storage_playbook" {
-  count            = var.enable_deployer == false ? 1 : 0
+  # count            = var.enable_deployer == false ? 1 : 0
   source           = "./modules/playbook"
   bastion_fip      = local.bastion_fip
   private_key_path = local.storage_private_key_path
