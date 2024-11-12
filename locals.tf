@@ -109,7 +109,7 @@ locals {
 # locals needed for dns-records
 locals {
   # dependency: dns -> dns-records
-  dns_instance_id        = var.enable_deployer == false ? module.dns.dns_instance_id : []
+  dns_instance_id        = module.dns.dns_instance_id
   dns_custom_resolver_id = module.dns.dns_custom_resolver_id
   compute_dns_zone_id = one(flatten([
     for dns_zone in module.dns.dns_zone_maps : values(dns_zone) if one(keys(dns_zone)) == var.dns_domain_names["compute"]

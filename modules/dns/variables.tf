@@ -64,10 +64,3 @@ variable "dns_domain_names" {
   default     = null
   description = "IBM Cloud HPC DNS domain names."
 }
-
-variable "enable_deployer" {
-  type        = bool
-  default     = false
-  description = "Deployer should be only used for better deployment performance"
-}
-

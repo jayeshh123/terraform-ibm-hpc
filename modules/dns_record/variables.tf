@@ -29,9 +29,3 @@ variable "dns_records" {
   default     = null
   description = "IBM Cloud HPC DNS record."
 }
-
-variable "enable_deployer" {
-  type        = bool
-  default     = false
-  description = "Deployer should be only used for better deployment performance"
-}
