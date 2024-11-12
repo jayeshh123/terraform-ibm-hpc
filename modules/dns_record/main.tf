@@ -1,15 +1,16 @@
 data "ibm_dns_zones" "itself" {
+  count = var.enable_deployer == false ? 1 : 0
   instance_id = var.dns_instance_id
 }
 
 locals {
-  dns_domain_name = [
-    for zone in data.ibm_dns_zones.itself.dns_zones : zone["name"] if zone["zone_id"] == var.dns_zone_id
-  ]
+  dns_domain_name = var.enable_deployer == false ? [
+    for zone in data.ibm_dns_zones.itself[*].dns_zones : zone["name"] if zone["zone_id"] == var.dns_zone_id
+  ] : []
 }
 
 resource "ibm_dns_resource_record" "a" {
-  count       = length(var.dns_records)
+  count       = var.enable_deployer == false ? length(var.dns_records) : 0 
   instance_id = var.dns_instance_id
   zone_id     = var.dns_zone_id
   type        = "A"
@@ -19,7 +20,7 @@ resource "ibm_dns_resource_record" "a" {
 }
 
 resource "ibm_dns_resource_record" "ptr" {
-  count       = length(var.dns_records)
+  count       = var.enable_deployer == false ? length(var.dns_records) : 0
   instance_id = var.dns_instance_id
   zone_id     = var.dns_zone_id
   type        = "PTR"
