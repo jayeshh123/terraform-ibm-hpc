@@ -71,6 +71,7 @@ module "deployer" {
 
 module "landing_zone_vsi" {
   source                     = "./modules/landing_zone_vsi"
+  ibmcloud_api_key           = var.ibmcloud_api_key
   resource_group             = local.resource_group_ids["workload_rg"]
   prefix                     = var.prefix
   zones                      = var.zones
@@ -98,6 +99,7 @@ module "landing_zone_vsi" {
 
 module "file_storage" {
   source             = "./modules/file_storage"
+  ibmcloud_api_key   = var.ibmcloud_api_key
   zone               = var.zones[0] # always the first zone
   resource_group_id  = local.resource_group_ids["service_rg"]
   file_shares        = local.file_shares
@@ -108,6 +110,7 @@ module "file_storage" {
 
 module "dns" {
   source                 = "./modules/dns"
+  ibmcloud_api_key       = var.ibmcloud_api_key
   prefix                 = var.prefix
   resource_group_id      = local.resource_group_ids["service_rg"]
   vpc_crn                = local.vpc_crn
@@ -118,24 +121,27 @@ module "dns" {
 }
 
 module "compute_dns_records" {
-  source          = "./modules/dns_record"
-  dns_instance_id = local.dns_instance_id
-  dns_zone_id     = local.compute_dns_zone_id
-  dns_records     = local.compute_dns_records
+  source           = "./modules/dns_record"
+  ibmcloud_api_key = var.ibmcloud_api_key
+  dns_instance_id  = local.dns_instance_id
+  dns_zone_id      = local.compute_dns_zone_id
+  dns_records      = local.compute_dns_records
 }
 
 module "storage_dns_records" {
-  source          = "./modules/dns_record"
-  dns_instance_id = local.dns_instance_id
-  dns_zone_id     = local.storage_dns_zone_id
-  dns_records     = local.storage_dns_records
+  source           = "./modules/dns_record"
+  ibmcloud_api_key = var.ibmcloud_api_key
+  dns_instance_id  = local.dns_instance_id
+  dns_zone_id      = local.storage_dns_zone_id
+  dns_records      = local.storage_dns_records
 }
 
 module "protocol_dns_records" {
-  source          = "./modules/dns_record"
-  dns_instance_id = local.dns_instance_id
-  dns_zone_id     = local.protocol_dns_zone_id
-  dns_records     = local.protocol_dns_records
+  source           = "./modules/dns_record"
+  ibmcloud_api_key = var.ibmcloud_api_key
+  dns_instance_id  = local.dns_instance_id
+  dns_zone_id      = local.protocol_dns_zone_id
+  dns_records      = local.protocol_dns_records
 }
 
 module "compute_inventory" {
