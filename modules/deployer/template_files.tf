@@ -17,7 +17,7 @@ data "template_file" "deployer_user_data" {
     resource_group               = local.enable_bastion ? var.resource_group : ""
     prefix                       = local.enable_bastion ? var.prefix : ""
     allowed_cidr                 = local.enable_bastion ? jsonencode(var.allowed_cidr) : "" 
-    zones                        = local.enable_bastion ? var.zones[0] : ""
+    zones                        = local.enable_bastion ? jsonencode(var.zones) : ""
     compute_ssh_keys             = local.enable_bastion ? jsonencode(var.compute_ssh_keys) : ""
     storage_ssh_keys             = local.enable_bastion ? jsonencode(var.storage_ssh_keys) : ""
     enable_bastion               = local.enable_bastion ? local.enable_bastion : ""

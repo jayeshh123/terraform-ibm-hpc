@@ -33,7 +33,7 @@ module "landing_zone" {
 module "deployer" {
   #scount = var.enable_bastion == true && var.enable_deployer == true ? 1 : 0
   source                     = "./modules/deployer"
-  resource_group             = var.resource_group #local.resource_group
+  resource_group             = local.resource_group
   prefix                     = var.prefix
   zones                      = var.zones
   vpc_id                     = local.vpc_id
@@ -66,12 +66,12 @@ module "deployer" {
   dns_custom_resolver_id     = local.dns_custom_resolver_id
   dns_domain_names           = var.dns_domain_names
   vpc                        = local.vpc
-  #resource_group_id          = local.resource_group_ids["workload_rg"]
+  resource_group_id          = local.resource_group_ids["workload_rg"]
 }
 
 module "landing_zone_vsi" {
   source                     = "./modules/landing_zone_vsi"
-  resource_group             = var.resource_group#local.resource_group_ids["workload_rg"]
+  resource_group             = local.resource_group_ids["workload_rg"]
   prefix                     = var.prefix
   zones                      = var.zones
   vpc_id                     = local.vpc_id
