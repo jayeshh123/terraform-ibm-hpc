@@ -707,3 +707,9 @@ variable "resource_group_id" {
   type        = string
   default     = null
 }
+
+variable "bastion_security_group_id" {
+  type        = string
+  default     = null
+  description = "Bastion security group id."
+}

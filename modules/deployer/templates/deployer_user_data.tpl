@@ -72,7 +72,6 @@ if [ ${enable_bastion} = true ]; then
         -var 'storage_instances=${storage_instances}' \
         -var 'protocol_instances=${protocol_instances}' \
         -var 'ibm_customer_number=${ibm_customer_number}' \
-        -var 'bastion_public_key_content=${bastion_public_key_content}' \
         -var 'compute_instances=${compute_instances}' \
         -var 'client_instances=${client_instances}' \
         -var 'enable_cos_integration=${enable_cos_integration}' \
@@ -90,5 +89,6 @@ if [ ${enable_bastion} = true ]; then
         -var 'dns_instance_id=${dns_instance_id}' \
         -var 'dns_custom_resolver_id=${dns_custom_resolver_id}' \
         -var 'dns_domain_names=${dns_domain_names}' \
-        -var 'resource_group_id=${resource_group_id}'
+        -var 'resource_group_id=${resource_group_id}' \
+        -var 'bastion_public_key_content=${bastion_public_key_content}'
 fi

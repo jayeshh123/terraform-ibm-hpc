@@ -31,8 +31,10 @@ locals {
 # locals needed for landing_zone_vsi
 locals {
   # dependency: landing_zone -> deployer -> landing_zone_vsi
-  bastion_security_group_id  = var.enable_bastion == true && var.enable_deployer == false ? module.deployer.bastion_security_group_id : ""
-  bastion_public_key_content = var.enable_bastion == true && var.enable_deployer == false ? module.deployer.bastion_public_key_content : ""
+  bastion_security_group_id   = var.bastion_security_group_id != null ? var.bastion_security_group_id : module.deployer.bastion_security_group_id
+  bastion_public_key_content  = var.bastion_public_key_content != null ? var.bastion_public_key_content : module.deployer.bastion_public_key_content
+  # bastion_security_group_id  = var.enable_bastion == true && var.enable_deployer == false ? module.deployer.bastion_security_group_id : ""
+  # bastion_public_key_content = var.enable_bastion == true && var.enable_deployer == false ? module.deployer.bastion_public_key_content : ""
 
   # dependency: landing_zone -> landing_zone_vsi
   client_subnets   = module.landing_zone.client_subnets
